@@ -14,7 +14,6 @@ pygame.display.set_caption('Menu Button')
 #load button images
 menu_img = pygame.image.load('menu.png').convert_alpha()
 
-
 #button class
 class Button():
     def __init__(self, x, y, image, scale):
@@ -43,7 +42,6 @@ class Button():
     #draw button on the screen
         screen.blit(self.image, (self.rect.x, self.rect.y))
         
-    
         return action
 
 #create button instances
