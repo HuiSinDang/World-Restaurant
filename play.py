@@ -18,6 +18,7 @@ grey = (200,200,200)
 #load button images
 menu_img = pygame.image.load('menu.png').convert_alpha()
 
+
 #food image
 #Level 1(Malaysia)-Nasi Lemak(telur/ayam)-Roti Canai-Ice Syrup
 nasilemaktelur_TA = pygame.image.load('Mini IT Project/project picture/nl_telur.png')
@@ -62,7 +63,6 @@ dimsum_TA = pygame.transform.scale(dimsum_TA, (100,100))
 
 #option box(put food's image init)
 
-
 #button class
 class Button():
     def __init__(self, x, y, image, scale):
@@ -91,7 +91,6 @@ class Button():
     #draw button on the screen
         screen.blit(self.image, (self.rect.x, self.rect.y))
         
-    
         return action
 
 #create button instances
