@@ -37,7 +37,7 @@ elif 800 <= money <= 1500:
 elif 1500 <= money <= 2000:
     print("You can choose to upgrade to machine B, C, or D. Do you want to upgrade your current machine?")
     confirm_upgrade(["B", "C", "D"])
-elif 2000 < money <= 2200:
+elif money > 2200:
     print("You can choose to upgrade to machine B, C, D, or E. Do you want to upgrade your current machine?")
     confirm_upgrade(["B", "C", "D", "E"])
 else:
