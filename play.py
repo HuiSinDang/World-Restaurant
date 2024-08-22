@@ -1,19 +1,147 @@
 #start
-
 import pygame
 import sys
+from pygame import mixer
 
 pygame.init()
+
+mixer.music.load('music.mp3')
+mixer.music.play(-1)
+mixer.music.set_volume(0.5)
 
 screen_height=750
 screen_width=1400
 
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Menu Button')
+pygame.display.set_caption('World Restaurant')
 
 white = (255,255,255)
 black = (0,0,0)
 grey = (200,200,200)
+red = (255, 0, 0)
+
+#first page
+font = pygame.font.Font('freesansbold.ttf', 50)
+base_font = pygame.font.Font(None, 55)
+
+input_rect = pygame.Rect(550, 350, 250, 50)
+color_active = pygame.Color('antiquewhite4')
+color_passive = pygame.Color('gray5')
+color_fill = pygame.Color('white')
+color = color_passive
+
+clock = pygame.time.Clock()
+
+def draw_text(text, font, color, surface, x, y):
+    text_obj = font.render(str(text), True, color)
+    text_rect = text_obj.get_rect()
+    text_rect.center = (x, y)
+    surface.blit(text_obj, text_rect)
+
+def show_name_from_file(restaurant_name):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        bg_img = pygame.image.load("bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        result_text = str(lines[0])
+
+        result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
+        result_text_rect = result_text.get_rect(center=(700, 150))
+        screen.blit(result_text, result_text_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+def show_restaurant_name(restaurant_name):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        bg_img = pygame.image.load("bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
+        result_text_rect = result_text.get_rect(center=(700, 150))
+        screen.blit(result_text, result_text_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+def get_restaurant_name():
+    text = font.render("What's the name of the restaurant?: ", True, white)
+    textRect = text.get_rect()
+    textRect.center = (700, 150)
+    user_text = ''
+    active = False
+
+    while True:
+        bg_img = pygame.image.load("bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        screen.blit(text, textRect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    elif event.key == pygame.K_RETURN:
+                        list1=[]
+                        list1.append(user_text)
+                        if list1[0] == '':
+                            draw_text("Don't leave it blank, please try again", font, "red", screen, 700, 350)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            get_restaurant_name()
+                        else:
+                            f = open("name.txt", "a")
+                            f.write(f'{user_text}')
+                            f.close()
+                            show_restaurant_name(user_text)
+                    else:
+                        if event.unicode.isalnum():
+                            user_text += event.unicode
+
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+
+        pygame.draw.rect(screen, color_fill, input_rect)
+        pygame.draw.rect(screen, color, input_rect, 2)
+
+        text_surface = base_font.render(user_text, True, (0, 0, 0))
+        screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+        input_rect.w = max(250, text_surface.get_width() + 10)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+f = open("name.txt", "r") 
+lines = f.readlines()
+
+if len(lines) != 1:
+    get_restaurant_name()
+else:
+    show_name_from_file(lines[0].strip())
 
 #load button images
 menu_img = pygame.image.load("picture/menu.png").convert_alpha()
