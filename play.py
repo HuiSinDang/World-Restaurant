@@ -183,21 +183,21 @@ input_rect = pygame.Rect(740,125, 200, 33)
 color = pygame.Color("slategray")
 
 # Load the background image
-background = pygame.image.load("background with logo.png")
+background = pygame.image.load("picture/background with logo.png")
 background = pygame.transform.scale(background, (1400, 750))
 
 #load machine button images
-machineA_img = pygame.image.load("machineA.png").convert_alpha()
-lock_machineB_img = pygame.image.load("lockMachineB.png").convert_alpha()
-lock_machineC_img = pygame.image.load("lockMachineC.png").convert_alpha()
+machineA_img = pygame.image.load("picture/machineA.png").convert_alpha()
+lock_machineB_img = pygame.image.load("picture/lockMachineB.png").convert_alpha()
+lock_machineC_img = pygame.image.load("picture/lockMachineC.png").convert_alpha()
 
 # Button setup
-upgrade_btn = UpgradeButton(30, 460, "upgrade-button.png",0.25)
-default_machineA_button = MachineButton(600, 190, "machineA.png", 0.6)
-lock_machineB_button = MachineButton(780, 190, "lockMachineB.png", 0.18)
-lock_machineC_button = MachineButton(950,190, "lockMachineC.png", 0.18)
-yes_button =  YesButton(550,460, "yesButton.png", 0.4)
-no_button =  NoButton(680,463, "noButton.png", 0.38)
+upgrade_btn = UpgradeButton(30, 460, "picture/upgrade-button.png",0.25)
+default_machineA_button = MachineButton(600, 190, "picture/machineA.png", 0.6)
+lock_machineB_button = MachineButton(780, 190, "picture/lockMachineB.png", 0.18)
+lock_machineC_button = MachineButton(950,190, "picture/lockMachineC.png", 0.18)
+yes_button =  YesButton(550,460, "picture/yesButton.png", 0.4)
+no_button =  NoButton(680,463, "picture/noButton.png", 0.38)
 
 #machine criteria
 machine_criteria = { 
