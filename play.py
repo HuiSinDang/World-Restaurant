@@ -68,9 +68,7 @@ money = int(input("Enter your money: "))
 
 machine_criteria = { 
     "B": "Criteria - Cooking process speed up to 40s",
-    "C": "Criteria - Cooking process speed up to 30s ",
-    "D": "Criteria - Cooking process speed up to 20s", 
-    "E": "Criteria - Cooking process speed up to 15s"}
+    "C": "Criteria - Cooking process speed up to 30s "}
 
 def confirm_upgrade(machine_options):
     print("Criteria of the available upgrade options:")
@@ -224,6 +222,15 @@ popup3_rect = pygame.Rect(438, 500, popup3_width, popup3_height)
 show_popup = False
 show_popup2 = False
 show_popup3 = False
+money = 3000
+
+def check_money(money):
+    if 600 <= money <= 1500:
+        return ["B"]
+    elif money > 1500:
+        return ["B", "C"]
+    else:
+        return []
 
 while True:
     for event in pygame.event.get():
@@ -264,26 +271,45 @@ while True:
         draw_text("Machine Features - B: Features - Cooking process speed up to 40s", font, "red", screen, 714, 340)
         draw_text("- C: Features - Cooking process speed up to 30s", font, "red", screen, 788, 360)
 
-        if lock_machineB_button.draw(screen):
-            print("machineB lock")
-        elif lock_machineC_button.draw(screen):
-            print("machineC lock")
-        elif default_machineA_button.draw(screen):
-            print("Default machine")
+        default_machineA_button.draw(screen)
+        lock_machineB_button.draw(screen)
+        lock_machineC_button.draw(screen)
 
-    if show_popup2:
-        pygame.draw.rect(screen,(222, 201, 235), popup2_rect)
+        if show_popup2:
+            available_upgrades = check_money(money)
+            pygame.draw.rect(screen, (222, 201, 235), popup2_rect)
 
-        draw_text("INSTRUCTIONS: ", font, "black", screen, 504, 400)
-        draw_text("--> Your money now can only upgrade to Machine B. ", font, "black", screen, 639, 423)
-        draw_text("--> So, do you want to upgrade your current machine to machine B? ", font, "black", screen, 705, 448)
-    
-        yes_button.draw(screen)
-        no_button.draw(screen)
+            if "B" in available_upgrades:
+                draw_text("Instructions: ", font, "black", screen, 500, 400)
+                draw_text("- You are eligible to upgrade your machine to machine B. ", font, "black", screen, 670, 425)
+                draw_text("- Do you wanna upgrade your machine now?", font, "black", screen, 617, 450)
+                yes_button.draw(screen)
+                no_button.draw(screen)
+            if yes_button.is_clicked:
+                pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
+                draw_text("You have successfully upgraded your machine!", font, "black", screen, 800, 580)
+            elif no_button.draw.is_clicked:
+                pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
+                draw_text("Thank you!", font, "black", screen, 800, 580)
 
-    if show_popup3:
-        pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
-
+            else:
+                draw_text("You are eligible to upgrade your machine to machine B or C.", font, "black", screen, 500, 500)
+                draw_text("Do you wanna upgrade your machine now?", font, "black", screen, 500, 550)
+                yes_button.draw(screen)
+                no_button.draw(screen)
+                if yes_button.draw(screen):
+                    pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
+                    draw_text("Machine B or C?", font, "black", screen, 800, 580)
+                    b_button.draw(screen)
+                    c_button.draw(screen)
+                    if  b_button.draw(screen):
+                        draw_text("You have successfully upgraded your machine to machine B!", font, "black", screen, 800, 580)
+                    elif c_button.draw(screen):
+                        draw_text("You have successfully upgraded your machine to machine C!", font, "black", screen, 800, 580)
+                elif no_button.draw(screen):
+                    pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
+                    draw_text("Thank you!", font, "black", screen, 800, 580) 
+            
 #button class
 class Button():
     def __init__(self, x, y, image, scale):
