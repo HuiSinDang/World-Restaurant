@@ -134,18 +134,31 @@ def get_restaurant_name():
 
         pygame.display.flip()
         clock.tick(60)
+        
+def show_logo():
+    bg_img = pygame.image.load("logo.png").convert()
+    screen.blit(bg_img, (0, 0))
 
-f = open("name.txt", "r") 
-lines = f.readlines()
+    pygame.display.flip()
+    pygame.time.wait(2000)
 
-if len(lines) != 1:
-    get_restaurant_name()
-else:
+path = './name.txt'
+check_file = os.path.isfile(path)
+
+show_logo()
+
+if check_file == True:
+    f = open("name.txt", "r") 
+    lines = f.readlines()
     show_name_from_file(lines[0].strip())
+else:
+    f = open("name.txt","x")
+    pass
+    get_restaurant_name()
+    
 
 #load button images
 menu_img = pygame.image.load("picture/menu.png").convert_alpha()
-
 
 #food image
 #Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
