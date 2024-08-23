@@ -49,10 +49,20 @@ def show_name_from_file(restaurant_name):
         screen.blit(bg_img, (0, 0))
 
         result_text = str(lines[0])
+        result_text1 = str(lines[0])
+        count = list(result_text)
+        if len(count) > int(18):
+            result_text = font.render(f"Welcome back to ", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 280))
+            screen.blit(result_text, result_text_rect)
 
-        result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
-        result_text_rect = result_text.get_rect(center=(700, 150))
-        screen.blit(result_text, result_text_rect)
+            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
+            result_text_rect1 = result_text1.get_rect(center=(700, 380))
+            screen.blit(result_text1, result_text_rect1)          
+        else:
+            result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 750//2))
+            screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
         clock.tick(60)
@@ -67,15 +77,26 @@ def show_restaurant_name(restaurant_name):
         bg_img = pygame.image.load("bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
-        result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
-        result_text_rect = result_text.get_rect(center=(700, 150))
-        screen.blit(result_text, result_text_rect)
+        count = list(restaurant_name)
+
+        if len(count) > int(25):
+            result_text = font.render(f"Welcome to", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 280))
+            screen.blit(result_text, result_text_rect)
+
+            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
+            result_text_rect1 = result_text1.get_rect(center=(700, 380))
+            screen.blit(result_text1, result_text_rect1)
+        else:
+            result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 750//2))
+            screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
         clock.tick(60)
 
 def get_restaurant_name():
-    text = font.render("What's the name of the restaurant?: ", True, white)
+    text = font.render("What's name of the restaurant?: ", True, white)
     textRect = text.get_rect()
     textRect.center = (700, 150)
     user_text = ''
@@ -134,7 +155,7 @@ def get_restaurant_name():
 
         pygame.display.flip()
         clock.tick(60)
-        
+
 def show_logo():
     bg_img = pygame.image.load("logo.png").convert()
     screen.blit(bg_img, (0, 0))
