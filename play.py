@@ -136,6 +136,10 @@ def get_restaurant_name():
                             f = open("name.txt", "a")
                             f.write(f'{user_text}')
                             f.close()
+                            fdate = open("date.txt","a")
+                            fdate.write(f'{other_StyleTime}')
+                            show_restaurant_name(user_text)
+                            fdate.close()
                             show_restaurant_name(user_text)
                     else:
                         if event.unicode.isalnum():
@@ -167,6 +171,8 @@ def show_logo():
 
 path = './name.txt'
 check_file = os.path.isfile(path)
+now = datetime.datetime.now()
+other_StyleTime = now.strftime("%Y-%m-%d")
 
 show_logo()
 
@@ -176,6 +182,7 @@ if check_file == True:
     show_name_from_file(lines[0].strip())
 else:
     f = open("name.txt","x")
+    fdate = open("date.txt", "x")
     get_restaurant_name()
     
 
