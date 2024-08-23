@@ -1,7 +1,6 @@
 #start
 import pygame
 import sys
-import os.path
 from pygame import mixer
 
 pygame.init()
@@ -50,20 +49,10 @@ def show_name_from_file(restaurant_name):
         screen.blit(bg_img, (0, 0))
 
         result_text = str(lines[0])
-        result_text1 = str(lines[0])
-        count = list(result_text)
-        if len(count) > int(18):
-            result_text = font.render(f"Welcome back to ", True, white)
-            result_text_rect = result_text.get_rect(center=(700, 280))
-            screen.blit(result_text, result_text_rect)
 
-            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
-            result_text_rect1 = result_text1.get_rect(center=(700, 380))
-            screen.blit(result_text1, result_text_rect1)          
-        else:
-            result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
-            result_text_rect = result_text.get_rect(center=(700, 750//2))
-            screen.blit(result_text, result_text_rect)
+        result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
+        result_text_rect = result_text.get_rect(center=(700, 150))
+        screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
         clock.tick(60)
@@ -78,26 +67,15 @@ def show_restaurant_name(restaurant_name):
         bg_img = pygame.image.load("bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
-        count = list(restaurant_name)
-
-        if len(count) > int(25):
-            result_text = font.render(f"Welcome to", True, white)
-            result_text_rect = result_text.get_rect(center=(700, 280))
-            screen.blit(result_text, result_text_rect)
-
-            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
-            result_text_rect1 = result_text1.get_rect(center=(700, 380))
-            screen.blit(result_text1, result_text_rect1)
-        else:
-            result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
-            result_text_rect = result_text.get_rect(center=(700, 750//2))
-            screen.blit(result_text, result_text_rect)
+        result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
+        result_text_rect = result_text.get_rect(center=(700, 150))
+        screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
         clock.tick(60)
 
 def get_restaurant_name():
-    text = font.render("What's name of the restaurant?: ", True, white)
+    text = font.render("What's the name of the restaurant?: ", True, white)
     textRect = text.get_rect()
     textRect.center = (700, 150)
     user_text = ''
@@ -156,9 +134,18 @@ def get_restaurant_name():
 
         pygame.display.flip()
         clock.tick(60)
+        
+def show_logo():
+    bg_img = pygame.image.load("logo.png").convert()
+    screen.blit(bg_img, (0, 0))
+
+    pygame.display.flip()
+    pygame.time.wait(2000)
 
 path = './name.txt'
 check_file = os.path.isfile(path)
+
+show_logo()
 
 if check_file == True:
     f = open("name.txt", "r") 
@@ -166,48 +153,46 @@ if check_file == True:
     show_name_from_file(lines[0].strip())
 else:
     f = open("name.txt","x")
+    pass
     get_restaurant_name()
+    
 
 #load button images
 menu_img = pygame.image.load("picture/menu.png").convert_alpha()
 
-
 #food image
-#Level 1(Malaysia)-Nasi Lemak(telur/ayam)-Roti Canai-Ice Syrup
-nasilemaktelur_TA = pygame.image.load('Mini IT Project/project picture/nl_telur.png')
-nasilemaktelur_TA = pygame.transform.scale(nasilemaktelur_TA, (100,100))
+#Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
+nasilemak = pygame.image.load('picture/nasilemak.png')
+nasilemak = pygame.transform.scale(nasilemak, (100,100))
 
-nasilemakayam_TA = pygame.image.load('Mini IT Project/project picture/nl_ayam.png')
-nasilemakayam_TA = pygame.transform.scale(nasilemakayam_TA, (100,100))
+roticanai = pygame.image.load('picture/roticanai.png')
+roticanai = pygame.transform.scale(roticanai, (100,100))
 
-roticanai_TA = pygame.image.load('Mini IT Project/project picture/rc_bungkus.png')
-roticanai_TA = pygame.transform.scale(roticanai_TA, (100,100))
-
-icesyrup_TA = pygame.image.load('Mini IT Project/project picture/syrup ice bungkus.png')
-icesyrup_TA = pygame.transform.scale(icesyrup_TA, (100,100))
+satay = pygame.image.load('picture/satay.png')
+satay = pygame.transform.scale(satay, (100,100))
 
 #Level 2(Korea)-Corndog(Cheese/Origin)-Kimchi-Tokbokki
-corndogcheese_TA = pygame.image.load('')
-corndogcheese_TA = pygame.transform.scale(corndogcheese_TA, (100,100))
+corndogcheese = pygame.image.load('picture/corndogcheese.png')
+corndogcheese = pygame.transform.scale(corndogcheese, (100,100))
 
-corndogorigin_TA = pygame.image.load('')
-corndogorigin_TA = pygame.transform.scale(corndogorigin_TA, (100,100))
+corndog = pygame.image.load('picture/corndog.png')
+corndog = pygame.transform.scale(corndog, (100,100))
 
-kimchi_TA = pygame.image.load('')
-kimchi_TA = pygame.transform.scale(kimchi_TA, (100,100))
+kimchi = pygame.image.load('picture/kimchi.png')
+kimchi = pygame.transform.scale(kimchi, (100,100))
 
-tokbokki_TA = pygame.image.load('')
-tokbokki_TA = pygame.transform.scale(tokbokki_TA, (100,100))
+tokbokki = pygame.image.load('picture/tokbokki.png')
+tokbokki = pygame.transform.scale(tokbokki, (100,100))
 
 #Level 3(China)-Dumpling-Mooncake-DimSum
-dumpling_TA = pygame.image.load('')
-dumpling_TA = pygame.transform.scale(dumpling_TA, (100,100))
+dumpling = pygame.image.load('picture/dumpling.png')
+dumpling = pygame.transform.scale(dumpling, (100,100))
 
-mooncake_TA = pygame.image.load('')
-mooncake_TA = pygame.transform.scale(mooncake_TA, (100,100))
+mooncake = pygame.image.load('picture/mooncake.png')
+mooncake = pygame.transform.scale(mooncake, (100,100))
 
-dimsum_TA = pygame.image.load('')
-dimsum_TA = pygame.transform.scale(dimsum_TA, (100,100))
+dimsum = pygame.image.load('picture/dimsum.png')
+dimsum = pygame.transform.scale(dimsum, (100,100))
 
 #nasilemaktelur_x = screen_width // 2-50   (position, last edit,exp)
 #nasilemaktelur_y = screen_height // 2-50  (position, last edit,exp)
