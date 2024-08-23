@@ -157,8 +157,17 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
+def show_logo():
+    bg_img = pygame.image.load("logo.png").convert()
+    screen.blit(bg_img, (0, 0))
+
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
 path = './name.txt'
 check_file = os.path.isfile(path)
+
+show_logo()
 
 if check_file == True:
     f = open("name.txt", "r") 
@@ -166,6 +175,7 @@ if check_file == True:
     show_name_from_file(lines[0].strip())
 else:
     f = open("name.txt","x")
+    pass
     get_restaurant_name()
 
 #load button images
