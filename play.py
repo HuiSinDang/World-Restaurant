@@ -1,6 +1,7 @@
 #start
 import pygame
 import sys
+import os.path
 from pygame import mixer
 
 pygame.init()
@@ -175,7 +176,6 @@ if check_file == True:
     show_name_from_file(lines[0].strip())
 else:
     f = open("name.txt","x")
-    pass
     get_restaurant_name()
     
 
