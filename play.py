@@ -162,7 +162,8 @@ def show_logo():
     screen.blit(bg_img, (0, 0))
 
     pygame.display.flip()
-    pygame.time.wait(2000)
+    pygame.time.wait(3000)
+
 
 path = './name.txt'
 check_file = os.path.isfile(path)
