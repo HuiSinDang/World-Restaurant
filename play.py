@@ -63,171 +63,86 @@ dimsum_TA = pygame.transform.scale(dimsum_TA, (100,100))
 
 #option box(put food's image init)
 
-##### irene_upgrade ######
-money = int(input("Enter your money: "))
-
-machine_criteria = { 
-    "B": "Criteria - Cooking process speed up to 40s",
-    "C": "Criteria - Cooking process speed up to 30s "}
-
-def confirm_upgrade(machine_options):
-    print("Criteria of the available upgrade options:")
-    for machine in machine_options:
-        print(f"Machine {machine}: {machine_criteria[machine]}")
-
-    confirm = input("If sure, please type YES/NO: ").upper()
-    if confirm == "YES":
-        if len(machine_options) == 1:
-            print(f"You have successfully upgraded your machine. Your current machine is {machine_options[0]}.")
-        else:
-            chosen_machine = input(f"Please type your choice ({'/'.join(machine_options)}): ").upper()
-            if chosen_machine in machine_options:
-                print(f"You have successfully upgraded your machine. Your current machine is {chosen_machine}.")
-            else:
-                print("Invalid answer!!!")
-    elif confirm == "NO":
-        print("Thank you! ^_^")
-    else:
-        print("Invalid answer!!!")
-
-if 500 <= money <= 800:
-    print("You can only upgrade to machine B. Do you want to upgrade your current machine to machine B?")
-    confirm_upgrade(["B"])
-elif 800 <= money <= 1500:
-    print("You can choose to upgrade to machine B or C. Do you want to upgrade your current machine?")
-    confirm_upgrade(["B", "C"])
-elif 1500 <= money <= 2000:
-    print("You can choose to upgrade to machine B, C, or D. Do you want to upgrade your current machine?")
-    confirm_upgrade(["B", "C", "D"])
-elif money > 2200:
-    print("You can choose to upgrade to machine B, C, D, or E. Do you want to upgrade your current machine?")
-    confirm_upgrade(["B", "C", "D", "E"])
-else:
-    print("Oops, you are unable to upgrade any machine since your money is not enough!")
-##### end #####
-
-#draw text display
+# Draw text display
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
     text_rect = text_obj.get_rect()
     text_rect.center = (x, y)
     surface.blit(text_obj, text_rect)
 
-class MachineButton():
+class Button():
     def __init__(self, x, y, image_path, scale):
         self.image = pygame.image.load(image_path)
         width = self.image.get_width()
         height = self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(width*scale), int(height*scale)))
-        self.rect = self.image.get_rect(topleft = (x, y)) #set button position
+        self.rect = self.image.get_rect(topleft = (x, y)) 
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect) #draw button on screen
+        screen.blit(self.image, self.rect) 
     
     def is_clicked(self, pos):
-        return self.rect.collidepoint(pos) #check if the mouse position is inside the button's rect
-
-class YesButton():
-    def __init__(self, x, y, image_path, scale):
-        self.image = pygame.image.load(image_path)
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(width*scale), int(height*scale)))
-        self.rect = self.image.get_rect(topleft = (x, y)) #set button position
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) #draw button on screen
-    
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos) #check if the mouse position is inside the button's rect
-
-class NoButton():
-    def __init__(self, x, y, image_path, scale):
-        self.image = pygame.image.load(image_path)
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(width*scale), int(height*scale)))
-        self.rect = self.image.get_rect(topleft = (x, y)) #set button position
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) #draw button on screen
-    
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos) #check if the mouse position is inside the button's rect
-
-class UpgradeButton():
-    def __init__(self, x, y, image_path, scale):
-        self.image = pygame.image.load(image_path)
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(width*scale), int(height*scale)))
-        self.rect = self.image.get_rect(topleft = (x, y)) #set button position
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) #draw button on screen
-    
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos) #check if the mouse position is inside the button's rect
-
-# Set up the main window
-screen = pygame.display.set_mode((1400, 750))
-pygame.display.set_caption("Pop-up Example")
+        return self.rect.collidepoint(pos) 
 
 #font
 font = pygame.font.SysFont("freesansbold.ttf", 26)
 
-#rectangle to display money
+# Rectangle to display money
 input_rect = pygame.Rect(740,125, 200, 33)
 color = pygame.Color("slategray")
 
 # Load the background image
-background = pygame.image.load("picture/background with logo.png")
+background = pygame.image.load("mainBG.jpg")
 background = pygame.transform.scale(background, (1400, 750))
 
-#load machine button images
-machineA_img = pygame.image.load("picture/machineA.png").convert_alpha()
-lock_machineB_img = pygame.image.load("picture/lockMachineB.png").convert_alpha()
-lock_machineC_img = pygame.image.load("picture/lockMachineC.png").convert_alpha()
+# Load machine button images
+machineA_img = pygame.image.load("machineA.png").convert_alpha()
+lock_machineB_img = pygame.image.load("lockMachineB.png").convert_alpha()
+lock_machineC_img = pygame.image.load("lockMachineC.png").convert_alpha()
+close_img = pygame.image.load("close_windowBtn.png").convert_alpha()
 
-# Button setup
-upgrade_btn = UpgradeButton(30, 460, "picture/upgrade-button.png",0.25)
-default_machineA_button = MachineButton(600, 190, "picture/machineA.png", 0.6)
-lock_machineB_button = MachineButton(780, 190, "picture/lockMachineB.png", 0.18)
-lock_machineC_button = MachineButton(950,190, "picture/lockMachineC.png", 0.18)
-yes_button =  YesButton(550,460, "picture/yesButton.png", 0.4)
-no_button =  NoButton(680,463, "picture/noButton.png", 0.38)
+# All button setup in upgrading machine
+upgrade_btn = Button(30, 460, "upgrade-button.png",0.8)
+default_machineA_button = Button(600, 190, "machineA.png", 0.6)
+lock_machineB_button = Button(780, 190, "lockMachineB.png", 0.18)
+lock_machineC_button = Button(950,190, "lockMachineC.png", 0.18)
+yes_button = Button (490, 443, "yesButton.png", 0.4)
+no_button = Button (610, 445, "noButton.png", 0.38)
+B_button = Button (490, 520, "alphabetB.png", 0.3)
+C_button = Button (570, 520, "alphabetC.png", 0.3)
+close_button = Button(1173, 70, "close_windowBtn.png", 0.1)
 
-#machine criteria
+# Machine criteria
 machine_criteria = { 
     "B": "Criteria - Cooking process speed up to 40s",
-    "C": "Criteria - Cooking process speed up to 30s ",
+    "C": "Criteria - Cooking process speed up to 30s",
 }
 
-# Pop-up 1st window size (big)
-popup_width = 800
-popup_height = 600
-popup_rect = pygame.Rect(400, 90, popup_width, popup_height)
+# Define the cost for each machine upgrade
+upgrade_costs = {
+    "B": 1500,  
+    "C": 4000   
+}
 
-# Pop-up 2nd window size (medium)
-popup2_width = 750
-popup2_height = 300
-popup2_rect = pygame.Rect(423, 380, popup2_width, popup2_height)
+# Pop-up window sizes
+popup_rect = pygame.Rect(400, 90, 800, 600)
+popup2_rect = pygame.Rect(423, 380, 750, 280)
+popup3_rect = pygame.Rect(438, 490, 720, 150)
 
-# Pop-up 3nd window size (small)
-popup3_width = 720
-popup3_height = 160
-popup3_rect = pygame.Rect(438, 500, popup3_width, popup3_height)
-
-# Main loop
+# Main loop in upgrading machine
 show_popup = False
 show_popup2 = False
-show_popup3 = False
-money = 3000
+selected_upgrade = None
+available_upgrades = []
+selecting_machine = False
+not_enough_money = False  # Flag to indicate not enough money
+message_timer = 0  # Timer to show messages temporarily
+money = 2500
 
 def check_money(money):
-    if 600 <= money <= 1500:
+    if 600 <= money <= 1000:
         return ["B"]
-    elif money > 1500:
+    elif money > 1000:
         return ["B", "C"]
     else:
         return []
@@ -239,122 +154,101 @@ while True:
             sys.exit()
         
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if upgrade_btn.is_clicked(event.pos): #check if the button is clicked
+            if close_button.is_clicked(event.pos):
+                show_popup = False
+                show_popup2 = False
+            if upgrade_btn.is_clicked(event.pos): 
                 show_popup = not show_popup
-            elif lock_machineB_button.is_clicked(event.pos):
-                show_popup2 = not show_popup2
-            elif lock_machineC_button.is_clicked(event.pos):
-                show_popup2 = not show_popup2
+            elif lock_machineB_button.is_clicked(event.pos) or lock_machineC_button.is_clicked(event.pos):
+                show_popup2 = True
             elif yes_button.is_clicked(event.pos):
-                show_popup3 = not show_popup3
+                available_upgrades = check_money(money)
+                if len(available_upgrades) == 1:
+                    selected_upgrade = available_upgrades[0]
+                    message_timer = 120
+                    show_popup = False  # Close the pop-ups after selecting an upgrade
+                    show_popup2 = False
+                else:
+                    selecting_machine = True  # Set the flag to True to prompt the user to select a machine
+                    show_popup2 = True
             elif no_button.is_clicked(event.pos):
-                show_popup3 = not show_popup3
+                show_popup2 = False  # Close the second pop-up if 'No' is clicked
 
+            # Check for machine selection if the selecting_machine flag is True
+            if selecting_machine:
+                if B_button.is_clicked(event.pos):
+                    if money >= upgrade_costs["B"]:
+                        selected_upgrade = "B"
+                        message_timer = 120
+                        money -= upgrade_costs["B"]
+                        selecting_machine = False # Stop prompting the user once a selection is made
+                        show_popup = True
+                        show_popup2 = True
+                    else:
+                        not_enough_money = True
+                        message_timer = 120  # Display the message for 2 seconds (assuming 60 FPS)
+
+                elif C_button.is_clicked(event.pos):
+                    if money >= upgrade_costs["C"]:
+                        selected_upgrade = "C"
+                        message_timer = 120
+                        money -= upgrade_costs["C"]
+                        selecting_machine = False # Stop prompting the user once a selection is made
+                        show_popup = False
+                        show_popup2 = True
+                    else:
+                        not_enough_money = True
+                        message_timer = 120  # Display the message for 2 seconds (assuming 60 FPS)
 
     # Draw background
     screen.blit(background, (0, 0))
 
-    # Draw button
     upgrade_btn.draw(screen)
 
-    # Draw popup if button clicked
     if show_popup:
-        pygame.draw.rect(screen, (255, 204, 229), popup_rect)
-        pygame.draw.rect(screen, (148, 5, 100), popup_rect, 3)  # Popup border
-        pygame.draw.rect(screen, color, input_rect)
+        pygame.draw.rect(screen, (255, 201, 254), popup_rect)
+        pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
 
         draw_text("Money: ", font, "black", screen, 700, 140)
         draw_text("Machine Types: ", font, "black", screen, 510, 250)
         draw_text("Default", font, "black", screen, 660, 315)
         draw_text("Machine B", font, "black", screen, 840, 315)
         draw_text("Machine C", font, "black", screen, 1010, 315)
-        draw_text("Machine Features - B: Features - Cooking process speed up to 40s", font, "red", screen, 714, 340)
-        draw_text("- C: Features - Cooking process speed up to 30s", font, "red", screen, 788, 360)
+        draw_text("Machine Features - B: Cooking process speed up to 40s", font, "black", screen, 714, 340)
+        draw_text("- C: Cooking process speed up to 30s", font, "black", screen, 788, 360)
 
         default_machineA_button.draw(screen)
         lock_machineB_button.draw(screen)
         lock_machineC_button.draw(screen)
-
-        if show_popup2:
-            available_upgrades = check_money(money)
-            pygame.draw.rect(screen, (222, 201, 235), popup2_rect)
-
-            if "B" in available_upgrades:
-                draw_text("Instructions: ", font, "black", screen, 500, 400)
-                draw_text("- You are eligible to upgrade your machine to machine B. ", font, "black", screen, 670, 425)
-                draw_text("- Do you wanna upgrade your machine now?", font, "black", screen, 617, 450)
-                yes_button.draw(screen)
-                no_button.draw(screen)
-            if yes_button.is_clicked:
-                pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
-                draw_text("You have successfully upgraded your machine!", font, "black", screen, 800, 580)
-            elif no_button.draw.is_clicked:
-                pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
-                draw_text("Thank you!", font, "black", screen, 800, 580)
-
-            else:
-                draw_text("You are eligible to upgrade your machine to machine B or C.", font, "black", screen, 500, 500)
-                draw_text("Do you wanna upgrade your machine now?", font, "black", screen, 500, 550)
-                yes_button.draw(screen)
-                no_button.draw(screen)
-                if yes_button.draw(screen):
-                    pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
-                    draw_text("Machine B or C?", font, "black", screen, 800, 580)
-                    b_button.draw(screen)
-                    c_button.draw(screen)
-                    if  b_button.draw(screen):
-                        draw_text("You have successfully upgraded your machine to machine B!", font, "black", screen, 800, 580)
-                    elif c_button.draw(screen):
-                        draw_text("You have successfully upgraded your machine to machine C!", font, "black", screen, 800, 580)
-                elif no_button.draw(screen):
-                    pygame.draw.rect(screen,(201, 148, 220), popup3_rect)
-                    draw_text("Thank you!", font, "black", screen, 800, 580) 
-            
-#button class
-class Button():
-    def __init__(self, x, y, image, scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame.transform.scale(image, (int(width*scale), int(height*scale)))
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
+        close_button.draw(screen)
     
-    def draw(self):
-        action = False
-        #get mouse position
-        pos = pygame.mouse.get_pos()
+    if show_popup2:
+        pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
+        draw_text("INSTRUCTIONS: ", font, "black", screen, 520, 405)
+        draw_text("1. Do you want to upgrade your machine?", font, "black", screen, 614, 430)
+        yes_button.draw(screen)
+        no_button.draw(screen)
 
-        #check mouseseover and clicked conditions
-        if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                action = True
-        
-        if pygame.mouse.get_pressed()[0] ==0:
-            self.clicked = False
+        # If the user needs to select a machine, show the selection prompt and buttons
+        if selecting_machine:
+            draw_text("2. Select your machine:", font, "black", screen, 543, 507)
+            B_button.draw(screen)
+            C_button.draw(screen)
 
-    #draw button on the screen
-        screen.blit(self.image, (self.rect.x, self.rect.y))
-        
-        return action
-
-#create button instances
-menu_button = Button(100, 200, menu_img, 0.8)
-
-run = True
-while run:
-
-    screen.fill((202, 228, 241))
-
-    if menu_button.draw():
-        print('MENU')
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+    if selected_upgrade:
+        draw_text(f"Machine upgraded to {selected_upgrade}!", font, "black", screen, 800, 480)
+        message_timer -= 1  # Decrease the timer
+        if message_timer == 0:
+            selected_upgrade = False
     
+    # Display "Not enough money" message
+    if not_enough_money:
+        draw_text("You do not have enough money!", font, "red", screen, 800, 550)
+        message_timer -= 1  # Decrease the timer
+        if message_timer == 0:
+            not_enough_money = False  # Hide the message after the timer ends
+            selecting_machine = False
+        
     pygame.display.update()
 
 pygame.quit()
