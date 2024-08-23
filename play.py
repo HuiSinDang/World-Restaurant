@@ -249,11 +249,16 @@ font = pygame.font.SysFont("freesansbold.ttf", 26)
 
 # Rectangle to display money
 input_rect = pygame.Rect(740,125, 200, 33)
-color = pygame.Color("slategray")
 
 # Load the background image
 background = pygame.image.load("mainBG.jpg")
 background = pygame.transform.scale(background, (1400, 750))
+
+# Load the small image
+coin1_img =  pygame.image.load("coin.png")
+coin1_img = pygame.transform.scale(coin1_img, (25, 25))
+coin2_img =  pygame.image.load("coin.png")
+coin2_img = pygame.transform.scale(coin2_img, (25, 25))
 
 # Load machine button images
 machineA_img = pygame.image.load("machineA.png").convert_alpha()
@@ -266,10 +271,10 @@ upgrade_btn = Button(30, 460, "upgrade-button.png",0.8)
 default_machineA_button = Button(600, 190, "machineA.png", 0.6)
 lock_machineB_button = Button(780, 190, "lockMachineB.png", 0.18)
 lock_machineC_button = Button(950,190, "lockMachineC.png", 0.18)
-yes_button = Button (490, 443, "yesButton.png", 0.4)
-no_button = Button (610, 445, "noButton.png", 0.38)
-B_button = Button (490, 520, "alphabetB.png", 0.3)
-C_button = Button (570, 520, "alphabetC.png", 0.3)
+yes_button = Button (490, 480, "yesButton.png", 0.4)
+no_button = Button (610, 482, "noButton.png", 0.38)
+B_button = Button (490, 550, "alphabetB.png", 0.32)
+C_button = Button (570, 550, "alphabetC.png", 0.32)
 close_button = Button(1173, 70, "close_windowBtn.png", 0.1)
 
 # Machine criteria
@@ -287,7 +292,6 @@ upgrade_costs = {
 # Pop-up window sizes
 popup_rect = pygame.Rect(400, 90, 800, 600)
 popup2_rect = pygame.Rect(423, 380, 750, 280)
-popup3_rect = pygame.Rect(438, 490, 720, 150)
 
 # Main loop in upgrading machine
 show_popup = False
@@ -295,14 +299,14 @@ show_popup2 = False
 selected_upgrade = None
 available_upgrades = []
 selecting_machine = False
-not_enough_money = False  # Flag to indicate not enough money
-message_timer = 0  # Timer to show messages temporarily
+not_enough_money = False  
+message_timer = 0  
 money = 2500
 
 def check_money(money):
-    if 600 <= money <= 1000:
+    if 1500 <= money <= 3999
         return ["B"]
-    elif money > 1000:
+    elif money > 4000:
         return ["B", "C"]
     else:
         return []
@@ -325,40 +329,40 @@ while True:
                 available_upgrades = check_money(money)
                 if len(available_upgrades) == 1:
                     selected_upgrade = available_upgrades[0]
-                    message_timer = 120
-                    show_popup = False  # Close the pop-ups after selecting an upgrade
+                    message_timer = 180
+                    show_popup = False 
                     show_popup2 = False
                 else:
-                    selecting_machine = True  # Set the flag to True to prompt the user to select a machine
+                    selecting_machine = True  
                     show_popup2 = True
             elif no_button.is_clicked(event.pos):
-                show_popup2 = False  # Close the second pop-up if 'No' is clicked
+                show_popup2 = False  
 
             # Check for machine selection if the selecting_machine flag is True
             if selecting_machine:
                 if B_button.is_clicked(event.pos):
                     if money >= upgrade_costs["B"]:
                         selected_upgrade = "B"
-                        message_timer = 120
+                        message_timer = 180
                         money -= upgrade_costs["B"]
-                        selecting_machine = False # Stop prompting the user once a selection is made
+                        selecting_machine = False 
                         show_popup = True
                         show_popup2 = True
                     else:
                         not_enough_money = True
-                        message_timer = 120  # Display the message for 2 seconds (assuming 60 FPS)
+                        message_timer = 180  
 
                 elif C_button.is_clicked(event.pos):
                     if money >= upgrade_costs["C"]:
                         selected_upgrade = "C"
-                        message_timer = 120
+                        message_timer = 180
                         money -= upgrade_costs["C"]
-                        selecting_machine = False # Stop prompting the user once a selection is made
-                        show_popup = False
+                        selecting_machine = False 
+                        show_popup = True
                         show_popup2 = True
                     else:
                         not_enough_money = True
-                        message_timer = 120  # Display the message for 2 seconds (assuming 60 FPS)
+                        message_timer = 180
 
     # Draw background
     screen.blit(background, (0, 0))
@@ -368,14 +372,20 @@ while True:
     if show_popup:
         pygame.draw.rect(screen, (255, 201, 254), popup_rect)
         pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
+        screen.blit(coin1_img,(800, 302))
+        screen.blit(coin1_img,(973, 303))
+        pygame.draw.rect(screen, (162, 164, 164), input_rect)
 
         draw_text("Money: ", font, "black", screen, 700, 140)
+        draw_text(money, font, "navyblue", screen, 836, 142)
         draw_text("Machine Types: ", font, "black", screen, 510, 250)
+        draw_text("1800", font, "black", screen, 847, 315)
+        draw_text("4000", font, "black", screen, 1020, 315)
         draw_text("Default", font, "black", screen, 660, 315)
-        draw_text("Machine B", font, "black", screen, 840, 315)
-        draw_text("Machine C", font, "black", screen, 1010, 315)
-        draw_text("Machine Features - B: Cooking process speed up to 40s", font, "black", screen, 714, 340)
-        draw_text("- C: Cooking process speed up to 30s", font, "black", screen, 788, 360)
+        draw_text("Machine B", font, "black", screen, 840, 337)
+        draw_text("Machine C", font, "black", screen, 1013, 336)
+        draw_text("Machine Features - B: Cooking process speed up to 40s", font, "black", screen, 714, 359)
+        draw_text("- C: Cooking process speed up to 30s", font, "black", screen, 788, 380)
 
         default_machineA_button.draw(screen)
         lock_machineB_button.draw(screen)
@@ -384,26 +394,26 @@ while True:
     
     if show_popup2:
         pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
-        draw_text("INSTRUCTIONS: ", font, "black", screen, 520, 405)
-        draw_text("1. Do you want to upgrade your machine?", font, "black", screen, 614, 430)
+        draw_text("INSTRUCTIONS: ", font, "black", screen, 520, 440)
+        draw_text("1. Do you want to upgrade your machine?", font, "black", screen, 614, 467)
         yes_button.draw(screen)
         no_button.draw(screen)
 
         # If the user needs to select a machine, show the selection prompt and buttons
         if selecting_machine:
-            draw_text("2. Select your machine:", font, "black", screen, 543, 507)
+            draw_text("2. Select your machine:", font, "black", screen, 543, 538)
             B_button.draw(screen)
             C_button.draw(screen)
 
     if selected_upgrade:
-        draw_text(f"Machine upgraded to {selected_upgrade}!", font, "black", screen, 800, 480)
+        draw_text(f"Machine upgraded to {selected_upgrade}!", font, "navyblue", screen, 800, 630)
         message_timer -= 1  # Decrease the timer
         if message_timer == 0:
             selected_upgrade = False
     
     # Display "Not enough money" message
     if not_enough_money:
-        draw_text("You do not have enough money!", font, "red", screen, 800, 550)
+        draw_text("You do not have enough money!", font, "red", screen, 800, 630)
         message_timer -= 1  # Decrease the timer
         if message_timer == 0:
             not_enough_money = False  # Hide the message after the timer ends
