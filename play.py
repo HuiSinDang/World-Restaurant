@@ -2,6 +2,7 @@
 import pygame
 import sys
 import os.path
+import datetime
 from pygame import mixer
 
 pygame.init()
@@ -59,11 +60,15 @@ def show_name_from_file(restaurant_name):
 
             result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
             result_text_rect1 = result_text1.get_rect(center=(700, 380))
-            screen.blit(result_text1, result_text_rect1)          
+            screen.blit(result_text1, result_text_rect1)       
+
+            f.close()   
         else:
             result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
             result_text_rect = result_text.get_rect(center=(700, 750//2))
             screen.blit(result_text, result_text_rect)
+
+            f.close()
 
         pygame.display.flip()
         clock.tick(60)
@@ -88,6 +93,7 @@ def show_restaurant_name(restaurant_name):
             result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
             result_text_rect1 = result_text1.get_rect(center=(700, 380))
             screen.blit(result_text1, result_text_rect1)
+
         else:
             result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
             result_text_rect = result_text.get_rect(center=(700, 750//2))
@@ -127,15 +133,29 @@ def get_restaurant_name():
                     elif event.key == pygame.K_RETURN:
                         list1=[]
                         list1.append(user_text)
+                        count = list(user_text)
                         if list1[0] == '':
                             draw_text("Don't leave it blank, please try again", font, "red", screen, 700, 350)
                             pygame.display.flip()
                             pygame.time.wait(2000)
                             get_restaurant_name()
+                        elif len(count) > int(24):
+                            draw_text("Sorry, your name is too long,it is ", font, "red", screen, 700, 350)
+                            draw_text("limited to 24 words, pls try again", font, "red", screen, 700, 450)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            get_restaurant_name()
                         else:
+                            f = open("name.txt","x")
+                            fdate = open("date.txt", "x")
+
                             f = open("name.txt", "a")
                             f.write(f'{user_text}')
                             f.close()
+
+                            fdate = open("date.txt","a")
+                            fdate.write(f'{other_StyleTime}')
+                            fdate.close()
                             show_restaurant_name(user_text)
                     else:
                         if event.unicode.isalnum():
@@ -167,6 +187,8 @@ def show_logo():
 
 path = './name.txt'
 check_file = os.path.isfile(path)
+now = datetime.datetime.now()
+other_StyleTime = now.strftime("%Y-%m-%d")
 
 show_logo()
 
@@ -175,7 +197,6 @@ if check_file == True:
     lines = f.readlines()
     show_name_from_file(lines[0].strip())
 else:
-    f = open("name.txt","x")
     get_restaurant_name()
     
 
