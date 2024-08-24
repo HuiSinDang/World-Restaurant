@@ -111,7 +111,6 @@ B_button = Button (490, 550, "alphabetB.png", 0.32)
 C_button = Button (570, 550, "alphabetC.png", 0.32)
 close_button = Button(1173, 70, "close_windowBtn.png", 0.1)
 menu_button = Button (27, 90, "menu.png", 0.18)
-![menu_button](World-Restaurant/picture/menu.png)
 
 # Machine criteria
 machine_criteria = { 
