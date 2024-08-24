@@ -271,6 +271,11 @@ font = pygame.font.SysFont("freesansbold.ttf", 26)
 # Rectangle to display money
 input_rect = pygame.Rect(740,125, 200, 33)
 
+# Rectangle to display machine types (prepare file)
+inputMA_rect = pygame.Rect(350,310, 200, 33)
+inputMB_rect = pygame.Rect(640,310, 200, 33)
+inputMC_rect = pygame.Rect(930,310, 200, 33)
+
 # Load the background image
 background = pygame.image.load("mainBG.jpg")
 background = pygame.transform.scale(background, (1400, 750))
@@ -280,6 +285,12 @@ coin1_img =  pygame.image.load("coin.png")
 coin1_img = pygame.transform.scale(coin1_img, (25, 25))
 coin2_img =  pygame.image.load("coin.png")
 coin2_img = pygame.transform.scale(coin2_img, (25, 25))
+oriMachineA = pygame.image.load("ori-machineA.png")
+oriMachineA = pygame.transform.scale(oriMachineA, (248, 238))
+oriMachineB = pygame.image.load("ori-machineB.png")
+oriMachineB = pygame.transform.scale(oriMachineB, (200, 187))
+oriMachineC = pygame.image.load("ori-machineC.png")
+oriMachineC = pygame.transform.scale(oriMachineC, (200, 187))
 
 # All button setup in upgrading machine
 upgrade_btn = Button(30, 460, "upgrade-button.png",0.8)
@@ -291,7 +302,9 @@ no_button = Button (610, 482, "noButton.png", 0.38)
 B_button = Button (490, 550, "alphabetB.png", 0.32)
 C_button = Button (570, 550, "alphabetC.png", 0.32)
 close_button = Button(1173, 70, "close_windowBtn.png", 0.1)
-menu_button = Button (27, 90, "menu.png", 0.18)
+menuA_button = Button(300, 115, "menu.png", 0.13)
+menuB_button = Button(619, 113, "menu.png", 0.13)
+menuC_button = Button(917, 110, "menu.png", 0.13)
 
 # Machine criteria
 machine_criteria = { 
@@ -380,12 +393,27 @@ while True:
                 else:
                     not_enough_money = True
                     message_timer = 180  
-
+            elif menuA_button.is_clicked(event.pos) or menuB_button.is_clicked(event.pos) or menuC_button.is_clicked(event.pos):
+                show_popup = True
     # Draw background
     screen.blit(background, (0, 0))
+    screen.blit(oriMachineA,(330,100))
+    screen.blit(oriMachineB,(640,120))
+    screen.blit(oriMachineC,(930,120))
+
+    pygame.draw.rect(screen, (7,0,63), inputMA_rect)
+    draw_text("Default- Machine A", font, "white", screen, 450, 330)
+    
+    pygame.draw.rect(screen, (7,0,63), inputMB_rect)
+    draw_text("Machine B", font, "white", screen, 740, 330)
+
+    pygame.draw.rect(screen, (7,0,63), inputMC_rect)
+    draw_text("Machine C", font, "white", screen, 1030, 330)
 
     upgrade_btn.draw(screen)
-    menu_button.draw(screen)
+    menuA_button.draw(screen)
+    menuB_button.draw(screen)
+    menuC_button.draw(screen)
 
     if show_popup:
         pygame.draw.rect(screen, (255, 201, 254), popup_rect)
