@@ -324,7 +324,7 @@ message_timer = 0
 money = 2500
 
 def check_money(money):
-    if 1800 <= money < 4000
+    if 1800 <= money < 4000:
         return ["B"]
     elif money >= 4000:
         return ["B", "C"]
