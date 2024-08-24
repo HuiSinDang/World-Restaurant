@@ -10,21 +10,30 @@ pygame.init()
 mixer.music.load('music.mp3')
 mixer.music.play(-1)
 mixer.music.set_volume(0.5)
+click_sfx = pygame.mixer.Sound("click.wav")
 
 screen_height=750
 screen_width=1400
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('World Restaurant')
+screen.set_alpha(None)
+
+screen_rect = screen.get_rect()
+screen_rect.x = 200
+screen_rect.y = 150
+surface = pygame.Surface((900,500),pygame.SRCALPHA)
+pygame.draw.rect(surface,(231, 175, 195  ,200),surface.get_rect(),0)
 
 white = (255,255,255)
 black = (0,0,0)
 grey = (200,200,200)
 red = (255, 0, 0)
 
-#first page
+#login
 font = pygame.font.Font('freesansbold.ttf', 50)
 base_font = pygame.font.Font(None, 55)
+main_font = pygame.font.SysFont("cambria", 45)
 
 input_rect = pygame.Rect(550, 350, 250, 50)
 color_active = pygame.Color('antiquewhite4')
@@ -39,6 +48,202 @@ def draw_text(text, font, color, surface, x, y):
     text_rect = text_obj.get_rect()
     text_rect.center = (x, y)
     surface.blit(text_obj, text_rect)
+
+class Button():
+    def __init__(self, image, x_pos, y_pos, text_input):
+        self.image = image
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_input = text_input
+        self.text = main_font.render(self.text_input, True, "white")
+        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+
+    def update(self):
+        screen.blit(self.image, self.rect)
+        screen.blit(self.text, self.text_rect)
+
+    def checkForInput(self, position):
+        if self.rect.collidepoint(position):
+            click_sfx.play()
+            return True
+        return False
+
+# Initialize the button
+button_surface = pygame.image.load("close_windowBtn.png")
+button_surface = pygame.transform.scale(button_surface, (75, 75))
+button = Button(button_surface, 1100, 150, "")
+
+resetbutton_surface = pygame.image.load("reset_btn.png")
+resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 250))
+resetbutton = Button(resetbutton_surface, 600, 575, "Reset Name")
+
+backbutton_surface = pygame.image.load("back_btn.png")
+backbutton_surfacebutton_surface = pygame.transform.scale(backbutton_surface, (150, 150))
+backbutton = Button(backbutton_surface, 75, 75, "")
+
+profilebutton_surface = pygame.image.load("profile_btn.png")
+profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
+profilebutton = Button(profilebutton_surface, 75, 75, "")
+
+def draw_text(text, font, color, surface, x, y):
+    text_obj = font.render(str(text), True, color)
+    text_rect = text_obj.get_rect()
+    text_rect.center = (x, y)
+    surface.blit(text_obj, text_rect)
+
+def rename():
+    text = font.render("What's name of your restaurant?: ", True, white)
+    textRect = text.get_rect()
+    textRect.center = (700, 150)
+    user_text = ''
+    active = False
+
+    while True:
+        bg_img = pygame.image.load("bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        screen.blit(text, textRect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if backbutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    elif event.key == pygame.K_RETURN:
+                        list1=[]
+                        list1.append(user_text)
+                        count = list(user_text)
+                        if list1[0] == '':
+                            draw_text("Don't leave it blank, please try again", font, "red", screen, 700, 350)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            rename()
+                        elif len(count) > int(24):
+                            draw_text("Sorry, your name is too long,it is ", font, "red", screen, 700, 350)
+                            draw_text("limited to 24 words, pls try again", font, "red", screen, 700, 450)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            rename()
+                        else:
+                            f = open("name.txt","w")
+                            f.write(f'{user_text}')
+                            f.close()
+                            profile()
+                    else:
+                        if event.unicode.isalnum():
+                            user_text += event.unicode
+
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+
+        pygame.draw.rect(screen, color_fill, input_rect)
+        pygame.draw.rect(screen, color, input_rect, 2)
+
+        text_surface = base_font.render(user_text, True, black)
+        screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+        input_rect.w = max(250, text_surface.get_width() + 10)
+
+        backbutton.update()
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def profile():
+    while True:
+        bg_img = pygame.image.load("lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+        screen.blit(surface,screen_rect)
+
+        draw_text("Profile", font, "black", screen, 650, 200)
+
+        f = open("name.txt","r")
+        lines = f.readlines()
+        name = lines[0].strip()
+        count = list(name)
+
+        fdate = open("date.txt","r")
+        firstdate = fdate.readlines()
+        date = firstdate[0].strip()
+
+        path = './totalearned.txt'
+        check_file = os.path.isfile(path)
+
+        if len(count) > int(14):
+            draw_text(f"Name: {name} ", font, "black", screen, 650, 300)
+            draw_text(f"Restaurant", font, "black", screen, 650, 350)
+            draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
+            if check_file :
+                y= open("totalearned.txt", 'r')
+                totalmoney = [int(i) for i in y.read().split("\n")]
+                y.close()
+                total = sum(totalmoney)
+                draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
+            else:
+                draw_text(f"Total earned money: $ 0", font, "black",screen,650, 500)
+        else:
+            draw_text(f"Name: {name} Restaurant", font, "black", screen, 650, 300)
+            draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
+            if check_file :
+                y= open("totalearned.txt", 'r')
+                totalmoney = [int(i) for i in y.read().split("\n")]
+                y.close()
+                total = sum(totalmoney)
+                draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
+            else:
+                draw_text(f"Total earned money: $ 0", font, "black",screen,650, 500)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button.checkForInput(pygame.mouse.get_pos()):
+                    main()
+                if resetbutton.checkForInput(pygame.mouse.get_pos()):
+                    rename()
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+
+        button.update()
+        resetbutton.update()
+        profilebutton.update()
+
+        pygame.display.flip()
+    
+def main():
+
+    while True:
+        bg_img = pygame.image.load("lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+
+        profilebutton.update()
+
+        pygame.display.flip()
+
 
 def show_name_from_file(restaurant_name):
     while True:
@@ -71,6 +276,8 @@ def show_name_from_file(restaurant_name):
             f.close()
 
         pygame.display.flip()
+        pygame.time.wait(2000)
+        main()        
         clock.tick(60)
 
 def show_restaurant_name(restaurant_name):
@@ -100,10 +307,12 @@ def show_restaurant_name(restaurant_name):
             screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
+        pygame.time.wait(2000)
+        main()
         clock.tick(60)
 
 def get_restaurant_name():
-    text = font.render("What's name of the restaurant?: ", True, white)
+    text = font.render("What's name of your restaurant?: ", True, white)
     textRect = text.get_rect()
     textRect.center = (700, 150)
     user_text = ''
