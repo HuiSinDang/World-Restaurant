@@ -139,9 +139,9 @@ def get_restaurant_name():
                             pygame.display.flip()
                             pygame.time.wait(2000)
                             get_restaurant_name()
-                        elif len(count) > int(25):
+                        elif len(count) > int(24):
                             draw_text("Sorry, your name is too long,it is ", font, "red", screen, 700, 350)
-                            draw_text("limited to 25 words, pls try again", font, "red", screen, 700, 450)
+                            draw_text("limited to 24 words, pls try again", font, "red", screen, 700, 450)
                             pygame.display.flip()
                             pygame.time.wait(2000)
                             get_restaurant_name()
