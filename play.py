@@ -531,14 +531,15 @@ upgrade_costs = {
 popup_rect = pygame.Rect(400, 90, 800, 600)
 popup2_rect = pygame.Rect(423, 380, 750, 280)
 
-# Main loop in upgrading machine
+# Main loop
 show_popup = False
 show_popup2 = False
 selected_upgrade = None
 selecting_machine = False
-not_enough_money = False  
-message_timer = 0  
-money = 2500
+not_enough_money = False  # indicate not enough money
+message_timer = 0  # Timer to show messages temporarily
+money = 4000
+unlocked_machine = set() # Set to track unlocked machines
 
 def check_money(money):
     if 1800 <= money < 4000:
@@ -556,10 +557,19 @@ while True:
             if close_button.is_clicked(event.pos):
                 show_popup = False
                 show_popup2 = False
+
             elif upgrade_btn.is_clicked(event.pos): 
                 show_popup = True
+
             elif lock_machineB_button.is_clicked(event.pos) or lock_machineC_button.is_clicked(event.pos):
                 show_popup2 = True
+            
+            if yes_button.is_clicked(event.pos):
+                selecting_machine = True
+                show_popup2 = True
+                
+            elif no_button.is_clicked(event.pos):
+                show_popup2 = False   
             elif yes_button.is_clicked(event.pos):
                 if upgrade_costs["B"] <= money < upgrade_costs["C"]:
                     selected_upgrade = "B" 
@@ -579,31 +589,31 @@ while True:
             elif no_button.is_clicked(event.pos):
                 show_popup2 = False  
 
-            elif B_button.is_clicked(event.pos):
-                if money >= upgrade_costs["B"]:
-                    selected_upgrade = "B"
-                    message_timer = 180
-                    money -= upgrade_costs["B"]
-                    selected_upgrade = False 
-                    show_popup = True
-                    show_popup2 = True
-                else:
-                    not_enough_money = True
-                    message_timer = 120  
+            elif selecting_machine:
+                if B_button.is_clicked(event.pos):
+                    if "B" in unlocked_machine:
+                        selected_upgrade = "B"
+                        message_timer = 180
+                    elif money >= upgrade_costs["B"]:
+                        money -= upgrade_costs["B"]
+                        unlocked_machine.add("B")
+                        selected_upgrade = "B"
+                        message_timer = 180
+                    else:
+                        not_enough_money = True
+                        message_timer = 180
 
-            elif C_button.is_clicked(event.pos):
-                if money >= upgrade_costs["C"]:
-                    selected_upgrade = "C"
-                    message_timer = 180
-                    money -= upgrade_costs["C"]
-                    selecting_machine = False 
-                    show_popup = True
-                    show_popup2 = True
-                else:
-                    not_enough_money = True
-                    message_timer = 180  
-            elif menuA_button.is_clicked(event.pos) or menuB_button.is_clicked(event.pos) or menuC_button.is_clicked(event.pos):
-                show_popup = True
+                elif C_button.is_clicked(event.pos):
+                    if money < upgrade_costs["C"]:
+                        not_enough_money = True
+                        message_timer = 180
+                    else:
+                        if "C" not in unlocked_machine:
+                            money -= upgrade_costs["C"]
+                            unlocked_machine.add("C")
+                            selected_upgrade = "C"
+                            message_timer = 180
+                            
     # Draw background
     screen.blit(background, (0, 0))
     screen.blit(oriMachineA,(330,100))
