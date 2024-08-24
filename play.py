@@ -100,12 +100,6 @@ coin1_img = pygame.transform.scale(coin1_img, (25, 25))
 coin2_img =  pygame.image.load("coin.png")
 coin2_img = pygame.transform.scale(coin2_img, (25, 25))
 
-# Load machine button images
-machineA_img = pygame.image.load("machineA.png").convert_alpha()
-lock_machineB_img = pygame.image.load("lockMachineB.png").convert_alpha()
-lock_machineC_img = pygame.image.load("lockMachineC.png").convert_alpha()
-close_img = pygame.image.load("close_windowBtn.png").convert_alpha()
-
 # All button setup in upgrading machine
 upgrade_btn = Button(30, 460, "upgrade-button.png",0.8)
 default_machineA_button = Button(600, 190, "machineA.png", 0.6)
@@ -116,6 +110,7 @@ no_button = Button (610, 482, "noButton.png", 0.38)
 B_button = Button (490, 550, "alphabetB.png", 0.32)
 C_button = Button (570, 550, "alphabetC.png", 0.32)
 close_button = Button(1173, 70, "close_windowBtn.png", 0.1)
+menu_button = Button (27, 90, "menu.png", 0.18)
 
 # Machine criteria
 machine_criteria = { 
@@ -209,6 +204,7 @@ while True:
     screen.blit(background, (0, 0))
 
     upgrade_btn.draw(screen)
+    menu_button.draw(screen)
 
     if show_popup:
         pygame.draw.rect(screen, (255, 201, 254), popup_rect)
