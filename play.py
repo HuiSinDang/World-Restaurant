@@ -88,7 +88,7 @@ profilebutton = Button(profilebutton_surface, 75, 75, "")
 
 upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
-upgrade_btn = Button(button_surface, 30, 460, "")
+upgrade_btn= Button(upgrade_btn, 75, 400, "")
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
