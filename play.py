@@ -86,6 +86,10 @@ profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
+upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
+upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
+upgrade_btn = Button(button_surface, 30, 460, "")
+
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
     text_rect = text_obj.get_rect()
@@ -223,6 +227,7 @@ def profile():
         button.update()
         resetbutton.update()
         profilebutton.update()
+        upgrade_btn.update()
 
         pygame.display.flip()
     
