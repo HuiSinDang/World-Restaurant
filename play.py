@@ -10,7 +10,7 @@ pygame.init()
 mixer.music.load('./picture/music.mp3')
 mixer.music.play(-1)
 mixer.music.set_volume(1)
-click_sfx = pygame.mixer.Sound("./picture/musicclick.wav")
+click_sfx = pygame.mixer.Sound("./picture/click.wav")
 
 screen_height=750
 screen_width=1400
@@ -70,19 +70,19 @@ class Button():
         return False
 
 # Initialize the button
-button_surface = pygame.image.load("./picture/musicclose_windowBtn.png")
+button_surface = pygame.image.load("./picture/close_windowBtn.png")
 button_surface = pygame.transform.scale(button_surface, (75, 75))
 button = Button(button_surface, 1100, 150, "")
 
-resetbutton_surface = pygame.image.load("./picture/musicreset_btn.png")
+resetbutton_surface = pygame.image.load("./picture/reset_btn.png")
 resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 250))
 resetbutton = Button(resetbutton_surface, 600, 575, "Reset Name")
 
-backbutton_surface = pygame.image.load("./picture/musicback_btn.png")
+backbutton_surface = pygame.image.load("./picture/back_btn.png")
 backbutton_surfacebutton_surface = pygame.transform.scale(backbutton_surface, (150, 150))
 backbutton = Button(backbutton_surface, 75, 75, "")
 
-profilebutton_surface = pygame.image.load("./picture/musicprofile_btn.png")
+profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
@@ -100,7 +100,7 @@ def rename():
     active = False
 
     while True:
-        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         screen.blit(text, textRect)
@@ -166,7 +166,7 @@ def rename():
 
 def profile():
     while True:
-        bg_img = pygame.image.load("./picture/musiclobby.jpg").convert()
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
         screen.blit(surface,screen_rect)
 
@@ -229,7 +229,7 @@ def profile():
 def main():
 
     while True:
-        bg_img = pygame.image.load("./picture/musiclobby.jpg").convert()
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
 
         for event in pygame.event.get():
@@ -252,7 +252,7 @@ def show_name_from_file(restaurant_name):
                 pygame.quit()
                 sys.exit()
 
-        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         result_text = str(lines[0])
@@ -287,7 +287,7 @@ def show_restaurant_name(restaurant_name):
                 pygame.quit()
                 sys.exit()
 
-        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         count = list(restaurant_name)
@@ -319,7 +319,7 @@ def get_restaurant_name():
     active = False
 
     while True:
-        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         screen.blit(text, textRect)
@@ -387,7 +387,7 @@ def get_restaurant_name():
         clock.tick(60)
 
 def show_logo():
-    bg_img = pygame.image.load("./picture/musiclogo.png").convert()
+    bg_img = pygame.image.load("./picture/logo.png").convert()
     screen.blit(bg_img, (0, 0))
 
     pygame.display.flip()
@@ -571,7 +571,7 @@ input_rect = pygame.Rect(740,125, 200, 33)
 color = pygame.Color("slategray")
 
 # Load the background image
-background = pygame.image.load("picture/background with ./picture/musiclogo.png")
+background = pygame.image.load("picture/background with ./picture/logo.png")
 background = pygame.transform.scale(background, (1400, 750))
 
 #load machine button images
