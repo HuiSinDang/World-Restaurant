@@ -91,16 +91,16 @@ upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
 upgrade_btn= Button(upgrade_btn, 75, 400, "")
 
 default_machineA_button = pygame.image.load("./picture/ori-machineA.png")
-default_machineA_button = pygame.transform.scale(default_machineA_button, (250, 250))
-default_machineA_button = Button(default_machineA_button, 600, 575, "")
+default_machineA_button = pygame.transform.scale(default_machineA_button, (220, 220))
+default_machineA_button = Button(default_machineA_button, 400, 590, "")
 
 lock_machineB_button = pygame.image.load("./picture/ori-MachineB.png")
-lock_machineB_button = pygame.transform.scale(lock_machineB_button, (250, 250))
-lock_machineB_button = Button(lock_machineB_button, 780, 190, "")
+lock_machineB_button = pygame.transform.scale(lock_machineB_button, (220, 220))
+lock_machineB_button = Button(lock_machineB_button, 560, 590, "")
 
 lock_machineC_button = pygame.image.load("./picture/ori-MachineC.png")
-lock_machineC_button = pygame.transform.scale(lock_machineC_button, (250, 250))
-lock_machineC_button = Button(lock_machineC_button, 780, 190, "")
+lock_machineC_button = pygame.transform.scale(lock_machineC_button, (220, 220))
+lock_machineC_button = Button(lock_machineC_button, 660, 590, "")
 
 yes_button = pygame.image.load("./picture/yesButton.png")
 yes_button = pygame.transform.scale(yes_button, (250, 250))
@@ -558,20 +558,6 @@ oriMachineB = pygame.image.load("./picture/ori-machineB.png")
 oriMachineB = pygame.transform.scale(oriMachineB, (200, 187))
 oriMachineC = pygame.image.load("./picture/ori-machineC.png")
 oriMachineC = pygame.transform.scale(oriMachineC, (200, 187))
-
-# All button setup in upgrading machine:
-# upgrade_btn = Button(30, 460, "./picture/upgrade-button.png",0.8)
-# default_machineA_button = Button(600, 190, "./picture/machineA.png", 0.6)
-# lock_machineB_button = Button(780, 190, "./picture/lockMachineB.png", 0.18)
-# lock_machineC_button = Button(950,190, "./picture/lockMachineC.png", 0.18)
-# yes_button = Button (490, 480, "./picture/yesButton.png", 0.4)
-# no_button = Button (610, 482, "./picture/noButton.png", 0.38)
-# B_button = Button (490, 550, "./picture/alphabetB.png", 0.32)
-# C_button = Button (570, 550, "./picture/alphabetC.png", 0.32)
-# close_button = Button(1173, 70, "./picture/close_windowBtn.png", 0.1)
-# menuA_button = Button(300, 115, "./picture/menu.png", 0.13)
-# menuB_button = Button(619, 113, "./picture/menu.png", 0.13)
-# menuC_button = Button(917, 110, "./picture/menu.png", 0.13)
 
 # Machine criteria
 machine_criteria = { 
