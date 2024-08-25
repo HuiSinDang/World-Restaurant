@@ -90,15 +90,15 @@ upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
 upgrade_btn= Button(upgrade_btn, 75, 400, "")
 
-default_machineA_button = pygame.image.load("./picture/machineA.png")
+default_machineA_button = pygame.image.load("./picture/ori-machineA.png")
 default_machineA_button = pygame.transform.scale(default_machineA_button, (250, 250))
 default_machineA_button = Button(default_machineA_button, 600, 575, "")
 
-lock_machineB_button = pygame.image.load("./picture/MachineB.png")
+lock_machineB_button = pygame.image.load("./picture/ori-MachineB.png")
 lock_machineB_button = pygame.transform.scale(lock_machineB_button, (250, 250))
 lock_machineB_button = Button(lock_machineB_button, 780, 190, "")
 
-lock_machineC_button = pygame.image.load("./picture/MachineC.png")
+lock_machineC_button = pygame.image.load("./picture/ori-MachineC.png")
 lock_machineC_button = pygame.transform.scale(lock_machineC_button, (250, 250))
 lock_machineC_button = Button(lock_machineC_button, 780, 190, "")
 
