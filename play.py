@@ -1,60 +1,450 @@
 #start
-
 import pygame
 import sys
+import os.path
+import datetime
+from pygame import mixer
 
 pygame.init()
+
+mixer.music.load('./picture/music.mp3')
+mixer.music.play(-1)
+mixer.music.set_volume(1)
+click_sfx = pygame.mixer.Sound("./picture/click.wav")
 
 screen_height=750
 screen_width=1400
 
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Menu Button')
+pygame.display.set_caption('World Restaurant')
+screen.set_alpha(None)
+
+screen_rect = screen.get_rect()
+screen_rect.x = 200
+screen_rect.y = 150
+surface = pygame.Surface((900,500),pygame.SRCALPHA)
+pygame.draw.rect(surface,(231, 175, 195  ,200),surface.get_rect(),0)
 
 white = (255,255,255)
 black = (0,0,0)
 grey = (200,200,200)
+red = (255, 0, 0)
+
+#login
+font = pygame.font.Font('freesansbold.ttf', 50)
+base_font = pygame.font.Font(None, 55)
+main_font = pygame.font.SysFont("cambria", 45)
+
+input_rect = pygame.Rect(550, 350, 250, 50)
+color_active = pygame.Color('antiquewhite4')
+color_passive = pygame.Color('gray5')
+color_fill = pygame.Color('white')
+color = color_passive
+
+clock = pygame.time.Clock()
+
+def draw_text(text, font, color, surface, x, y):
+    text_obj = font.render(str(text), True, color)
+    text_rect = text_obj.get_rect()
+    text_rect.center = (x, y)
+    surface.blit(text_obj, text_rect)
+
+class Button():
+    def __init__(self, image, x_pos, y_pos, text_input):
+        self.image = image
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_input = text_input
+        self.text = main_font.render(self.text_input, True, "white")
+        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+
+    def update(self):
+        screen.blit(self.image, self.rect)
+        screen.blit(self.text, self.text_rect)
+
+    def checkForInput(self, position):
+        if self.rect.collidepoint(position):
+            click_sfx.play()
+            return True
+        return False
+
+# Initialize the button
+button_surface = pygame.image.load("./picture/close_windowBtn.png")
+button_surface = pygame.transform.scale(button_surface, (75, 75))
+button = Button(button_surface, 1100, 150, "")
+
+resetbutton_surface = pygame.image.load("./picture/reset_btn.png")
+resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 250))
+resetbutton = Button(resetbutton_surface, 600, 575, "Reset Name")
+
+backbutton_surface = pygame.image.load("./picture/back_btn.png")
+backbutton_surfacebutton_surface = pygame.transform.scale(backbutton_surface, (150, 150))
+backbutton = Button(backbutton_surface, 75, 75, "")
+
+profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
+profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
+profilebutton = Button(profilebutton_surface, 75, 75, "")
+
+def draw_text(text, font, color, surface, x, y):
+    text_obj = font.render(str(text), True, color)
+    text_rect = text_obj.get_rect()
+    text_rect.center = (x, y)
+    surface.blit(text_obj, text_rect)
+
+def rename():
+    text = font.render("What's name of your restaurant?: ", True, white)
+    textRect = text.get_rect()
+    textRect.center = (700, 150)
+    user_text = ''
+    active = False
+
+    while True:
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        screen.blit(text, textRect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if backbutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    elif event.key == pygame.K_RETURN:
+                        list1=[]
+                        list1.append(user_text)
+                        count = list(user_text)
+                        if list1[0] == '':
+                            draw_text("Don't leave it blank, please try again", font, "red", screen, 700, 350)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            rename()
+                        elif len(count) > int(24):
+                            draw_text("Sorry, your name is too long,it is ", font, "red", screen, 700, 350)
+                            draw_text("limited to 24 words, pls try again", font, "red", screen, 700, 450)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            rename()
+                        else:
+                            f = open("name.txt","w")
+                            f.write(f'{user_text}')
+                            f.close()
+                            profile()
+                    else:
+                        if event.unicode.isalnum():
+                            user_text += event.unicode
+
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+
+        pygame.draw.rect(screen, color_fill, input_rect)
+        pygame.draw.rect(screen, color, input_rect, 2)
+
+        text_surface = base_font.render(user_text, True, black)
+        screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+        input_rect.w = max(250, text_surface.get_width() + 10)
+
+        backbutton.update()
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def profile():
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+        screen.blit(surface,screen_rect)
+
+        draw_text("Profile", font, "black", screen, 650, 200)
+
+        f = open("name.txt","r")
+        lines = f.readlines()
+        name = lines[0].strip()
+        count = list(name)
+
+        fdate = open("date.txt","r")
+        firstdate = fdate.readlines()
+        date = firstdate[0].strip()
+
+        path = './totalearned.txt'
+        check_file = os.path.isfile(path)
+
+        if len(count) > int(14):
+            draw_text(f"Name: {name} ", font, "black", screen, 650, 300)
+            draw_text(f"Restaurant", font, "black", screen, 650, 350)
+            draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
+            if check_file :
+                y= open("totalearned.txt", 'r')
+                totalmoney = [int(i) for i in y.read().split("\n")]
+                y.close()
+                total = sum(totalmoney)
+                draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
+            else:
+                draw_text(f"Total earned money: $ 0", font, "black",screen,650, 500)
+        else:
+            draw_text(f"Name: {name} Restaurant", font, "black", screen, 650, 300)
+            draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
+            if check_file :
+                y= open("totalearned.txt", 'r')
+                totalmoney = [int(i) for i in y.read().split("\n")]
+                y.close()
+                total = sum(totalmoney)
+                draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
+            else:
+                draw_text(f"Total earned money: $ 0", font, "black",screen,650, 500)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button.checkForInput(pygame.mouse.get_pos()):
+                    main()
+                if resetbutton.checkForInput(pygame.mouse.get_pos()):
+                    rename()
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+
+        button.update()
+        resetbutton.update()
+        profilebutton.update()
+
+        pygame.display.flip()
+    
+def main():
+
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+
+        profilebutton.update()
+
+        pygame.display.flip()
+
+
+def show_name_from_file(restaurant_name):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        result_text = str(lines[0])
+        result_text1 = str(lines[0])
+        count = list(result_text)
+        if len(count) > int(18):
+            result_text = font.render(f"Welcome back to ", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 280))
+            screen.blit(result_text, result_text_rect)
+
+            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
+            result_text_rect1 = result_text1.get_rect(center=(700, 380))
+            screen.blit(result_text1, result_text_rect1)       
+
+            f.close()   
+        else:
+            result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 750//2))
+            screen.blit(result_text, result_text_rect)
+
+            f.close()
+
+        pygame.display.flip()
+        pygame.time.wait(2000)
+        main()        
+        clock.tick(60)
+
+def show_restaurant_name(restaurant_name):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        count = list(restaurant_name)
+
+        if len(count) > int(25):
+            result_text = font.render(f"Welcome to", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 280))
+            screen.blit(result_text, result_text_rect)
+
+            result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
+            result_text_rect1 = result_text1.get_rect(center=(700, 380))
+            screen.blit(result_text1, result_text_rect1)
+
+        else:
+            result_text = font.render(f"Welcome to {restaurant_name} Restaurant!", True, white)
+            result_text_rect = result_text.get_rect(center=(700, 750//2))
+            screen.blit(result_text, result_text_rect)
+
+        pygame.display.flip()
+        pygame.time.wait(2000)
+        main()
+        clock.tick(60)
+
+def get_restaurant_name():
+    text = font.render("What's name of your restaurant?: ", True, white)
+    textRect = text.get_rect()
+    textRect.center = (700, 150)
+    user_text = ''
+    active = False
+
+    while True:
+        bg_img = pygame.image.load("./picture/bcg.png").convert()
+        screen.blit(bg_img, (0, 0))
+
+        screen.blit(text, textRect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    elif event.key == pygame.K_RETURN:
+                        list1=[]
+                        list1.append(user_text)
+                        count = list(user_text)
+                        if list1[0] == '':
+                            draw_text("Don't leave it blank, please try again", font, "red", screen, 700, 350)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            get_restaurant_name()
+                        elif len(count) > int(24):
+                            draw_text("Sorry, your name is too long,it is ", font, "red", screen, 700, 350)
+                            draw_text("limited to 24 words, pls try again", font, "red", screen, 700, 450)
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            get_restaurant_name()
+                        else:
+                            f = open("name.txt","x")
+                            fdate = open("date.txt", "x")
+
+                            f = open("name.txt", "a")
+                            f.write(f'{user_text}')
+                            f.close()
+
+                            fdate = open("date.txt","a")
+                            fdate.write(f'{other_StyleTime}')
+                            fdate.close()
+                            show_restaurant_name(user_text)
+                    else:
+                        if event.unicode.isalnum():
+                            user_text += event.unicode
+
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+
+        pygame.draw.rect(screen, color_fill, input_rect)
+        pygame.draw.rect(screen, color, input_rect, 2)
+
+        text_surface = base_font.render(user_text, True, (0, 0, 0))
+        screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+        input_rect.w = max(250, text_surface.get_width() + 10)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+def show_logo():
+    bg_img = pygame.image.load("./picture/logo.png").convert()
+    screen.blit(bg_img, (0, 0))
+
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+
+path = './name.txt'
+check_file = os.path.isfile(path)
+now = datetime.datetime.now()
+other_StyleTime = now.strftime("%Y-%m-%d")
+
+show_logo()
+
+if check_file == True:
+    f = open("name.txt", "r") 
+    lines = f.readlines()
+    show_name_from_file(lines[0].strip())
+else:
+    get_restaurant_name()
+    
 
 #load button images
-menu_img = pygame.image.load('menu.png').convert_alpha()
-
+menu_img = pygame.image.load("./picture/menu.png").convert_alpha()
 
 #food image
-#Level 1(Malaysia)-Nasi Lemak(telur/ayam)-Roti Canai-Ice Syrup
-nasilemaktelur_TA = pygame.image.load('Mini IT Project/project picture/nl_telur.png')
-nasilemaktelur_TA = pygame.transform.scale(nasilemaktelur_TA, (100,100))
+#Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
+nasilemak = pygame.image.load('./picture/nasilemak.png')
+nasilemak = pygame.transform.scale(nasilemak, (100,100))
 
-nasilemakayam_TA = pygame.image.load('Mini IT Project/project picture/nl_ayam.png')
-nasilemakayam_TA = pygame.transform.scale(nasilemakayam_TA, (100,100))
+roticanai = pygame.image.load('./picture/roticanai.png')
+roticanai = pygame.transform.scale(roticanai, (100,100))
 
-roticanai_TA = pygame.image.load('Mini IT Project/project picture/rc_bungkus.png')
-roticanai_TA = pygame.transform.scale(roticanai_TA, (100,100))
-
-icesyrup_TA = pygame.image.load('Mini IT Project/project picture/syrup ice bungkus.png')
-icesyrup_TA = pygame.transform.scale(icesyrup_TA, (100,100))
+satay = pygame.image.load('./picture/satay.png')
+satay = pygame.transform.scale(satay, (100,100))
 
 #Level 2(Korea)-Corndog(Cheese/Origin)-Kimchi-Tokbokki
-corndogcheese_TA = pygame.image.load('')
-corndogcheese_TA = pygame.transform.scale(corndogcheese_TA, (100,100))
+corndogcheese = pygame.image.load('./picture/corndogcheese.png')
+corndogcheese = pygame.transform.scale(corndogcheese, (100,100))
 
-corndogorigin_TA = pygame.image.load('')
-corndogorigin_TA = pygame.transform.scale(corndogorigin_TA, (100,100))
+corndog = pygame.image.load('./picture/corndog.png')
+corndog = pygame.transform.scale(corndog, (100,100))
 
-kimchi_TA = pygame.image.load('')
-kimchi_TA = pygame.transform.scale(kimchi_TA, (100,100))
+kimchi = pygame.image.load('./picture/kimchi.png')
+kimchi = pygame.transform.scale(kimchi, (100,100))
 
-tokbokki_TA = pygame.image.load('')
-tokbokki_TA = pygame.transform.scale(tokbokki_TA, (100,100))
+tokbokki = pygame.image.load('./picture/tokbokki.png')
+tokbokki = pygame.transform.scale(tokbokki, (100,100))
 
 #Level 3(China)-Dumpling-Mooncake-DimSum
-dumpling_TA = pygame.image.load('')
-dumpling_TA = pygame.transform.scale(dumpling_TA, (100,100))
+dumpling = pygame.image.load('./picture/dumpling.png')
+dumpling = pygame.transform.scale(dumpling, (100,100))
 
-mooncake_TA = pygame.image.load('')
-mooncake_TA = pygame.transform.scale(mooncake_TA, (100,100))
+mooncake = pygame.image.load('./picture/mooncake.png')
+mooncake = pygame.transform.scale(mooncake, (100,100))
 
-dimsum_TA = pygame.image.load('')
-dimsum_TA = pygame.transform.scale(dimsum_TA, (100,100))
+dimsum = pygame.image.load('./picture/dimsum.png')
+dimsum = pygame.transform.scale(dimsum, (100,100))
 
 #nasilemaktelur_x = screen_width // 2-50   (position, last edit,exp)
 #nasilemaktelur_y = screen_height // 2-50  (position, last edit,exp)
@@ -97,6 +487,24 @@ inputMC_rect = pygame.Rect(930,310, 200, 33)
 
 # Load the background image
 background = pygame.image.load("./picture/mainBG.jpg")
+background = pygame.image.load("picture/background with ./picture/logo.png")
+background = pygame.transform.scale(background, (1400, 750))
+
+#load machine button images
+machineA_img = pygame.image.load("./picture/machineA.png").convert_alpha()
+lock_machineB_img = pygame.image.load("./picture/lockMachineB.png").convert_alpha()
+lock_machineC_img = pygame.image.load("./picture/lockMachineC.png").convert_alpha()
+
+# Button setup
+upgrade_btn = UpgradeButton(30, 460, "./picture/upgrade-button.png",0.25)
+default_machineA_button = MachineButton(600, 190, "./picture/machineA.png", 0.6)
+lock_machineB_button = MachineButton(780, 190, "./picture/lockMachineB.png", 0.18)
+lock_machineC_button = MachineButton(950,190, "./picture/lockMachineC.png", 0.18)
+yes_button =  YesButton(550,460, "./picture/yesButton.png", 0.4)
+no_button =  NoButton(680,463, "./picture/noButton.png", 0.38)
+
+#machine criteria
+background = pygame.image.load("mainBG.jpg")
 background = pygame.transform.scale(background, (1400, 750))
 
 # Load the small image
