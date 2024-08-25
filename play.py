@@ -90,6 +90,42 @@ upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
 upgrade_btn= Button(upgrade_btn, 75, 400, "")
 
+default_machineA_button = pygame.image.load("./picture/machineA.png")
+default_machineA_button = pygame.transform.scale(default_machineA_button, (250, 250))
+default_machineA_button = Button(default_machineA_button, 600, 575, "")
+
+lock_machineB_button = pygame.image.load("./picture/lockMachineB.png")
+lock_machineB_button = pygame.transform.scale(lock_machineB_button, (250, 250))
+lock_machineB_button = Button(lock_machineB_button, 780, 190, "")
+
+lock_machineC_button = pygame.image.load("./picture/lockMachineC.png")
+lock_machineC_button = pygame.transform.scale(lock_machineC_button, (250, 250))
+lock_machineC_button = Button(lock_machineC_button, 780, 190, "")
+
+yes_button = pygame.image.load("./picture/yesButton.png")
+yes_button = pygame.transform.scale(yes_button, (250, 250))
+yes_button = Button(yes_button, 550,460, "")
+
+no_button = pygame.image.load("./picture/noButton.png")
+no_button = pygame.transform.scale(no_button, (250, 250))
+no_button = Button(no_button, 680,463, "")
+
+close_button = pygame.image.load("./picture/close_windowBtn.png")
+close_button = pygame.transform.scale(close_button, (75, 75))
+close_button = Button(close_button, 1173, 70, "")
+
+menuA_button = pygame.image.load("./picture/menu.png")
+menuA_button = pygame.transform.scale(menuA_button, (80, 80))
+menuA_button = Button(menuA_button, 1173, 70, "")
+
+menuB_button = pygame.image.load("./picture/menu.png")
+menuB_button = pygame.transform.scale(menuB_button, (80, 80))
+menuB_button = Button(menuB_button, 1173, 70, "")
+
+menuC_button = pygame.image.load("./picture/menu.png")
+menuC_button = pygame.transform.scale(menuC_button, (80, 80))
+menuC_button = Button(menuC_button, 1173, 70, "")
+
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
     text_rect = text_obj.get_rect()
@@ -247,6 +283,12 @@ def main():
 
         profilebutton.update()
         upgrade_btn.update()
+        default_machineA_button.update()
+        lock_machineB_button.update()
+        lock_machineC_button.update()
+        menuA_button.update()
+        menuB_button.update()
+        menuC_button.update()
 
         pygame.display.flip()
 
@@ -501,14 +543,6 @@ machineA_img = pygame.image.load("./picture/machineA.png").convert_alpha()
 lock_machineB_img = pygame.image.load("./picture/lockMachineB.png").convert_alpha()
 lock_machineC_img = pygame.image.load("./picture/lockMachineC.png").convert_alpha()
 
-# Button setup
-upgrade_btn = UpgradeButton(30, 460, "./picture/upgrade-button.png",0.25)
-default_machineA_button = MachineButton(600, 190, "./picture/machineA.png", 0.6)
-lock_machineB_button = MachineButton(780, 190, "./picture/lockMachineB.png", 0.18)
-lock_machineC_button = MachineButton(950,190, "./picture/lockMachineC.png", 0.18)
-yes_button =  YesButton(550,460, "./picture/yesButton.png", 0.4)
-no_button =  NoButton(680,463, "./picture/noButton.png", 0.38)
-
 #machine criteria
 background = pygame.image.load("mainBG.jpg")
 background = pygame.transform.scale(background, (1400, 750))
@@ -525,19 +559,19 @@ oriMachineB = pygame.transform.scale(oriMachineB, (200, 187))
 oriMachineC = pygame.image.load("./picture/ori-machineC.png")
 oriMachineC = pygame.transform.scale(oriMachineC, (200, 187))
 
-# All button setup in upgrading machine
-upgrade_btn = Button(30, 460, "./picture/upgrade-button.png",0.8)
-default_machineA_button = Button(600, 190, "./picture/machineA.png", 0.6)
-lock_machineB_button = Button(780, 190, "./picture/lockMachineB.png", 0.18)
-lock_machineC_button = Button(950,190, "./picture/lockMachineC.png", 0.18)
-yes_button = Button (490, 480, "./picture/yesButton.png", 0.4)
-no_button = Button (610, 482, "./picture/noButton.png", 0.38)
-B_button = Button (490, 550, "./picture/alphabetB.png", 0.32)
-C_button = Button (570, 550, "./picture/alphabetC.png", 0.32)
-close_button = Button(1173, 70, "./picture/close_windowBtn.png", 0.1)
-menuA_button = Button(300, 115, "./picture/menu.png", 0.13)
-menuB_button = Button(619, 113, "./picture/menu.png", 0.13)
-menuC_button = Button(917, 110, "./picture/menu.png", 0.13)
+# All button setup in upgrading machine:
+# upgrade_btn = Button(30, 460, "./picture/upgrade-button.png",0.8)
+# default_machineA_button = Button(600, 190, "./picture/machineA.png", 0.6)
+# lock_machineB_button = Button(780, 190, "./picture/lockMachineB.png", 0.18)
+# lock_machineC_button = Button(950,190, "./picture/lockMachineC.png", 0.18)
+# yes_button = Button (490, 480, "./picture/yesButton.png", 0.4)
+# no_button = Button (610, 482, "./picture/noButton.png", 0.38)
+# B_button = Button (490, 550, "./picture/alphabetB.png", 0.32)
+# C_button = Button (570, 550, "./picture/alphabetC.png", 0.32)
+# close_button = Button(1173, 70, "./picture/close_windowBtn.png", 0.1)
+# menuA_button = Button(300, 115, "./picture/menu.png", 0.13)
+# menuB_button = Button(619, 113, "./picture/menu.png", 0.13)
+# menuC_button = Button(917, 110, "./picture/menu.png", 0.13)
 
 # Machine criteria
 machine_criteria = { 
