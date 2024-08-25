@@ -246,6 +246,7 @@ def main():
                     profile()
 
         profilebutton.update()
+        upgrade_btn.update()
 
         pygame.display.flip()
 
