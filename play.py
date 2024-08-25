@@ -144,6 +144,8 @@ popup2_rect = pygame.Rect(423, 380, 750, 280)
 # Main loop
 show_popup = False
 show_popup2 = False
+show_popup3 = False
+show_popup4 = False
 selected_upgrade = None
 selecting_machine = False
 not_enough_money = False  # indicate not enough money
@@ -167,6 +169,8 @@ while True:
             if close_button.is_clicked(event.pos):
                 show_popup = False
                 show_popup2 = False
+                show_popup3 = False
+                show_popup4 = False
 
             elif upgrade_btn.is_clicked(event.pos): 
                 show_popup = True
@@ -223,7 +227,10 @@ while True:
                             unlocked_machine.add("C")
                             selected_upgrade = "C"
                             message_timer = 180
-                            
+                
+                elif menuA_button.is_clicked(event.pos):
+                    show_popup3 = True
+
     # Draw background
     screen.blit(background, (0, 0))
     screen.blit(oriMachineA,(330,100))
@@ -273,11 +280,16 @@ while True:
         draw_text("1. Do you want to upgrade your machine?", font, "black", screen, 614, 467)
         yes_button.draw(screen)
         no_button.draw(screen)
-
-    if selecting_machine:
-        draw_text("2. Select your machine:", font, "black", screen, 543, 538)
-        B_button.draw(screen)
-        C_button.draw(screen)
+        if selecting_machine:
+            draw_text("2. Select your machine:", font, "black", screen, 543, 538)
+            B_button.draw(screen)
+            C_button.draw(screen)
+    
+    if show_popup3:
+        pygame.draw.rect(screen, (255, 201, 254), popup3_rect)
+        pygame.draw.rect(screen, (148, 5, 100), popup3_rect, 5)  # Popup border
+        draw_text("Foods:", font, "black", screen, 465, 150)
+        close_button.draw(screen)
 
     if selected_upgrade:
         draw_text(f"Machine upgraded to {selected_upgrade}!", font, "navyblue", screen, 800, 630)
