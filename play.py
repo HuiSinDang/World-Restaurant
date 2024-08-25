@@ -316,10 +316,10 @@ def main():
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
                 elif close_button.is_clicked(event.pos):
-                show_popup = False
-                show_popup2 = False
-                show_popup3 = False
-                show_popup4 = False
+                    show_popup = False
+                    show_popup2 = False
+                    show_popup3 = False
+                    show_popup4 = False
 
                 elif upgrade_btn.is_clicked(event.pos): 
                     show_popup = True
