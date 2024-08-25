@@ -7,10 +7,10 @@ from pygame import mixer
 
 pygame.init()
 
-mixer.music.load('music.mp3')
+mixer.music.load('./picture/music.mp3')
 mixer.music.play(-1)
-mixer.music.set_volume(0.5)
-click_sfx = pygame.mixer.Sound("click.wav")
+mixer.music.set_volume(1)
+click_sfx = pygame.mixer.Sound("./picture/musicclick.wav")
 
 screen_height=750
 screen_width=1400
@@ -70,19 +70,19 @@ class Button():
         return False
 
 # Initialize the button
-button_surface = pygame.image.load("close_windowBtn.png")
+button_surface = pygame.image.load("./picture/musicclose_windowBtn.png")
 button_surface = pygame.transform.scale(button_surface, (75, 75))
 button = Button(button_surface, 1100, 150, "")
 
-resetbutton_surface = pygame.image.load("reset_btn.png")
+resetbutton_surface = pygame.image.load("./picture/musicreset_btn.png")
 resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 250))
 resetbutton = Button(resetbutton_surface, 600, 575, "Reset Name")
 
-backbutton_surface = pygame.image.load("back_btn.png")
+backbutton_surface = pygame.image.load("./picture/musicback_btn.png")
 backbutton_surfacebutton_surface = pygame.transform.scale(backbutton_surface, (150, 150))
 backbutton = Button(backbutton_surface, 75, 75, "")
 
-profilebutton_surface = pygame.image.load("profile_btn.png")
+profilebutton_surface = pygame.image.load("./picture/musicprofile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
@@ -100,7 +100,7 @@ def rename():
     active = False
 
     while True:
-        bg_img = pygame.image.load("bcg.png").convert()
+        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         screen.blit(text, textRect)
@@ -166,7 +166,7 @@ def rename():
 
 def profile():
     while True:
-        bg_img = pygame.image.load("lobby.jpg").convert()
+        bg_img = pygame.image.load("./picture/musiclobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
         screen.blit(surface,screen_rect)
 
@@ -229,7 +229,7 @@ def profile():
 def main():
 
     while True:
-        bg_img = pygame.image.load("lobby.jpg").convert()
+        bg_img = pygame.image.load("./picture/musiclobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
 
         for event in pygame.event.get():
@@ -252,7 +252,7 @@ def show_name_from_file(restaurant_name):
                 pygame.quit()
                 sys.exit()
 
-        bg_img = pygame.image.load("bcg.png").convert()
+        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         result_text = str(lines[0])
@@ -287,7 +287,7 @@ def show_restaurant_name(restaurant_name):
                 pygame.quit()
                 sys.exit()
 
-        bg_img = pygame.image.load("bcg.png").convert()
+        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         count = list(restaurant_name)
@@ -319,7 +319,7 @@ def get_restaurant_name():
     active = False
 
     while True:
-        bg_img = pygame.image.load("bcg.png").convert()
+        bg_img = pygame.image.load("./picture/musicbcg.png").convert()
         screen.blit(bg_img, (0, 0))
 
         screen.blit(text, textRect)
@@ -387,7 +387,7 @@ def get_restaurant_name():
         clock.tick(60)
 
 def show_logo():
-    bg_img = pygame.image.load("logo.png").convert()
+    bg_img = pygame.image.load("./picture/musiclogo.png").convert()
     screen.blit(bg_img, (0, 0))
 
     pygame.display.flip()
@@ -410,40 +410,40 @@ else:
     
 
 #load button images
-menu_img = pygame.image.load("picture/menu.png").convert_alpha()
+menu_img = pygame.image.load("./picture/menu.png").convert_alpha()
 
 #food image
 #Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
-nasilemak = pygame.image.load('picture/nasilemak.png')
+nasilemak = pygame.image.load('./picture/nasilemak.png')
 nasilemak = pygame.transform.scale(nasilemak, (100,100))
 
-roticanai = pygame.image.load('picture/roticanai.png')
+roticanai = pygame.image.load('./picture/roticanai.png')
 roticanai = pygame.transform.scale(roticanai, (100,100))
 
-satay = pygame.image.load('picture/satay.png')
+satay = pygame.image.load('./picture/satay.png')
 satay = pygame.transform.scale(satay, (100,100))
 
 #Level 2(Korea)-Corndog(Cheese/Origin)-Kimchi-Tokbokki
-corndogcheese = pygame.image.load('picture/corndogcheese.png')
+corndogcheese = pygame.image.load('./picture/corndogcheese.png')
 corndogcheese = pygame.transform.scale(corndogcheese, (100,100))
 
-corndog = pygame.image.load('picture/corndog.png')
+corndog = pygame.image.load('./picture/corndog.png')
 corndog = pygame.transform.scale(corndog, (100,100))
 
-kimchi = pygame.image.load('picture/kimchi.png')
+kimchi = pygame.image.load('./picture/kimchi.png')
 kimchi = pygame.transform.scale(kimchi, (100,100))
 
-tokbokki = pygame.image.load('picture/tokbokki.png')
+tokbokki = pygame.image.load('./picture/tokbokki.png')
 tokbokki = pygame.transform.scale(tokbokki, (100,100))
 
 #Level 3(China)-Dumpling-Mooncake-DimSum
-dumpling = pygame.image.load('picture/dumpling.png')
+dumpling = pygame.image.load('./picture/dumpling.png')
 dumpling = pygame.transform.scale(dumpling, (100,100))
 
-mooncake = pygame.image.load('picture/mooncake.png')
+mooncake = pygame.image.load('./picture/mooncake.png')
 mooncake = pygame.transform.scale(mooncake, (100,100))
 
-dimsum = pygame.image.load('picture/dimsum.png')
+dimsum = pygame.image.load('./picture/dimsum.png')
 dimsum = pygame.transform.scale(dimsum, (100,100))
 
 #nasilemaktelur_x = screen_width // 2-50   (position, last edit,exp)
@@ -571,21 +571,21 @@ input_rect = pygame.Rect(740,125, 200, 33)
 color = pygame.Color("slategray")
 
 # Load the background image
-background = pygame.image.load("picture/background with logo.png")
+background = pygame.image.load("picture/background with ./picture/musiclogo.png")
 background = pygame.transform.scale(background, (1400, 750))
 
 #load machine button images
-machineA_img = pygame.image.load("picture/machineA.png").convert_alpha()
-lock_machineB_img = pygame.image.load("picture/lockMachineB.png").convert_alpha()
-lock_machineC_img = pygame.image.load("picture/lockMachineC.png").convert_alpha()
+machineA_img = pygame.image.load("./picture/machineA.png").convert_alpha()
+lock_machineB_img = pygame.image.load("./picture/lockMachineB.png").convert_alpha()
+lock_machineC_img = pygame.image.load("./picture/lockMachineC.png").convert_alpha()
 
 # Button setup
-upgrade_btn = UpgradeButton(30, 460, "picture/upgrade-button.png",0.25)
-default_machineA_button = MachineButton(600, 190, "picture/machineA.png", 0.6)
-lock_machineB_button = MachineButton(780, 190, "picture/lockMachineB.png", 0.18)
-lock_machineC_button = MachineButton(950,190, "picture/lockMachineC.png", 0.18)
-yes_button =  YesButton(550,460, "picture/yesButton.png", 0.4)
-no_button =  NoButton(680,463, "picture/noButton.png", 0.38)
+upgrade_btn = UpgradeButton(30, 460, "./picture/upgrade-button.png",0.25)
+default_machineA_button = MachineButton(600, 190, "./picture/machineA.png", 0.6)
+lock_machineB_button = MachineButton(780, 190, "./picture/lockMachineB.png", 0.18)
+lock_machineC_button = MachineButton(950,190, "./picture/lockMachineC.png", 0.18)
+yes_button =  YesButton(550,460, "./picture/yesButton.png", 0.4)
+no_button =  NoButton(680,463, "./picture/noButton.png", 0.38)
 
 #machine criteria
 machine_criteria = { 
