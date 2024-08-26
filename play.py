@@ -109,21 +109,21 @@ profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
-upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
-upgrade_btn = pygame.transform.scale(upgrade_btn, (80, 80))
-upgrade_btn= Button(upgrade_btn, 75, 400, "")
+upgrade_btn = pygame.image.load("./pictureupgrade-button.png")
+upgrade_btn = pygame.transform.scale(upgrade_btn, (110, 110))
+upgrade_btn= Button(upgrade_btn, 76, 430, "")
 
 default_machineA_button = pygame.image.load("./picture/ori-machineA.png")
-default_machineA_button = pygame.transform.scale(default_machineA_button, (180, 180))
-default_machineA_button = Button(default_machineA_button, 400, 260, "")
+default_machineA_button = pygame.transform.scale(default_machineA_button, (210, 240))
+default_machineA_button = Button(default_machineA_button, 420, 260, "")
 
 lock_machineB_button = pygame.image.load("./picture/ori-MachineB.png")
-lock_machineB_button = pygame.transform.scale(lock_machineB_button, (180, 180))
-lock_machineB_button = Button(lock_machineB_button, 660, 260, "")
+lock_machineB_button = pygame.transform.scale(lock_machineB_button, (210, 180))
+lock_machineB_button = Button(lock_machineB_button, 740, 255, "")
 
 lock_machineC_button = pygame.image.load("./picture/ori-MachineC.png")
-lock_machineC_button = pygame.transform.scale(lock_machineC_button, (180, 180))
-lock_machineC_button = Button(lock_machineC_button, 890, 260, "")
+lock_machineC_button = pygame.transform.scale(lock_machineC_button, (210, 180))
+lock_machineC_button = Button(lock_machineC_button, 1050, 255, "")
 
 yes_button = pygame.image.load("./picture/yesButton.png")
 yes_button = pygame.transform.scale(yes_button, (250, 250))
@@ -137,17 +137,13 @@ close_button = pygame.image.load("./picture/close_windowBtn.png")
 close_button = pygame.transform.scale(close_button, (75, 75))
 close_button = Button(close_button, 1173, 70, "")
 
-menuA_button = pygame.image.load("./picture/menu.png")
-menuA_button = pygame.transform.scale(menuA_button, (80, 80))
-menuA_button = Button(menuA_button, 1173, 70, "")
+menu_button = pygame.image.load("./picture/menu.png")
+menu_button = pygame.transform.scale(menu_button, (110,100))
+menu_button = Button(menu_button, 76, 250, "")
 
-menuB_button = pygame.image.load("./picture/menu.png")
-menuB_button = pygame.transform.scale(menuB_button, (80, 80))
-menuB_button = Button(menuB_button, 1173, 70, "")
-
-menuC_button = pygame.image.load("./picture/menu.png")
-menuC_button = pygame.transform.scale(menuC_button, (80, 80))
-menuC_button = Button(menuC_button, 1173, 70, "")
+setting_button = pygame.image.load("./picture/setting.png")
+setting_button = pygame.transform.scale(setting_button, (120, 120))
+setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
@@ -161,11 +157,6 @@ message_timer = 0  # Timer to show messages temporarily
 money = 4000
 unlocked_machine = set() # Set to track unlocked machines
 
-# def draw_text(text, font, color, surface, x, y):
-#     text_obj = font.render(str(text), True, color)
-#     text_rect = text_obj.get_rect()
-#     text_rect.center = (x, y)
-#     surface.blit(text_obj, text_rect)
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -321,7 +312,7 @@ def main():
         default_machineA_button.update()
         lock_machineB_button.update()
         lock_machineC_button.update()
-        menuA_button.update()
+        menu_button.update()
         menuB_button.update()
         menuC_button.update()
 
@@ -696,7 +687,7 @@ while True:
                             selected_upgrade = "C"
                             message_timer = 180
                 
-                elif menuA_button.is_clicked(event.pos):
+                elif menu_button.is_clicked(event.pos):
                     show_popup3 = True
 
     # Draw background
@@ -715,7 +706,7 @@ while True:
     draw_text("Machine C", font, "white", screen, 1030, 330)
 
     upgrade_btn.draw(screen)
-    menuA_button.draw(screen)
+    menu_button.draw(screen)
     menuB_button.draw(screen)
     menuC_button.draw(screen)
 
