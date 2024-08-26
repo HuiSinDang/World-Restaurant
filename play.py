@@ -1,6 +1,7 @@
 #start
 import pygame
 import sys
+import time
 import os.path
 import datetime
 from pygame import mixer
@@ -481,6 +482,7 @@ if check_file == True:
     show_name_from_file(lines[0].strip())
 else:
     get_restaurant_name()
+
     
 
 #load button images
@@ -520,12 +522,104 @@ mooncake = pygame.transform.scale(mooncake, (100,100))
 dimsum = pygame.image.load('./picture/dimsum.png')
 dimsum = pygame.transform.scale(dimsum, (100,100))
 
-#nasilemaktelur_x = screen_width // 2-50   (position, last edit,exp)
-#nasilemaktelur_y = screen_height // 2-50  (position, last edit,exp)
+#noticeboard(intro)
+noticeboard = pygame.image.load('noticeboard.png')
+noticeboard = pygame.transform.scale(noticeboard, (1400,800))
 
-#font
+closebutton = pygame.image.load('closebutton.png')
+closebutton = pygame.transform.scale(closebutton, (1000,700))
 
-#option box(put food's image init)
+nextbutton = pygame.image.load('nextbutton.png')
+nextbutton = pygame.transform.scale(nextbutton, (1000,700))
+
+#logo fade effect
+logo = pygame.image.load('./picture/background with logo.png')
+logo = pygame.transform.scale(logo, (screen_width,screen_height))
+start_time = time.time()
+fade_duration = 3
+
+#money
+font2 = pygame.font.Font('jugnle.ttf',50)
+money_amount = 0
+max_display_money = 1000000
+
+def money_bar():
+    money_text = font2.render(f"{money_amount}", True, black)
+    text_rect = money_text.get_rect(center=(1250,67))
+    screen.blit(money_text, text_rect)
+
+#happy hour
+order_completed = 0
+hhactive = False
+hhtime = 30
+hh_start_time = None
+
+def update_happy_hour_status():
+    global hhactive,order_completed,hh_start_time
+    if order_completed >= 5:
+        hhactive = True
+        hh_start_time = time.time()
+        order_completed = order_completed % 5
+    elif hhactive and (time.time() - hh_start_time) >= hhtime:
+        hhactive = False
+
+def happyhour_bar(happyhour):
+    update_happy_hour_status()
+    if hhactive:
+        hhtext = font2.render("Happy Hour Active!", True, black)
+    else:
+        hhtext = font2.render("Happy Hour", True, black)
+
+    remaining_order = (order_completed % 5 - 5) % 5
+    hhtext2 = font2.render(f"{remaining_order} /5", True, black)
+    text_rect = hhtext.get_rect(center=(670,60))
+    text_rect2 = hhtext2.get_rect(center=(670,100))
+    screen.blit(hhtext,text_rect)
+    screen.blit(hhtext2,text_rect2)
+
+def hhprofit(origin_profit):
+    if hhactive:
+        return origin_profit * 2
+    return origin_profit
+
+#intro
+noticeboard_rect = noticeboard.get_rect(center=(700,400))
+closebutton_rect = closebutton.get_rect(topright=(1225,43))
+nextbutton_rect = nextbutton.get_rect(bottomright=(1255,795))
+notice_font = pygame.font.Font('jugnle.ttf',20)
+noticetext1 = "Welcome to World Restaurant!\nIntroduction of the game..."
+noticetext2 = "Many tutorial...\nBla bla bla..."
+intropage = 1
+mouse_pressed_last_frame = False
+
+def render_introtext(text,font,color,center):
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        rendered_line = notice_font.render(line,True,black)
+        line_rect = rendered_line.get_rect(center=(center[0],center[1] - 20 + i * 40))
+        screen.blit(rendered_line,line_rect)
+
+def intropage1():
+    screen.blit(noticeboard, noticeboard_rect)
+    render_introtext(noticetext1,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
+    screen.blit(nextbutton,nextbutton_rect)
+
+def intropage2():
+    screen.blit(noticeboard,noticeboard_rect)
+    render_introtext(noticetext2,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
+    screen.blit(closebutton,closebutton_rect)
+
+
+def intropage_click(page,mouse_pressed_last_frame):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pressed = pygame.mouse.get_pressed()[0]
+    if page == 1 and nextbutton_rect.collidepoint(mouse_pos):
+        if mouse_pressed_last_frame and not mouse_pressed:
+            return 2,mouse_pressed
+    elif page == 2 and closebutton_rect.collidepoint(mouse_pos):
+        if mouse_pressed_last_frame and not mouse_pressed:
+            return 0,mouse_pressed
+    return page,mouse_pressed
 
 # Draw text display 
 def draw_text(text, font, color, surface, x, y):
@@ -550,8 +644,11 @@ class Button():
 
 font = pygame.font.SysFont("freesansbold.ttf", 26)
 
+
 # Rectangle to display money
 input_rect = pygame.Rect(740,125, 200, 33)
+
+
 
 # Rectangle to display machine types (prepare file)
 inputMA_rect = pygame.Rect(350,310, 200, 33)
@@ -689,26 +786,48 @@ while True:
                 
                 elif menu_button.is_clicked(event.pos):
                     show_popup3 = True
+    elapsed_time = time.time() - start_time
+    
+    if elapsed_time < fade_duration:
+        fade_alpha = int(255 * (1 - (elapsed_time / fade_duration)))
+        logo.set_alpha(fade_alpha)
+        screen.fill(white)
+        screen.blit(logo, (0,0))
 
     # Draw background
-    screen.blit(background, (0, 0))
-    screen.blit(oriMachineA,(330,100))
-    screen.blit(oriMachineB,(640,120))
-    screen.blit(oriMachineC,(930,120))
+    else:
+        if intropage == 1:
+            intropage1()
+        elif intropage == 2:
+            intropage2()
+        intropage,mouse_pressed_last_frame = intropage_click(intropage,mouse_pressed_last_frame)
+        if intropage == 0:
+            money_bar()
+            happyhour_bar()
+            screen.blit(background, (0, 0))
+            screen.blit(oriMachineA,(330,100))
+            screen.blit(oriMachineB,(640,120))
+            screen.blit(oriMachineC,(930,120))
 
-    pygame.draw.rect(screen, (7,0,63), inputMA_rect)
-    draw_text("Default- Machine A", font, "white", screen, 450, 330)
-    
-    pygame.draw.rect(screen, (7,0,63), inputMB_rect)
-    draw_text("Machine B", font, "white", screen, 740, 330)
+            pygame.draw.rect(screen, (7,0,63), inputMA_rect)
+            draw_text("Default- Machine A", font, "white", screen, 450, 330)
+            
+            pygame.draw.rect(screen, (7,0,63), inputMB_rect)
+            draw_text("Machine B", font, "white", screen, 740, 330)
 
-    pygame.draw.rect(screen, (7,0,63), inputMC_rect)
-    draw_text("Machine C", font, "white", screen, 1030, 330)
+            pygame.draw.rect(screen, (7,0,63), inputMC_rect)
+            draw_text("Machine C", font, "white", screen, 1030, 330)
 
     upgrade_btn.draw(screen)
     menu_button.draw(screen)
     menuB_button.draw(screen)
     menuC_button.draw(screen)
+
+            upgrade_btn.draw(screen)
+            menuA_button.draw(screen)
+            menuB_button.draw(screen)
+            menuC_button.draw(screen)
+
 
     if show_popup:
         pygame.draw.rect(screen, (255, 201, 254), popup_rect)
