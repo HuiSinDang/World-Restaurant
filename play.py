@@ -110,7 +110,7 @@ profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
-upgrade_btn = pygame.image.load("./pictureupgrade-button.png")
+upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (110, 110))
 upgrade_btn= Button(upgrade_btn, 76, 430, "")
 
@@ -142,9 +142,9 @@ menu_button = pygame.image.load("./picture/menu.png")
 menu_button = pygame.transform.scale(menu_button, (110,100))
 menu_button = Button(menu_button, 76, 250, "")
 
-setting_button = pygame.image.load("./picture/setting.png")
-setting_button = pygame.transform.scale(setting_button, (120, 120))
-setting_button = Button(setting_button, 73, 620, "")
+# setting_button = pygame.image.load("./picture/setting.png")
+# setting_button = pygame.transform.scale(setting_button, (120, 120))
+# setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
@@ -314,8 +314,8 @@ def main():
         lock_machineB_button.update()
         lock_machineC_button.update()
         menu_button.update()
-        menuB_button.update()
-        menuC_button.update()
+        # menuB_button.update()
+        # menuC_button.update()
 
         pygame.display.flip()
 
@@ -825,10 +825,10 @@ while True:
     menuB_button.draw(screen)
     menuC_button.draw(screen)
 
-            upgrade_btn.draw(screen)
-            menuA_button.draw(screen)
-            menuB_button.draw(screen)
-            menuC_button.draw(screen)
+    upgrade_btn.draw(screen)
+    menuA_button.draw(screen)
+    menuB_button.draw(screen)
+    menuC_button.draw(screen)
 
 
     if show_popup:
