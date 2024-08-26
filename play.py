@@ -470,12 +470,19 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
+def fade(width, height):
+    fade = pygame.Surface((width,height))
+    fade.fill("white")
+    for alpha in range(0,300):
+        fade.set_alpha(alpha)
+        show_logo()
+        screen.blit(fade, (0,0))
+        pygame.display.update()
+        pygame.time.delay(5)
+
 def show_logo():
     bg_img = pygame.image.load("./picture/logo.png").convert()
     screen.blit(bg_img, (0, 0))
-
-    pygame.display.flip()
-    pygame.time.wait(2000)
 
 
 path = './name.txt'
@@ -483,7 +490,7 @@ check_file = os.path.isfile(path)
 now = datetime.datetime.now()
 other_StyleTime = now.strftime("%Y-%m-%d")
 
-show_logo()
+fade(1400,750)
 
 if check_file == True:
     f = open("name.txt", "r") 
@@ -541,11 +548,6 @@ closebutton = pygame.transform.scale(closebutton, (1000,700))
 nextbutton = pygame.image.load('nextbutton.png')
 nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
-#logo fade effect
-logo = pygame.image.load('./picture/background with logo.png')
-logo = pygame.transform.scale(logo, (screen_width,screen_height))
-start_time = time.time()
-fade_duration = 3
 
 #money
 font2 = pygame.font.Font('jugnle.ttf',50)
