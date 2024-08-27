@@ -329,6 +329,9 @@ def profile():
                     main()
                 if event.key == pygame.K_r:
                     rename()
+                if event.key == pygame.K_u:
+                    upgrade_process()
+                
 
         button.update()
         resetbutton.update()
@@ -340,6 +343,9 @@ def profile():
         pygame.display.flip()
 
 def draw_popup():
+    ori_machineA_button.update()
+    ori_machineB_button.update()
+    ori_machineC_button.update()
     profilebutton.update()
     upgrade_btn.update()
     menu_button.update()
