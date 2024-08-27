@@ -338,6 +338,7 @@ def profile():
         menu_button.update()
         setting_button.update()
         money_bar()
+        happyhour_bar(hhactive)
 
         pygame.display.flip()
 
@@ -480,6 +481,7 @@ def upgrade_process():
 
         handle_upgrades()
         pygame.display.update()
+        happyhour_bar(hhactive)
         money_bar()
 
     
@@ -708,7 +710,7 @@ def fade(width, height):
         show_logo()
         screen.blit(fade, (0,0))
         pygame.display.update()
-        pygame.time.delay(5)
+        pygame.time.delay(2)
 
 def show_logo():
     bg_img = pygame.image.load("./picture/logo.png").convert()
