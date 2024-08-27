@@ -432,7 +432,7 @@ def upgrade_process():
                 if close_button.checkForInput(pygame.mouse.get_pos()):
                     main()
 
-                elif upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
+                if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     show_popup = True
 
                 elif machineB_button.checkForInput(pygame.mouse.get_pos()) or machineC_button.checkForInput(pygame.mouse.get_pos()):
@@ -490,7 +490,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
-                elif upgrade_btn.checkForInput(pygame.mouse.get_pos()):
+                if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
                     upgrade_process()
 
         profilebutton.update()
