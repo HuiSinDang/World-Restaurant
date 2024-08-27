@@ -33,6 +33,7 @@ red = (255, 0, 0)
 
 #login
 font = pygame.font.Font('freesansbold.ttf', 50)
+font2 = pygame.font.Font('freesansbold.ttf',50)
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
 
@@ -110,7 +111,7 @@ profilebutton_surface = pygame.image.load("./picture/profile_btn.png")
 profilebutton_surfacebutton_surface = pygame.transform.scale(profilebutton_surface, (100, 100))
 profilebutton = Button(profilebutton_surface, 75, 75, "")
 
-upgrade_btn = pygame.image.load("./pictureupgrade-button.png")
+upgrade_btn = pygame.image.load("./picture/upgrade-button.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (110, 110))
 upgrade_btn= Button(upgrade_btn, 76, 430, "")
 
@@ -142,9 +143,9 @@ menu_button = pygame.image.load("./picture/menu.png")
 menu_button = pygame.transform.scale(menu_button, (110,100))
 menu_button = Button(menu_button, 76, 250, "")
 
-setting_button = pygame.image.load("./picture/setting.png")
-setting_button = pygame.transform.scale(setting_button, (120, 120))
-setting_button = Button(setting_button, 73, 620, "")
+# setting_button = pygame.image.load("./picture/setting.png")
+# setting_button = pygame.transform.scale(setting_button, (120, 120))
+# setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
@@ -184,6 +185,10 @@ def rename():
                     active = True
                 else:
                     active = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    profile()
 
             if event.type == pygame.KEYDOWN:
                 if active:
@@ -205,7 +210,7 @@ def rename():
                             pygame.time.wait(2000)
                             rename()
                         else:
-                            f = open("name.txt","w")
+                            f = open("./picture/name.txt","w")
                             f.write(f'{user_text}')
                             f.close()
                             profile()
@@ -239,16 +244,16 @@ def profile():
 
         draw_text("Profile", font, "black", screen, 650, 200)
 
-        f = open("name.txt","r")
+        f = open("./picture/name.txt","r")
         lines = f.readlines()
         name = lines[0].strip()
         count = list(name)
 
-        fdate = open("date.txt","r")
+        fdate = open("./picture/date.txt","r")
         firstdate = fdate.readlines()
         date = firstdate[0].strip()
 
-        path = './totalearned.txt'
+        path = './picture/totalearned.txt'
         check_file = os.path.isfile(path)
 
         if len(count) > int(14):
@@ -256,7 +261,7 @@ def profile():
             draw_text(f"Restaurant", font, "black", screen, 650, 350)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -267,7 +272,7 @@ def profile():
             draw_text(f"Name: {name} Restaurant", font, "black", screen, 650, 300)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -286,6 +291,13 @@ def profile():
                     rename()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    profile()
+                if event.key == pygame.K_ESCAPE:
+                    main()
+                if event.key == pygame.K_r:
+                    rename()
 
         button.update()
         resetbutton.update()
@@ -293,31 +305,15 @@ def profile():
         upgrade_btn.update()
 
         pygame.display.flip()
-    
-def main():
 
-    while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-        screen.blit(bg_img, (0, 0))
+#money
+money_amount = 0
+max_display_money = 1000000
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if profilebutton.checkForInput(pygame.mouse.get_pos()):
-                    profile()
-
-        profilebutton.update()
-        upgrade_btn.update()
-        default_machineA_button.update()
-        lock_machineB_button.update()
-        lock_machineC_button.update()
-        menu_button.update()
-        menuB_button.update()
-        menuC_button.update()
-
-        pygame.display.flip()
+def money_bar():
+    money_text = font2.render(f"{money_amount}", True, black)
+    text_rect = money_text.get_rect(center=(1250,67))
+    screen.blit(money_text, text_rect)
 
 
 def show_name_from_file(restaurant_name):
@@ -430,14 +426,14 @@ def get_restaurant_name():
                             pygame.time.wait(2000)
                             get_restaurant_name()
                         else:
-                            f = open("name.txt","x")
-                            fdate = open("date.txt", "x")
+                            f = open("./picture/name.txt","x")
+                            fdate = open("./picture/date.txt", "x")
 
-                            f = open("name.txt", "a")
+                            f = open("./picture/name.txt", "a")
                             f.write(f'{user_text}')
                             f.close()
 
-                            fdate = open("date.txt","a")
+                            fdate = open("./picture/date.txt","a")
                             fdate.write(f'{other_StyleTime}')
                             fdate.close()
                             show_restaurant_name(user_text)
@@ -475,8 +471,35 @@ def show_logo():
     bg_img = pygame.image.load("./picture/logo.png").convert()
     screen.blit(bg_img, (0, 0))
 
+def main():
 
-path = './name.txt'
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+            if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        profile()
+
+        money_bar()
+        profilebutton.update()
+        upgrade_btn.update()
+        default_machineA_button.update()
+        lock_machineB_button.update()
+        lock_machineC_button.update()
+        menu_button.update()
+
+        pygame.display.flip()
+
+
+path = './picture/name.txt'
 check_file = os.path.isfile(path)
 now = datetime.datetime.now()
 other_StyleTime = now.strftime("%Y-%m-%d")
@@ -484,7 +507,7 @@ other_StyleTime = now.strftime("%Y-%m-%d")
 fade(1400,750)
 
 if check_file == True:
-    f = open("name.txt", "r") 
+    f = open("./picture/name.txt", "r") 
     lines = f.readlines()
     show_name_from_file(lines[0].strip())
 else:
@@ -539,16 +562,6 @@ closebutton = pygame.transform.scale(closebutton, (1000,700))
 nextbutton = pygame.image.load('nextbutton.png')
 nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
-
-#money
-font2 = pygame.font.Font('jugnle.ttf',50)
-money_amount = 0
-max_display_money = 1000000
-
-def money_bar():
-    money_text = font2.render(f"{money_amount}", True, black)
-    text_rect = money_text.get_rect(center=(1250,67))
-    screen.blit(money_text, text_rect)
 
 #happy hour
 order_completed = 0
@@ -825,10 +838,10 @@ while True:
     menuB_button.draw(screen)
     menuC_button.draw(screen)
 
-            upgrade_btn.draw(screen)
-            menuA_button.draw(screen)
-            menuB_button.draw(screen)
-            menuC_button.draw(screen)
+    upgrade_btn.draw(screen)
+    menuA_button.draw(screen)
+    menuB_button.draw(screen)
+    menuC_button.draw(screen)
 
 
     if show_popup:
