@@ -172,9 +172,9 @@ menu_button = pygame.image.load("./picture/menu.png")
 menu_button = pygame.transform.scale(menu_button, (110,100))
 menu_button = Button(menu_button, 76, 250, "")
 
-# setting_button = pygame.image.load("./picture/setting.png")
-# setting_button = pygame.transform.scale(setting_button, (120, 120))
-# setting_button = Button(setting_button, 73, 620, "")
+setting_button = pygame.image.load("./picture/setting.png")
+setting_button = pygame.transform.scale(setting_button, (120, 120))
+setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
