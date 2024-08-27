@@ -66,8 +66,8 @@ inputmoney_rect = pygame.Rect(740,125, 200, 33)
 inputMA_rect = pygame.Rect(350,310, 200, 33)
 inputMB_rect = pygame.Rect(640,310, 200, 33)
 inputMC_rect = pygame.Rect(930,310, 200, 33)
-popup_rect = pygame.Rect(400, 90, 800, 600)
-popup2_rect = pygame.Rect(423, 380, 750, 280)
+popup_rect = pygame.Rect(400, 120, 800, 600)
+popup2_rect = pygame.Rect(423, 430, 750, 230)
 
 # Load the small image
 coin1_img =  pygame.image.load("./picture/coin.png")
