@@ -185,6 +185,10 @@ def rename():
                     active = True
                 else:
                     active = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    profile()
 
             if event.type == pygame.KEYDOWN:
                 if active:
@@ -206,7 +210,7 @@ def rename():
                             pygame.time.wait(2000)
                             rename()
                         else:
-                            f = open("name.txt","w")
+                            f = open("./picture/name.txt","w")
                             f.write(f'{user_text}')
                             f.close()
                             profile()
@@ -240,16 +244,16 @@ def profile():
 
         draw_text("Profile", font, "black", screen, 650, 200)
 
-        f = open("name.txt","r")
+        f = open("./picture/name.txt","r")
         lines = f.readlines()
         name = lines[0].strip()
         count = list(name)
 
-        fdate = open("date.txt","r")
+        fdate = open("./picture/date.txt","r")
         firstdate = fdate.readlines()
         date = firstdate[0].strip()
 
-        path = './totalearned.txt'
+        path = './picture/totalearned.txt'
         check_file = os.path.isfile(path)
 
         if len(count) > int(14):
@@ -257,7 +261,7 @@ def profile():
             draw_text(f"Restaurant", font, "black", screen, 650, 350)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -268,7 +272,7 @@ def profile():
             draw_text(f"Name: {name} Restaurant", font, "black", screen, 650, 300)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -287,35 +291,18 @@ def profile():
                     rename()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    profile()
+                if event.key == pygame.K_ESCAPE:
+                    main()
+                if event.key == pygame.K_r:
+                    rename()
 
         button.update()
         resetbutton.update()
         profilebutton.update()
         upgrade_btn.update()
-
-        pygame.display.flip()
-    
-def main():
-
-    while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-        screen.blit(bg_img, (0, 0))
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if profilebutton.checkForInput(pygame.mouse.get_pos()):
-                    profile()
-
-        money_bar()
-        profilebutton.update()
-        upgrade_btn.update()
-        default_machineA_button.update()
-        lock_machineB_button.update()
-        lock_machineC_button.update()
-        menu_button.update()
 
         pygame.display.flip()
 
@@ -439,14 +426,14 @@ def get_restaurant_name():
                             pygame.time.wait(2000)
                             get_restaurant_name()
                         else:
-                            f = open("name.txt","x")
-                            fdate = open("date.txt", "x")
+                            f = open("./picture/name.txt","x")
+                            fdate = open("./picture/date.txt", "x")
 
-                            f = open("name.txt", "a")
+                            f = open("./picture/name.txt", "a")
                             f.write(f'{user_text}')
                             f.close()
 
-                            fdate = open("date.txt","a")
+                            fdate = open("./picture/date.txt","a")
                             fdate.write(f'{other_StyleTime}')
                             fdate.close()
                             show_restaurant_name(user_text)
@@ -484,8 +471,35 @@ def show_logo():
     bg_img = pygame.image.load("./picture/logo.png").convert()
     screen.blit(bg_img, (0, 0))
 
+def main():
 
-path = './name.txt'
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+            if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        profile()
+
+        money_bar()
+        profilebutton.update()
+        upgrade_btn.update()
+        default_machineA_button.update()
+        lock_machineB_button.update()
+        lock_machineC_button.update()
+        menu_button.update()
+
+        pygame.display.flip()
+
+
+path = './picture/name.txt'
 check_file = os.path.isfile(path)
 now = datetime.datetime.now()
 other_StyleTime = now.strftime("%Y-%m-%d")
@@ -493,7 +507,7 @@ other_StyleTime = now.strftime("%Y-%m-%d")
 fade(1400,750)
 
 if check_file == True:
-    f = open("name.txt", "r") 
+    f = open("./picture/name.txt", "r") 
     lines = f.readlines()
     show_name_from_file(lines[0].strip())
 else:
