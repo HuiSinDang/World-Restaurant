@@ -34,7 +34,7 @@ red = (255, 0, 0)
 #login
 font = pygame.font.Font('freesansbold.ttf', 50)
 upgrade_font = pygame.font.Font('freesansbold.ttf', 20)
-font2 = pygame.font.Font('freesansbold.ttf',50)
+font2 = pygame.font.Font('./picture/jugnle.ttf', 50)
 
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
@@ -519,7 +519,7 @@ max_display_money = 1000000
 
 def money_bar():
     money_text = font2.render(f"{money_amount}", True, black)
-    text_rect = money_text.get_rect(center=(1250,67))
+    text_rect = money_text.get_rect(center=(1250,55))
     screen.blit(money_text, text_rect)
 
 def show_name_from_file(restaurant_name):
