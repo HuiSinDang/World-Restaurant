@@ -329,8 +329,6 @@ def profile():
                     main()
                 if event.key == pygame.K_r:
                     rename()
-                if event.key == pygame.K_u:
-                    upgrade_process()
                 
 
         button.update()
