@@ -500,6 +500,7 @@ def main():
         ori_machineC_button.update()
         menu_button.update()
         setting_button.update()
+        pygame.display.flip
 
 #money
 money_amount = 0
