@@ -493,6 +493,7 @@ def main():
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
                     upgrade_process()
 
+        money_bar()
         profilebutton.update()
         upgrade_btn.update()
         ori_machineA_button.update()
