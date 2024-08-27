@@ -74,7 +74,7 @@ coin1_img =  pygame.image.load("./picture/coin.png")
 coin1_img = pygame.transform.scale(coin1_img, (25, 25))
 coin2_img =  pygame.image.load("./picture/coin.png")
 coin2_img = pygame.transform.scale(coin2_img, (25, 25))
-background = pygame.image.load("./picture/mainBG.jpg")
+background = pygame.image.load("./picture/lobby.jpg")
 background = pygame.transform.scale(background, (1400, 750))
 
 def draw_text(text, font, color, surface, x, y):
