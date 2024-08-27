@@ -33,6 +33,7 @@ red = (255, 0, 0)
 
 #login
 font = pygame.font.Font('freesansbold.ttf', 50)
+font2 = pygame.font.Font('freesansbold.ttf',50)
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
 
@@ -308,16 +309,24 @@ def main():
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
 
+        money_bar()
         profilebutton.update()
         upgrade_btn.update()
         default_machineA_button.update()
         lock_machineB_button.update()
         lock_machineC_button.update()
         menu_button.update()
-        # menuB_button.update()
-        # menuC_button.update()
 
         pygame.display.flip()
+
+#money
+money_amount = 0
+max_display_money = 1000000
+
+def money_bar():
+    money_text = font2.render(f"{money_amount}", True, black)
+    text_rect = money_text.get_rect(center=(1250,67))
+    screen.blit(money_text, text_rect)
 
 
 def show_name_from_file(restaurant_name):
@@ -539,16 +548,6 @@ closebutton = pygame.transform.scale(closebutton, (1000,700))
 nextbutton = pygame.image.load('nextbutton.png')
 nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
-
-#money
-font2 = pygame.font.Font('jugnle.ttf',50)
-money_amount = 0
-max_display_money = 1000000
-
-def money_bar():
-    money_text = font2.render(f"{money_amount}", True, black)
-    text_rect = money_text.get_rect(center=(1250,67))
-    screen.blit(money_text, text_rect)
 
 #happy hour
 order_completed = 0
