@@ -490,7 +490,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
-                if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
+                if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     upgrade_process()
 
         profilebutton.update()
