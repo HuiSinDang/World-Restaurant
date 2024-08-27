@@ -490,9 +490,12 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+                if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
+                    upgrade_process()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
+
 
         money_bar()
         profilebutton.update()
