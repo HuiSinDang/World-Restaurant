@@ -511,6 +511,7 @@ def main():
         ori_machineC_button.update()
         menu_button.update()
         setting_button.update()
+        happyhour_bar(hhactive)
 
         pygame.display.flip()
 
@@ -523,6 +524,40 @@ def money_bar():
     money_text = font2.render(f"{money_amount}", True, black)
     text_rect = money_text.get_rect(center=(1250,55))
     screen.blit(money_text, text_rect)
+
+#happy hour
+order_completed = 0
+hhactive = False
+hhtime = 30
+hh_start_time = None
+
+def update_happy_hour_status():
+    global hhactive,order_completed,hh_start_time
+    if order_completed >= 5:
+        hhactive = True
+        hh_start_time = time.time()
+        order_completed = order_completed % 5
+    elif hhactive and (time.time() - hh_start_time) >= hhtime:
+        hhactive = False
+
+def happyhour_bar(happyhour):
+    update_happy_hour_status()
+    if hhactive:
+        hhtext = font2.render("Happy Hour Active!", True, black)
+    else:
+        hhtext = font2.render("Happy Hour", True, black)
+
+    remaining_order = (order_completed % 5 - 5) % 5
+    hhtext2 = font2.render(f"{remaining_order} /5", True, black)
+    text_rect = hhtext.get_rect(center=(570,60))
+    text_rect2 = hhtext2.get_rect(center=(800,60))
+    screen.blit(hhtext,text_rect)
+    screen.blit(hhtext2,text_rect2)
+
+def hhprofit(origin_profit):
+    if hhactive:
+        return origin_profit * 2
+    return origin_profit
 
 def show_name_from_file(restaurant_name):
     while True:
@@ -739,39 +774,7 @@ else:
 # nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
 
-# #happy hour
-# order_completed = 0
-# hhactive = False
-# hhtime = 30
-# hh_start_time = None
 
-# def update_happy_hour_status():
-#     global hhactive,order_completed,hh_start_time
-#     if order_completed >= 5:
-#         hhactive = True
-#         hh_start_time = time.time()
-#         order_completed = order_completed % 5
-#     elif hhactive and (time.time() - hh_start_time) >= hhtime:
-#         hhactive = False
-
-# def happyhour_bar(happyhour):
-#     update_happy_hour_status()
-#     if hhactive:
-#         hhtext = font2.render("Happy Hour Active!", True, black)
-#     else:
-#         hhtext = font2.render("Happy Hour", True, black)
-
-#     remaining_order = (order_completed % 5 - 5) % 5
-#     hhtext2 = font2.render(f"{remaining_order} /5", True, black)
-#     text_rect = hhtext.get_rect(center=(670,60))
-#     text_rect2 = hhtext2.get_rect(center=(670,100))
-#     screen.blit(hhtext,text_rect)
-#     screen.blit(hhtext2,text_rect2)
-
-# def hhprofit(origin_profit):
-#     if hhactive:
-#         return origin_profit * 2
-#     return origin_profit
 
 # #intro
 # noticeboard_rect = noticeboard.get_rect(center=(700,400))
