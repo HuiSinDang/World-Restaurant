@@ -477,30 +477,30 @@ def upgrade_process():
         pygame.display.update()
 
     
-def main():
+# def main():
 
-    while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-        screen.blit(bg_img, (0, 0))
+#     while True:
+#         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+#         screen.blit(bg_img, (0, 0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if profilebutton.checkForInput(pygame.mouse.get_pos()):
-                    profile()
-                if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
-                    upgrade_process()
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 pygame.quit()
+#                 sys.exit()
+#             if event.type == pygame.MOUSEBUTTONDOWN:
+#                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
+#                     profile()
+#                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
+#                     upgrade_process()
 
-        profilebutton.update()
-        upgrade_btn.update()
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
-        menu_button.update()
-        setting_button.update()
-        pygame.display.flip
+#         profilebutton.update()
+#         upgrade_btn.update()
+#         ori_machineA_button.update()
+#         ori_machineB_button.update()
+#         ori_machineC_button.update()
+#         menu_button.update()
+#         setting_button.update()
+#         pygame.display.flip
 
 #money
 money_amount = 0
@@ -679,6 +679,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+                if upgrade_btn.checkForInput(pygame.mouse.get_pos()):
+                    upgrade_process()
+
             if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         profile()
@@ -690,8 +693,8 @@ def main():
         ori_machineB_button.update()
         ori_machineC_button.update()
         menu_button.update()
-
-        pygame.display.flip()
+        setting_button.update()
+        pygame.display.flip
 
 
 path = './picture/name.txt'
