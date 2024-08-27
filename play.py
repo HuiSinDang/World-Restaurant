@@ -685,9 +685,9 @@ def main():
         money_bar()
         profilebutton.update()
         upgrade_btn.update()
-        default_machineA_button.update()
-        lock_machineB_button.update()
-        lock_machineC_button.update()
+        ori_machineA_button.update()
+        ori_machineB_button.update()
+        ori_machineC_button.update()
         menu_button.update()
 
         pygame.display.flip()
