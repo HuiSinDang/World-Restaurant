@@ -34,6 +34,8 @@ red = (255, 0, 0)
 #login
 font = pygame.font.Font('freesansbold.ttf', 50)
 upgrade_font = pygame.font.Font('freesansbold.ttf', 20)
+font2 = pygame.font.Font('freesansbold.ttf',50)
+
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
 
@@ -170,9 +172,9 @@ menu_button = pygame.image.load("./picture/menu.png")
 menu_button = pygame.transform.scale(menu_button, (110,100))
 menu_button = Button(menu_button, 76, 250, "")
 
-setting_button = pygame.image.load("./picture/setting.png")
-setting_button = pygame.transform.scale(setting_button, (120, 120))
-setting_button = Button(setting_button, 73, 620, "")
+# setting_button = pygame.image.load("./picture/setting.png")
+# setting_button = pygame.transform.scale(setting_button, (120, 120))
+# setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
@@ -185,7 +187,6 @@ not_enough_money = False  # indicate not enough money
 message_timer = 0  # Timer to show messages temporarily
 money = 4000
 unlocked_machine = set() # Set to track unlocked machines
-
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -212,6 +213,10 @@ def rename():
                     active = True
                 else:
                     active = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    profile()
 
             if event.type == pygame.KEYDOWN:
                 if active:
@@ -233,7 +238,7 @@ def rename():
                             pygame.time.wait(2000)
                             rename()
                         else:
-                            f = open("name.txt","w")
+                            f = open("./picture/name.txt","w")
                             f.write(f'{user_text}')
                             f.close()
                             profile()
@@ -270,16 +275,16 @@ def profile():
 
         draw_text("Profile", font, "black", screen, 650, 200)
 
-        f = open("name.txt","r")
+        f = open("./picture/name.txt","r")
         lines = f.readlines()
         name = lines[0].strip()
         count = list(name)
 
-        fdate = open("date.txt","r")
+        fdate = open("./picture/date.txt","r")
         firstdate = fdate.readlines()
         date = firstdate[0].strip()
 
-        path = './totalearned.txt'
+        path = './picture/totalearned.txt'
         check_file = os.path.isfile(path)
 
         if len(count) > int(14):
@@ -287,7 +292,7 @@ def profile():
             draw_text(f"Restaurant", font, "black", screen, 650, 350)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -298,7 +303,7 @@ def profile():
             draw_text(f"Name: {name} Restaurant", font, "black", screen, 650, 300)
             draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
             if check_file :
-                y= open("totalearned.txt", 'r')
+                y= open("./picture/totalearned.txt", 'r')
                 totalmoney = [int(i) for i in y.read().split("\n")]
                 y.close()
                 total = sum(totalmoney)
@@ -317,6 +322,13 @@ def profile():
                     rename()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    profile()
+                if event.key == pygame.K_ESCAPE:
+                    main()
+                if event.key == pygame.K_r:
+                    rename()
 
         button.update()
         resetbutton.update()
@@ -489,7 +501,14 @@ def main():
         menu_button.update()
         setting_button.update()
 
-        pygame.display.flip()
+#money
+money_amount = 0
+max_display_money = 1000000
+
+def money_bar():
+    money_text = font2.render(f"{money_amount}", True, black)
+    text_rect = money_text.get_rect(center=(1250,67))
+    screen.blit(money_text, text_rect)
 
 def show_name_from_file(restaurant_name):
     while True:
@@ -601,14 +620,14 @@ def get_restaurant_name():
                             pygame.time.wait(2000)
                             get_restaurant_name()
                         else:
-                            f = open("name.txt","x")
-                            fdate = open("date.txt", "x")
+                            f = open("./picture/name.txt","x")
+                            fdate = open("./picture/date.txt", "x")
 
-                            f = open("name.txt", "a")
+                            f = open("./picture/name.txt", "a")
                             f.write(f'{user_text}')
                             f.close()
 
-                            fdate = open("date.txt","a")
+                            fdate = open("./picture/date.txt","a")
                             fdate.write(f'{other_StyleTime}')
                             fdate.close()
                             show_restaurant_name(user_text)
@@ -632,23 +651,57 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
+def fade(width, height):
+    fade = pygame.Surface((width,height))
+    fade.fill("white")
+    for alpha in range(0,300):
+        fade.set_alpha(alpha)
+        show_logo()
+        screen.blit(fade, (0,0))
+        pygame.display.update()
+        pygame.time.delay(5)
+
 def show_logo():
     bg_img = pygame.image.load("./picture/logo.png").convert()
     screen.blit(bg_img, (0, 0))
 
-    pygame.display.flip()
-    pygame.time.wait(2000)
+def main():
+
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+            if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        profile()
+
+        money_bar()
+        profilebutton.update()
+        upgrade_btn.update()
+        default_machineA_button.update()
+        lock_machineB_button.update()
+        lock_machineC_button.update()
+        menu_button.update()
+
+        pygame.display.flip()
 
 
-path = './name.txt'
+path = './picture/name.txt'
 check_file = os.path.isfile(path)
 now = datetime.datetime.now()
 other_StyleTime = now.strftime("%Y-%m-%d")
 
-show_logo()
+fade(1400,750)
 
 if check_file == True:
-    f = open("name.txt", "r") 
+    f = open("./picture/name.txt", "r") 
     lines = f.readlines()
     show_name_from_file(lines[0].strip())
 else:
@@ -699,21 +752,6 @@ closebutton = pygame.transform.scale(closebutton, (1000,700))
 nextbutton = pygame.image.load('nextbutton.png')
 nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
-#logo fade effect
-logo = pygame.image.load('./picture/background with logo.png')
-logo = pygame.transform.scale(logo, (screen_width,screen_height))
-start_time = time.time()
-fade_duration = 3
-
-#money
-font2 = pygame.font.Font('jugnle.ttf',50)
-money_amount = 0
-max_display_money = 1000000
-
-def money_bar():
-    money_text = font2.render(f"{money_amount}", True, black)
-    text_rect = money_text.get_rect(center=(1250,67))
-    screen.blit(money_text, text_rect)
 
 #happy hour
 order_completed = 0
@@ -787,172 +825,7 @@ def intropage_click(page,mouse_pressed_last_frame):
         if mouse_pressed_last_frame and not mouse_pressed:
             return 0,mouse_pressed
     return page,mouse_pressed
-
-# Draw text display 
-def draw_text(text, font, color, surface, x, y):
-    text_obj = font.render(str(text), True, color)
-    text_rect = text_obj.get_rect()
-    text_rect.center = (x, y)
-    surface.blit(text_obj, text_rect)
-
-class Button():
-    def __init__(self, x, y, image_path, scale):
-        self.image = pygame.image.load(image_path)
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(width*scale), int(height*scale)))
-        self.rect = self.image.get_rect(topleft = (x, y)) 
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect) 
-    
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos) 
-
-font = pygame.font.SysFont("freesansbold.ttf", 26)
-
-
-# Rectangle to display money
-input_rect = pygame.Rect(740,125, 200, 33)
-
-
-
-# Rectangle to display machine types (prepare file)
-inputMA_rect = pygame.Rect(350,310, 200, 33)
-inputMB_rect = pygame.Rect(640,310, 200, 33)
-inputMC_rect = pygame.Rect(930,310, 200, 33)
-
-# Load the background image
-background = pygame.image.load("./picture/mainBG.jpg")
-background = pygame.image.load("picture/background with ./picture/logo.png")
-background = pygame.transform.scale(background, (1400, 750))
-
-#load machine button images
-machineA_img = pygame.image.load("./picture/machineA.png").convert_alpha()
-lock_machineB_img = pygame.image.load("./picture/lockMachineB.png").convert_alpha()
-lock_machineC_img = pygame.image.load("./picture/lockMachineC.png").convert_alpha()
-
-#machine criteria
-background = pygame.image.load("mainBG.jpg")
-background = pygame.transform.scale(background, (1400, 750))
-
-# Load the small image
-coin1_img =  pygame.image.load("./picture/coin.png")
-coin1_img = pygame.transform.scale(coin1_img, (25, 25))
-coin2_img =  pygame.image.load("./picture/coin.png")
-coin2_img = pygame.transform.scale(coin2_img, (25, 25))
-oriMachineA = pygame.image.load("./picture/ori-machineA.png")
-oriMachineA = pygame.transform.scale(oriMachineA, (248, 238))
-oriMachineB = pygame.image.load("./picture/ori-machineB.png")
-oriMachineB = pygame.transform.scale(oriMachineB, (200, 187))
-oriMachineC = pygame.image.load("./picture/ori-machineC.png")
-oriMachineC = pygame.transform.scale(oriMachineC, (200, 187))
-
-# Machine criteria
-machine_criteria = { 
-    "B": "Criteria - Cooking process speed up to 40s",
-    "C": "Criteria - Cooking process speed up to 30s",
-}
-
-# Define the cost for each machine upgrade
-upgrade_costs = {
-    "B": 1800,  
-    "C": 4000   
-}
-
-# Pop-up window sizes
-popup_rect = pygame.Rect(400, 90, 800, 600)
-popup2_rect = pygame.Rect(423, 380, 750, 280)
-
-# Main loop
-show_popup = False
-show_popup2 = False
-show_popup3 = False
-show_popup4 = False
-selected_upgrade = None
-selecting_machine = False
-not_enough_money = False  # indicate not enough money
-message_timer = 0  # Timer to show messages temporarily
-money = 4000
-unlocked_machine = set() # Set to track unlocked machines
-
-def check_money(money):
-    if 1800 <= money < 4000:
-        return ["B"]
-    elif money >= 4000:
-        return ["B", "C"]
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if close_button.is_clicked(event.pos):
-                show_popup = False
-                show_popup2 = False
-                show_popup3 = False
-                show_popup4 = False
-
-            elif upgrade_btn.is_clicked(event.pos): 
-                show_popup = True
-
-            elif lock_machineB_button.is_clicked(event.pos) or lock_machineC_button.is_clicked(event.pos):
-                show_popup2 = True
             
-            if yes_button.is_clicked(event.pos):
-                selecting_machine = True
-                show_popup2 = True
-                
-            elif no_button.is_clicked(event.pos):
-                show_popup2 = False   
-            elif yes_button.is_clicked(event.pos):
-                if upgrade_costs["B"] <= money < upgrade_costs["C"]:
-                    selected_upgrade = "B" 
-                    message_timer = 180
-                    money -= upgrade_costs["B"]
-                    selecting_machine = False
-                    show_popup = True
-                    show_popup2 = True
-                elif money >= upgrade_costs["C"]:
-                    show_popup = True
-                    show_popup2 = True
-                    selecting_machine = True
-                else:
-                    not_enough_money = True  
-                    show_popup2 = True
-                    message_timer = 180
-            elif no_button.is_clicked(event.pos):
-                show_popup2 = False  
-
-            elif selecting_machine:
-                if B_button.is_clicked(event.pos):
-                    if "B" in unlocked_machine:
-                        selected_upgrade = "B"
-                        message_timer = 180
-                    elif money >= upgrade_costs["B"]:
-                        money -= upgrade_costs["B"]
-                        unlocked_machine.add("B")
-                        selected_upgrade = "B"
-                        message_timer = 180
-                    else:
-                        not_enough_money = True
-                        message_timer = 180
-
-                elif C_button.is_clicked(event.pos):
-                    if money < upgrade_costs["C"]:
-                        not_enough_money = True
-                        message_timer = 180
-                    else:
-                        if "C" not in unlocked_machine:
-                            money -= upgrade_costs["C"]
-                            unlocked_machine.add("C")
-                            selected_upgrade = "C"
-                            message_timer = 180
-                
-                elif menu_button.is_clicked(event.pos):
-                    show_popup3 = True
     elapsed_time = time.time() - start_time
     
     if elapsed_time < fade_duration:
@@ -984,6 +857,7 @@ while True:
 
             pygame.draw.rect(screen, (7,0,63), inputMC_rect)
             draw_text("Machine C", font, "white", screen, 1030, 330)
+
         
     pygame.display.update()
 
