@@ -337,6 +337,7 @@ def profile():
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
+        money_bar()
 
         pygame.display.flip()
 
@@ -479,6 +480,7 @@ def upgrade_process():
 
         handle_upgrades()
         pygame.display.update()
+        money_bar()
 
     
 def main():
