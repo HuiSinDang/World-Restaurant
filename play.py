@@ -486,7 +486,6 @@ def upgrade_process():
 
     
 def main():
-
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
@@ -574,12 +573,14 @@ def show_name_from_file(restaurant_name):
             result_text = font.render(f"Welcome back to ", True, white)
             result_text_rect = result_text.get_rect(center=(700, 280))
             screen.blit(result_text, result_text_rect)
+            
 
             result_text1 = font.render(f"{restaurant_name} Restaurant!", True, white)
             result_text_rect1 = result_text1.get_rect(center=(700, 380))
-            screen.blit(result_text1, result_text_rect1)       
-
-            f.close()   
+            screen.blit(result_text1, result_text_rect1)     
+             
+            f.close() 
+            
         else:
             result_text = font.render(f"Welcome back to {restaurant_name} Restaurant!", True, white)
             result_text_rect = result_text.get_rect(center=(700, 750//2))
@@ -589,7 +590,7 @@ def show_name_from_file(restaurant_name):
 
         pygame.display.flip()
         pygame.time.wait(2000)
-        main()        
+        main()
         clock.tick(60)
 
 def show_restaurant_name(restaurant_name):
@@ -619,8 +620,7 @@ def show_restaurant_name(restaurant_name):
             screen.blit(result_text, result_text_rect)
 
         pygame.display.flip()
-        pygame.time.wait(2000)
-        main()
+        show_intropage()
         clock.tick(60)
 
 def get_restaurant_name():
@@ -698,6 +698,77 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
+#intro
+closebutton = pygame.image.load('./picture/closebutton.png')
+closebutton = pygame.transform.scale(closebutton, (1000,700))
+
+nextbutton = pygame.image.load('./picture/nextbutton.png')
+nextbutton = pygame.transform.scale(nextbutton, (1000,700))
+
+noticeboard = pygame.image.load('./picture/noticeboard.png')
+noticeboard = pygame.transform.scale(noticeboard, (1400,800))
+
+background = pygame.image.load('./picture/lobby.jpg')
+background = pygame.transform.scale(background, (screen_width,screen_height))
+
+noticeboard_rect = noticeboard.get_rect(center=(700,400))
+closebutton_rect = closebutton.get_rect(topright=(1225,43))
+nextbutton_rect = nextbutton.get_rect(bottomright=(1255,795))
+notice_font = pygame.font.Font('./picture/jugnle.ttf',20)
+noticetext1 = "Welcome to World Restaurant!\nIntroduction of the game..."
+noticetext2 = "Many tutorial...\nBla bla bla..."
+intropage = 1
+mouse_pressed_last_frame = False
+
+
+def render_introtext(text,font,color,center):
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        rendered_line = notice_font.render(line,True,black)
+        line_rect = rendered_line.get_rect(center=(center[0],center[1] - 20 + i * 40))
+        screen.blit(rendered_line,line_rect)
+
+def intropage1():
+    screen.blit(background,(0,0))
+    screen.blit(noticeboard, noticeboard_rect)
+    render_introtext(noticetext1,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
+    screen.blit(nextbutton,nextbutton_rect)
+
+def intropage2():
+    screen.blit(background,(0,0))
+    screen.blit(noticeboard,noticeboard_rect)
+    render_introtext(noticetext2,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
+    screen.blit(closebutton,closebutton_rect)
+
+def intropage_click(page,mouse_pressed_last_frame):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pressed = pygame.mouse.get_pressed()[0]
+    if page == 1 and nextbutton_rect.collidepoint(mouse_pos):
+        if mouse_pressed_last_frame and not mouse_pressed:
+            return 2,mouse_pressed
+    elif page == 2 and closebutton_rect.collidepoint(mouse_pos):
+        if mouse_pressed_last_frame and not mouse_pressed:
+            return 0,mouse_pressed
+    return page,mouse_pressed
+
+def show_intropage():
+    global intropage, mouse_pressed_last_frame
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        if intropage == 1:
+            intropage1()
+        elif intropage == 2:
+            intropage2()
+        intropage,mouse_pressed_last_frame = intropage_click(intropage,mouse_pressed_last_frame)
+        if intropage == 0:
+            main()
+
+        pygame.display.flip()
+        pygame.time.Clock().tick(30)
+
+
 #logo_fade
 start_time = time.time()
 fade_duration = 3
@@ -729,130 +800,9 @@ while running:
             show_name_from_file(lines[0].strip())
         else:
             get_restaurant_name()
-            
+
     pygame.display.flip()
     pygame.time.Clock().tick(30)
     
-# #food image
-# #Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
-# nasilemak = pygame.image.load('./picture/nasilemak.png')
-# nasilemak = pygame.transform.scale(nasilemak, (100,100))
-
-# roticanai = pygame.image.load('./picture/roticanai.png')
-# roticanai = pygame.transform.scale(roticanai, (100,100))
-
-# satay = pygame.image.load('./picture/satay.png')
-# satay = pygame.transform.scale(satay, (100,100))
-
-# #Level 2(Korea)-Corndog(Cheese/Origin)-Kimchi-Tokbokki
-# corndogcheese = pygame.image.load('./picture/corndogcheese.png')
-# corndogcheese = pygame.transform.scale(corndogcheese, (100,100))
-
-# corndog = pygame.image.load('./picture/corndog.png')
-# corndog = pygame.transform.scale(corndog, (100,100))
-
-# kimchi = pygame.image.load('./picture/kimchi.png')
-# kimchi = pygame.transform.scale(kimchi, (100,100))
-
-# tokbokki = pygame.image.load('./picture/tokbokki.png')
-# tokbokki = pygame.transform.scale(tokbokki, (100,100))
-
-# #Level 3(China)-Dumpling-Mooncake-DimSum
-# dumpling = pygame.image.load('./picture/dumpling.png')
-# dumpling = pygame.transform.scale(dumpling, (100,100))
-
-# mooncake = pygame.image.load('./picture/mooncake.png')
-# mooncake = pygame.transform.scale(mooncake, (100,100))
-
-# dimsum = pygame.image.load('./picture/dimsum.png')
-# dimsum = pygame.transform.scale(dimsum, (100,100))
-
-# #noticeboard(intro)
-# noticeboard = pygame.image.load('noticeboard.png')
-# noticeboard = pygame.transform.scale(noticeboard, (1400,800))
-
-# closebutton = pygame.image.load('closebutton.png')
-# closebutton = pygame.transform.scale(closebutton, (1000,700))
-
-# nextbutton = pygame.image.load('nextbutton.png')
-# nextbutton = pygame.transform.scale(nextbutton, (1000,700))
-
-
-
-
-# #intro
-# noticeboard_rect = noticeboard.get_rect(center=(700,400))
-# closebutton_rect = closebutton.get_rect(topright=(1225,43))
-# nextbutton_rect = nextbutton.get_rect(bottomright=(1255,795))
-# notice_font = pygame.font.Font('jugnle.ttf',20)
-# noticetext1 = "Welcome to World Restaurant!\nIntroduction of the game..."
-# noticetext2 = "Many tutorial...\nBla bla bla..."
-# intropage = 1
-# mouse_pressed_last_frame = False
-
-# def render_introtext(text,font,color,center):
-#     lines = text.splitlines()
-#     for i, line in enumerate(lines):
-#         rendered_line = notice_font.render(line,True,black)
-#         line_rect = rendered_line.get_rect(center=(center[0],center[1] - 20 + i * 40))
-#         screen.blit(rendered_line,line_rect)
-
-# def intropage1():
-#     screen.blit(noticeboard, noticeboard_rect)
-#     render_introtext(noticetext1,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
-#     screen.blit(nextbutton,nextbutton_rect)
-
-# def intropage2():
-#     screen.blit(noticeboard,noticeboard_rect)
-#     render_introtext(noticetext2,notice_font,black,(noticeboard_rect.centerx-50,noticeboard_rect.centery-250))
-#     screen.blit(closebutton,closebutton_rect)
-
-
-# def intropage_click(page,mouse_pressed_last_frame):
-#     mouse_pos = pygame.mouse.get_pos()
-#     mouse_pressed = pygame.mouse.get_pressed()[0]
-#     if page == 1 and nextbutton_rect.collidepoint(mouse_pos):
-#         if mouse_pressed_last_frame and not mouse_pressed:
-#             return 2,mouse_pressed
-#     elif page == 2 and closebutton_rect.collidepoint(mouse_pos):
-#         if mouse_pressed_last_frame and not mouse_pressed:
-#             return 0,mouse_pressed
-#     return page,mouse_pressed
-            
-#     elapsed_time = time.time() - start_time
-    
-#     if elapsed_time < fade_duration:
-#         fade_alpha = int(255 * (1 - (elapsed_time / fade_duration)))
-#         logo.set_alpha(fade_alpha)
-#         screen.fill(white)
-#         screen.blit(logo, (0,0))
-
-#     # Draw background
-#     else:
-#         if intropage == 1:
-#             intropage1()
-#         elif intropage == 2:
-#             intropage2()
-#         intropage,mouse_pressed_last_frame = intropage_click(intropage,mouse_pressed_last_frame)
-#         if intropage == 0:
-#             money_bar()
-#             happyhour_bar()
-#             screen.blit(background, (0, 0))
-#             screen.blit(oriMachineA,(330,100))
-#             screen.blit(oriMachineB,(640,120))
-#             screen.blit(oriMachineC,(930,120))
-
-#             pygame.draw.rect(screen, (7,0,63), inputMA_rect)
-#             draw_text("Default- Machine A", font, "white", screen, 450, 330)
-            
-#             pygame.draw.rect(screen, (7,0,63), inputMB_rect)
-#             draw_text("Machine B", font, "white", screen, 740, 330)
-
-#             pygame.draw.rect(screen, (7,0,63), inputMC_rect)
-#             draw_text("Machine C", font, "white", screen, 1030, 330)
-
-        
-#     pygame.display.update()
-
 pygame.quit()
 sys.exit()
