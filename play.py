@@ -34,7 +34,7 @@ red = (255, 0, 0)
 #login
 font = pygame.font.Font('freesansbold.ttf', 50)
 upgrade_font = pygame.font.Font('freesansbold.ttf', 20)
-font2 = pygame.font.Font('freesansbold.ttf',50)
+font2 = pygame.font.Font('./picture/jugnle.ttf', 50)
 
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
@@ -338,6 +338,8 @@ def profile():
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
+        money_bar()
+        happyhour_bar(hhactive)
 
         pygame.display.flip()
 
@@ -551,6 +553,10 @@ def upgrade_process():
         pygame.display.update()
         clock.tick(60)
 
+        happyhour_bar(hhactive)
+        money_bar()
+
+
     
 def main():
 
@@ -580,6 +586,7 @@ def main():
         ori_machineC_button.update()
         menu_button.update()
         setting_button.update()
+        happyhour_bar(hhactive)
 
         pygame.display.flip()
         clock.tick(60)
@@ -589,8 +596,38 @@ max_display_money = 1000000
 
 def money_bar():
     money_text = font2.render(f"{money_amount}", True, black)
-    text_rect = money_text.get_rect(center=(1250,67))
+    text_rect = money_text.get_rect(center=(1250,55))
     screen.blit(money_text, text_rect)
+
+#happy hour
+order_completed = 0
+hhactive = False
+hhtime = 30
+hh_start_time = None
+
+def update_happy_hour_status():
+    global hhactive,order_completed,hh_start_time
+    if order_completed >= 5:
+        hhactive = True
+        hh_start_time = time.time()
+        order_completed = order_completed % 5
+    elif hhactive and (time.time() - hh_start_time) >= hhtime:
+        hhactive = False
+
+def happyhour_bar(happyhour):
+    update_happy_hour_status()
+    remaining_order = (order_completed % 5 - 5) % 5
+    if hhactive:
+        hhtext = font2.render(f"Happy Hour Active! {remaining_order} /5", True, black)
+    else:
+        hhtext = font2.render(f"Happy Hour {remaining_order} /5", True, black)
+    text_rect = hhtext.get_rect(center=(650,60))
+    screen.blit(hhtext,text_rect)
+
+def hhprofit(origin_profit):
+    if hhactive:
+        return origin_profit * 2
+    return origin_profit
 
 def show_name_from_file(restaurant_name):
     while True:
@@ -733,34 +770,40 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
-def fade(width, height):
-    fade = pygame.Surface((width,height))
-    fade.fill("white")
-    for alpha in range(0,300):
-        fade.set_alpha(alpha)
-        show_logo()
-        screen.blit(fade, (0,0))
-        pygame.display.update()
-        pygame.time.delay(5)
+#logo_fade
+start_time = time.time()
+fade_duration = 3
+logo = pygame.image.load('./picture/logo.png')
 
-def show_logo():
-    bg_img = pygame.image.load("./picture/logo.png").convert()
-    screen.blit(bg_img, (0, 0))
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-path = './picture/name.txt'
-check_file = os.path.isfile(path)
-now = datetime.datetime.now()
-other_StyleTime = now.strftime("%Y-%m-%d")
+    elapsed_time = time.time() - start_time
+    
+    if elapsed_time < fade_duration:
+        fade_alpha = int(255 * (1 - (elapsed_time / fade_duration)))
+        logo.set_alpha(fade_alpha)
+        screen.fill(white)
+        screen.blit(logo, (0,0))
+    else:
+        path = './picture/name.txt'
+        check_file = os.path.isfile(path)
+        now = datetime.datetime.now()
+        other_StyleTime = now.strftime("%Y-%m-%d")
 
-fade(1400,750)
 
-if check_file == True:
-    f = open("./picture/name.txt", "r") 
-    lines = f.readlines()
-    show_name_from_file(lines[0].strip())
-else:
-    get_restaurant_name()
-
+        if check_file == True:
+            f = open("./picture/name.txt", "r") 
+            lines = f.readlines()
+            show_name_from_file(lines[0].strip())
+        else:
+            get_restaurant_name()
+            
+    pygame.display.flip()
+    pygame.time.Clock().tick(30)
     
 # #food image
 # #Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
@@ -807,39 +850,7 @@ else:
 # nextbutton = pygame.transform.scale(nextbutton, (1000,700))
 
 
-# #happy hour
-# order_completed = 0
-# hhactive = False
-# hhtime = 30
-# hh_start_time = None
 
-# def update_happy_hour_status():
-#     global hhactive,order_completed,hh_start_time
-#     if order_completed >= 5:
-#         hhactive = True
-#         hh_start_time = time.time()
-#         order_completed = order_completed % 5
-#     elif hhactive and (time.time() - hh_start_time) >= hhtime:
-#         hhactive = False
-
-# def happyhour_bar(happyhour):
-#     update_happy_hour_status()
-#     if hhactive:
-#         hhtext = font2.render("Happy Hour Active!", True, black)
-#     else:
-#         hhtext = font2.render("Happy Hour", True, black)
-
-#     remaining_order = (order_completed % 5 - 5) % 5
-#     hhtext2 = font2.render(f"{remaining_order} /5", True, black)
-#     text_rect = hhtext.get_rect(center=(670,60))
-#     text_rect2 = hhtext2.get_rect(center=(670,100))
-#     screen.blit(hhtext,text_rect)
-#     screen.blit(hhtext2,text_rect2)
-
-# def hhprofit(origin_profit):
-#     if hhactive:
-#         return origin_profit * 2
-#     return origin_profit
 
 # #intro
 # noticeboard_rect = noticeboard.get_rect(center=(700,400))
