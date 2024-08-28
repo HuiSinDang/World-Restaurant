@@ -148,19 +148,19 @@ ori_machineC_button = pygame.image.load("./picture/ori-machineC.png")
 ori_machineC_button = pygame.transform.scale(ori_machineC_button, (210, 180))
 ori_machineC_button = Button(ori_machineC_button, 1050, 255, "")
 
-yesC_button = pygame.image.load("yesButton.png")
+yesC_button = pygame.image.load("./picture/yesButton.png")
 yesC_button = pygame.transform.scale(yesC_button, (90, 43))
 yesC_button = Button(yesC_button, 550,515, "")
 
-noC_button = pygame.image.load("noButton.png")
+noC_button = pygame.image.load("./picture/noButton.png")
 noC_button = pygame.transform.scale(noC_button, (85, 41))
 noC_button = Button(noC_button, 680,516, "")
 
-yesB_button = pygame.image.load("yesButton.png")
+yesB_button = pygame.image.load("./picture/yesButton.png")
 yesB_button = pygame.transform.scale(yesB_button, (90, 43))
 yesB_button = Button(yesB_button, 550,515, "")
 
-noB_button = pygame.image.load("noButton.png")
+noB_button = pygame.image.load("./picture/noButton.png")
 noB_button = pygame.transform.scale(noB_button, (85, 41))
 noB_button = Button(noB_button, 680,516, "")
 
