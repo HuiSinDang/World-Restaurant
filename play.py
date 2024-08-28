@@ -148,21 +148,21 @@ ori_machineC_button = pygame.image.load("./picture/ori-machineC.png")
 ori_machineC_button = pygame.transform.scale(ori_machineC_button, (210, 180))
 ori_machineC_button = Button(ori_machineC_button, 1050, 255, "")
 
-yes_button = pygame.image.load("./picture/yesButton.png")
-yes_button = pygame.transform.scale(yes_button, (90, 43))
-yes_button = Button(yes_button, 550,515, "")
+yesC_button = pygame.image.load("yesButton.png")
+yesC_button = pygame.transform.scale(yesC_button, (90, 43))
+yesC_button = Button(yesC_button, 550,515, "")
 
-no_button = pygame.image.load("./picture/noButton.png")
-no_button = pygame.transform.scale(no_button, (85, 41))
-no_button = Button(no_button, 680,516, "")
+noC_button = pygame.image.load("noButton.png")
+noC_button = pygame.transform.scale(noC_button, (85, 41))
+noC_button = Button(noC_button, 680,516, "")
 
-B_button = pygame.image.load("./picture/alphabetB.png")
-B_button = pygame.transform.scale(B_button, (40, 30))
-B_button = Button(B_button, 530, 585, "")
+yesB_button = pygame.image.load("yesButton.png")
+yesB_button = pygame.transform.scale(yesB_button, (90, 43))
+yesB_button = Button(yesB_button, 550,515, "")
 
-C_button = pygame.image.load("./picture/alphabetC.png")
-C_button = pygame.transform.scale(C_button, (40, 30))
-C_button = Button(C_button, 586, 585, "")
+noB_button = pygame.image.load("noButton.png")
+noB_button = pygame.transform.scale(noB_button, (85, 41))
+noB_button = Button(noB_button, 680,516, "")
 
 close_button = pygame.image.load("./picture/close_windowBtn.png")
 close_button = pygame.transform.scale(close_button, (60, 60))
@@ -178,14 +178,15 @@ setting_button = Button(setting_button, 73, 620, "")
 
 # Main loop
 show_popup = False
-show_popup2 = False
-show_popup3 = False
-show_popup4 = False
-selected_upgrade = None
-selecting_machine = False
+show_popup2B = False
+show_popup2C = False
+selected_upgradeB = None
+selected_upgradeC = None
+current_upgrade = None
+already_upgrade = False
 not_enough_money = False  # indicate not enough money
 message_timer = 0  # Timer to show messages temporarily
-money = 4000
+money = 2000
 unlocked_machine = set() # Set to track unlocked machines
 
 def rename():
@@ -372,113 +373,183 @@ def draw_popup():
 
     close_button.update()
 
-def draw_popup2():
+def draw_popup2B():
     # (width,height,x,y)
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
     draw_text("INSTRUCTIONS: ", upgrade_font, "black", screen, 520, 449)
     draw_text("1. Do you want to upgrade your machine?", upgrade_font, "black", screen, 650, 478)
-    yes_button.update()
-    no_button.update()
 
-    if selecting_machine:
-        draw_text("2. Select your machine:", upgrade_font, "black", screen, 565, 552)
-        B_button.update()
-        C_button.update()
+    yesB_button.update()
+    noB_button.update()
 
-def draw_popup3():
-    pygame.draw.rect(screen, (255, 201, 254), popup3_rect)
-    pygame.draw.rect(screen, (148, 5, 100), popup3_rect, 5)  # Popup border
-    draw_text("Foods:", font, "black", screen, 465, 150)
-    close_button.update()
+def draw_popup2C():
+    # (width,height,x,y)
+    popup2_rect = pygame.Rect(423, 430, 750, 230)
+    pygame.draw.rect(screen, (224, 248, 253), popup2_rect)
+    draw_text("INSTRUCTIONS: ", upgrade_font, "black", screen, 520, 449)
+    draw_text("1. Do you want to upgrade your machine?", upgrade_font, "black", screen, 650, 478)
 
-def select_upgrade_machine():
-    global selected_upgrade, message_timer
-    draw_text(f"Machine upgraded to {selected_upgrade}!", upgrade_font, "navyblue", screen, 800, 630)
+    yesC_button.update()
+    noC_button.update()
+
+def select_upgrade_machineB():
+    global selected_upgradeB, message_timer
+    popup2_rect = pygame.Rect(423, 430, 750, 230)
+    pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
+    draw_text(f"Machine upgraded to {selected_upgradeB}!", upgrade_font, "navyblue", screen, 800, 550)
     message_timer -= 1  
     if message_timer == 0:
-        selected_upgrade = False
+        selected_upgradeB = False
+
+def select_upgrade_machineC():
+    global selected_upgradeC, message_timer
+    popup2_rect = pygame.Rect(423, 430, 750, 230)
+    pygame.draw.rect(screen, (224, 248, 253), popup2_rect)
+    draw_text(f"Machine upgraded to {selected_upgradeC}!", upgrade_font, "navyblue", screen, 800, 550)
+    message_timer -= 1  
+    if message_timer == 0:
+        selected_upgradeC = False
+
+def draw_complete_upgrade():
+    global current_upgrade, message_timer,already_upgrade
+    popup2_rect = pygame.Rect(423, 430, 750, 230)
+    pygame.draw.rect(screen, (255, 229, 215), popup2_rect)
+    draw_text(f"Machine has already upgraded to {current_upgrade}!", upgrade_font, "navyblue", screen, 800, 550)
+    message_timer -= 1  
+    if message_timer == 0:
+        already_upgrade = False
+        not_enough_money = False
 
 def less_money():
-    global message_timer, selecting_machine, not_enough_money
+    global message_timer, not_enough_money, show_popup2B, show_popup2C
+    popup3_rect = pygame.Rect(423, 430, 750, 230)
+    pygame.draw.rect(screen, (255, 201, 254), popup3_rect)
     draw_text("You do not have enough money!", upgrade_font, "red", screen, 800, 630)
     message_timer -= 1  
     if message_timer == 0:
-        not_enough_money = False 
-        selecting_machine = False
+        not_enough_money = False
+        show_popup2B = False
+        show_popup2C = False
 
 def handle_upgrades(): 
-    global show_popup, show_popup2, show_popup3, show_popup4, not_enough_money, selected_upgrade, selecting_machine, message_timer
+    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB, selected_upgradeC, message_timer, current_upgrade, already_upgrade
     if show_popup:
         draw_popup()
 
-    if show_popup2:
-        draw_popup2()
-    
-    if show_popup3:
-        draw_popup3()
+    if show_popup2B:
+        draw_popup2B()
 
-    if selected_upgrade:
-        select_upgrade_machine()
+    if show_popup2C:
+        draw_popup2C()
+
+    if selected_upgradeB:
+        select_upgrade_machineB()
+
+    if selected_upgradeC:
+        select_upgrade_machineC()
+
+    if already_upgrade:
+        draw_complete_upgrade()
         
     if not_enough_money:
         less_money()
 
 def upgrade_process():
-    global show_popup, show_popup2, show_popup3, show_popup4, not_enough_money, selected_upgrade, selecting_machine, message_timer, money, unlocked_machine
+    ori_machineA_button.update()
+    ori_machineB_button.update()
+    ori_machineC_button.update()
+    profilebutton.update()
+    upgrade_btn.update()
+    menu_button.update()
+    setting_button.update()
+    pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
+    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money, unlocked_machine,current_upgrade, already_upgrade
+    
+    show_popup= True
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
+                exit()
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if close_button.checkForInput(pygame.mouse.get_pos()):
                     main()
 
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
-                    show_popup = True
+                    draw_popup()
 
-                elif machineB_button.checkForInput(pygame.mouse.get_pos()) or machineC_button.checkForInput(pygame.mouse.get_pos()):
-                    show_popup2 = True
-                
-                elif yes_button.checkForInput(pygame.mouse.get_pos()):
-                    selecting_machine = True
-                    show_popup2 = True
-                    
-                elif no_button.checkForInput(pygame.mouse.get_pos()):
-                    show_popup2 = False   
-
-                elif selecting_machine:
-                    if B_button.checkForInput(pygame.mouse.get_pos()):
-                        if "B" in unlocked_machine:
-                            selected_upgrade = "B"
-                            message_timer = 180
-                        elif money >= upgrade_costs["B"]:
-                            money -= upgrade_costs["B"]
-                            unlocked_machine.add("B")
-                            selected_upgrade = "B"
-                            message_timer = 180
-                        else:
+                if machineB_button.checkForInput(pygame.mouse.get_pos()):
+                    if "B" in unlocked_machine:
+                        current_upgrade = "MACHINE B"
+                        already_upgrade = True
+                        message_timer = 60
+                    else:
+                        if money < upgrade_costs["B"]:
                             not_enough_money = True
-                            message_timer = 180
-
-                    elif C_button.checkForInput(pygame.mouse.get_pos()):
+                            message_timer = 60
+                        else:
+                            show_popup2B = True
+                        
+                if yesB_button.checkForInput(pygame.mouse.get_pos()) and show_popup2B:
+                    if "B" in unlocked_machine:
+                        already_upgrade = True  # Ensure money is not deducted
+                        message_timer = 60
+                        show_popup2B = False
+                    elif money >= upgrade_costs["B"]:
+                        money -= upgrade_costs["B"]
+                        unlocked_machine.add("B")
+                        selected_upgradeB = "B"
+                        current_upgrade = "MACHINE B"
+                        message_timer = 60
+                        show_popup2B = False
+                    else:
+                        not_enough_money = True
+                        message_timer = 60
+                
+                if machineC_button.checkForInput(pygame.mouse.get_pos()):
+                    if "C" in unlocked_machine:
+                        current_upgrade = "MACHINE C"
+                        already_upgrade = True
+                        message_timer = 60
+                    else:
                         if money < upgrade_costs["C"]:
                             not_enough_money = True
-                            message_timer = 180
+                            message_timer = 60
                         else:
-                            if "C" not in unlocked_machine:
-                                money -= upgrade_costs["C"]
-                                unlocked_machine.add("C")
-                                selected_upgrade = "C"
-                                message_timer = 180
+                            show_popup2C = True
                     
-                    elif menu_button.checkForInput(pygame.mouse.get_pos()):
-                        show_popup3 = True
+                if yesC_button.checkForInput(pygame.mouse.get_pos()) and show_popup2C:
+                    if "C" in unlocked_machine:
+                        already_upgrade = True
+                        message_timer = 60
+                        show_popup2C = False
+                    elif money >= upgrade_costs["C"]:
+                        money -= upgrade_costs["C"]
+                        unlocked_machine.add("C")
+                        selected_upgradeC = "C"
+                        current_upgrade = "MACHINE C"
+                        message_timer = 60
+                        show_popup2C = False
+                    else:
+                        not_enough_money = True
+                        message_timer = 60
+
+                if noB_button.checkForInput(pygame.mouse.get_pos()):
+                    show_popup2B = False  
+                   
+                if noC_button.checkForInput(pygame.mouse.get_pos()):
+                    show_popup2C = False 
 
         handle_upgrades()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        money_bar()
         pygame.display.update()
+        clock.tick(60)
 
     
 def main():
@@ -511,7 +582,6 @@ def main():
         setting_button.update()
 
         pygame.display.flip()
-
         clock.tick(60)
 #money
 money_amount = 0
