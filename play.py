@@ -544,17 +544,13 @@ def update_happy_hour_status():
 
 def happyhour_bar(happyhour):
     update_happy_hour_status()
-    if hhactive:
-        hhtext = font2.render("Happy Hour Active!", True, black)
-    else:
-        hhtext = font2.render("Happy Hour", True, black)
-
     remaining_order = (order_completed % 5 - 5) % 5
-    hhtext2 = font2.render(f"{remaining_order} /5", True, black)
-    text_rect = hhtext.get_rect(center=(570,60))
-    text_rect2 = hhtext2.get_rect(center=(800,60))
+    if hhactive:
+        hhtext = font2.render(f"Happy Hour Active! {remaining_order} /5", True, black)
+    else:
+        hhtext = font2.render(f"Happy Hour {remaining_order} /5", True, black)
+    text_rect = hhtext.get_rect(center=(650,60))
     screen.blit(hhtext,text_rect)
-    screen.blit(hhtext2,text_rect2)
 
 def hhprofit(origin_profit):
     if hhactive:
@@ -702,34 +698,40 @@ def get_restaurant_name():
         pygame.display.flip()
         clock.tick(60)
 
-def fade(width, height):
-    fade = pygame.Surface((width,height))
-    fade.fill("white")
-    for alpha in range(0,300):
-        fade.set_alpha(alpha)
-        show_logo()
-        screen.blit(fade, (0,0))
-        pygame.display.update()
-        pygame.time.delay(2)
+#logo_fade
+start_time = time.time()
+fade_duration = 3
+logo = pygame.image.load('./picture/logo.png')
 
-def show_logo():
-    bg_img = pygame.image.load("./picture/logo.png").convert()
-    screen.blit(bg_img, (0, 0))
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-path = './picture/name.txt'
-check_file = os.path.isfile(path)
-now = datetime.datetime.now()
-other_StyleTime = now.strftime("%Y-%m-%d")
+    elapsed_time = time.time() - start_time
+    
+    if elapsed_time < fade_duration:
+        fade_alpha = int(255 * (1 - (elapsed_time / fade_duration)))
+        logo.set_alpha(fade_alpha)
+        screen.fill(white)
+        screen.blit(logo, (0,0))
+    else:
+        path = './picture/name.txt'
+        check_file = os.path.isfile(path)
+        now = datetime.datetime.now()
+        other_StyleTime = now.strftime("%Y-%m-%d")
 
-fade(1400,750)
 
-if check_file == True:
-    f = open("./picture/name.txt", "r") 
-    lines = f.readlines()
-    show_name_from_file(lines[0].strip())
-else:
-    get_restaurant_name()
-
+        if check_file == True:
+            f = open("./picture/name.txt", "r") 
+            lines = f.readlines()
+            show_name_from_file(lines[0].strip())
+        else:
+            get_restaurant_name()
+            
+    pygame.display.flip()
+    pygame.time.Clock().tick(30)
     
 # #food image
 # #Level 1(Malaysia)-Nasi Lemak-Roti Canai-Satay
