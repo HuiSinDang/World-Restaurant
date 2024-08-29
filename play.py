@@ -772,10 +772,10 @@ def get_restaurant_name():
 
 #intro
 closebutton = pygame.image.load('./picture/closebutton.png')
-closebutton = pygame.transform.scale(closebutton, (1000,700))
+closebutton = pygame.transform.scale(closebutton, (50,50))
 
 nextbutton = pygame.image.load('./picture/nextbutton.png')
-nextbutton = pygame.transform.scale(nextbutton, (1000,700))
+nextbutton = pygame.transform.scale(nextbutton, (50,50))
 
 noticeboard = pygame.image.load('./picture/noticeboard.png')
 noticeboard = pygame.transform.scale(noticeboard, (1400,800))
@@ -784,13 +784,12 @@ background = pygame.image.load('./picture/lobby.jpg')
 background = pygame.transform.scale(background, (screen_width,screen_height))
 
 noticeboard_rect = noticeboard.get_rect(center=(700,400))
-closebutton_rect = closebutton.get_rect(topright=(1225,43))
-nextbutton_rect = nextbutton.get_rect(bottomright=(1255,795))
+closebutton_rect = closebutton.get_rect(topright=(900,100))
+nextbutton_rect = nextbutton.get_rect(bottomright=(900,700))
 notice_font = pygame.font.Font('./picture/jugnle.ttf',20)
 noticetext1 = "Welcome to World Restaurant!\nIntroduction of the game..."
 noticetext2 = "Many tutorial...\nBla bla bla..."
-intropage = 1
-mouse_pressed_last_frame = False
+
 
 
 def render_introtext(text,font,color,center):
@@ -816,19 +815,22 @@ def intropage_click(page,mouse_pressed_last_frame):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pressed = pygame.mouse.get_pressed()[0]
     if page == 1 and nextbutton_rect.collidepoint(mouse_pos):
-        if mouse_pressed_last_frame and not mouse_pressed:
+        if not mouse_pressed_last_frame and mouse_pressed:
             return 2,mouse_pressed
     elif page == 2 and closebutton_rect.collidepoint(mouse_pos):
-        if mouse_pressed_last_frame and not mouse_pressed:
+        if not mouse_pressed_last_frame and mouse_pressed:
             return 0,mouse_pressed
     return page,mouse_pressed
 
 def show_intropage():
     global intropage, mouse_pressed_last_frame
+    intropage = 1
+    mouse_pressed_last_frame = False
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
         if intropage == 1:
             intropage1()
         elif intropage == 2:
@@ -836,6 +838,7 @@ def show_intropage():
         intropage,mouse_pressed_last_frame = intropage_click(intropage,mouse_pressed_last_frame)
         if intropage == 0:
             main()
+
 
         pygame.display.flip()
         pygame.time.Clock().tick(30)
