@@ -231,23 +231,23 @@ setting_button = pygame.image.load("./picture/setting.png")
 setting_button = pygame.transform.scale(setting_button, (120, 120))
 setting_button = Button(setting_button, 73, 620, "")
 
-next_btn = pygame.image.load("nextbutton.png")
+next_btn = pygame.image.load("./picture/nextbutton.png")
 next_btn = pygame.transform.scale(next_btn, (50, 60))
 next_btn = Button(next_btn, 1138, 669, "")
 
-back_btn = pygame.image.load("back_btn.png")
+back_btn = pygame.image.load("./picture/back_btn.png")
 back_btn = pygame.transform.scale(back_btn, (60, 70))
 back_btn = Button(back_btn, 460, 665, "")
 
-selectDM_btn = pygame.image.load("select-default.png")
+selectDM_btn = pygame.image.load("./picture/select-default.png")
 selectDM_btn = pygame.transform.scale(selectDM_btn, (600,100))
 selectDM_btn = Button(selectDM_btn, 800, 340, "")
 
-selectMB_btn = pygame.image.load("select-mb.png")
+selectMB_btn = pygame.image.load("./picture/select-mb.png")
 selectMB_btn = pygame.transform.scale(selectMB_btn, (600,90))
 selectMB_btn = Button(selectMB_btn, 800, 450, "")
 
-selectMC_btn = pygame.image.load("select-mc.png")
+selectMC_btn = pygame.image.load("./picture/select-mc.png")
 selectMC_btn = pygame.transform.scale(selectMC_btn, (600,90))
 selectMC_btn = Button(selectMC_btn, 800, 560, "")
 
