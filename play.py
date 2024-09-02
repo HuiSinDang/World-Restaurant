@@ -45,6 +45,11 @@ color_passive = pygame.Color('gray5')
 color_fill = pygame.Color('white')
 color = color_passive
 
+# select food to prepare
+food_selection_font = pygame.font.SysFont("Comic Sans MS", 23, bold=True)
+food_title_font = pygame.font.SysFont("Comic Sans MS", 18, bold=True)
+color_pic = (222, 220, 250)
+
 clock = pygame.time.Clock()
 
 # Machine criteria
@@ -68,14 +73,64 @@ inputMB_rect = pygame.Rect(640,310, 200, 33)
 inputMC_rect = pygame.Rect(930,310, 200, 33)
 popup_rect = pygame.Rect(400, 120, 800, 600)
 popup2_rect = pygame.Rect(423, 430, 750, 230)
+food_selection1_rect = pygame.Rect(400, 120, 800, 600)
 
 # Load the small image
 coin1_img =  pygame.image.load("./picture/coin.png")
 coin1_img = pygame.transform.scale(coin1_img, (25, 25))
+
 coin2_img =  pygame.image.load("./picture/coin.png")
 coin2_img = pygame.transform.scale(coin2_img, (25, 25))
+
 background = pygame.image.load("./picture/lobby.jpg")
 background = pygame.transform.scale(background, (1400, 750))
+
+corndog_img = pygame.image.load("corndog.png")
+corndog_img = pygame.transform.scale(corndog_img, (100, 127))
+
+tokbokki_img = pygame.image.load("tokbokki.png")
+tokbokki_img = pygame.transform.scale(tokbokki_img, (100, 127))
+
+corndogcheese_img = pygame.image.load("corndogcheese.png")
+corndogcheese_img = pygame.transform.scale(corndogcheese_img, (100, 127))
+
+roticanai_img = pygame.image.load("roticanai.png")
+roticanai_img = pygame.transform.scale(roticanai_img, (100, 127))
+
+dumpling_img = pygame.image.load("dumpling.png")
+dumpling_img = pygame.transform.scale(dumpling_img, (100, 127))
+
+food_lists =[
+    {
+    "image": tokbokki_img,
+    "name": "Tokbokki",
+    "price": "RM10.00",
+    },
+
+    {
+    "image": corndogcheese_img,
+    "name": "Cheese Corndog",
+    "price": "RM10.00",
+    },
+
+    {
+    "image": corndog_img,
+    "name": "Original Corndog",
+    "price": "RM8.00",
+    },
+
+    {
+    "image": roticanai_img,
+    "name": "Roti Canai",
+    "price": "RM1.50",
+    },
+
+    {
+    "image": dumpling_img,
+    "name": "Dumpling",
+    "price": "RM6.00",
+    }
+]
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
@@ -176,6 +231,26 @@ setting_button = pygame.image.load("./picture/setting.png")
 setting_button = pygame.transform.scale(setting_button, (120, 120))
 setting_button = Button(setting_button, 73, 620, "")
 
+next_btn = pygame.image.load("nextbutton.png")
+next_btn = pygame.transform.scale(next_btn, (50, 60))
+next_btn = Button(next_btn, 1138, 669, "")
+
+back_btn = pygame.image.load("back_btn.png")
+back_btn = pygame.transform.scale(back_btn, (60, 70))
+back_btn = Button(back_btn, 460, 665, "")
+
+selectDM_btn = pygame.image.load("select-default.png")
+selectDM_btn = pygame.transform.scale(selectDM_btn, (600,100))
+selectDM_btn = Button(selectDM_btn, 800, 340, "")
+
+selectMB_btn = pygame.image.load("select-mb.png")
+selectMB_btn = pygame.transform.scale(selectMB_btn, (600,90))
+selectMB_btn = Button(selectMB_btn, 800, 450, "")
+
+selectMC_btn = pygame.image.load("select-mc.png")
+selectMC_btn = pygame.transform.scale(selectMC_btn, (600,90))
+selectMC_btn = Button(selectMC_btn, 800, 560, "")
+
 # Main loop
 show_popup = False
 show_popup2B = False
@@ -184,10 +259,11 @@ selected_upgradeB = None
 selected_upgradeC = None
 current_upgrade = None
 already_upgrade = False
-not_enough_money = False  # indicate not enough money
-message_timer = 0  # Timer to show messages temporarily
+not_enough_money = False 
+message_timer = 0  
 money = 2000
-unlocked_machine = set() # Set to track unlocked machines
+unlocked_machine = set() 
+remind_unlock = False
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -556,8 +632,140 @@ def upgrade_process():
         happyhour_bar(hhactive)
         money_bar()
 
+def remind_unlock_popout():
+    global message_timer, remind_unlock,current_upgrade
+    draw_text(f"You haven't unlocked {current_upgrade }!", food_selection_font, "red", screen, 800, 640)
+    message_timer -= 1  
+    if message_timer == 0:
+        remind_unlock = False
 
-    
+def selectfood_page1():
+    while True:
+        global message_timer, remind_unlock, current_upgrade
+        screen.blit(background, (0, 0))  # Add this to clear the screen properly before drawing
+        
+        # Draw UI elements
+        ori_machineA_button.update()
+        ori_machineB_button.update()
+        ori_machineC_button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
+        pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
+        draw_text("Please select the machine you want to prepare your food: ", food_selection_font, "black", screen, 800, 240)
+
+        selectDM_btn.update()
+        selectMB_btn.update()
+        selectMC_btn.update()
+        close_button.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                    main()
+                if selectDM_btn.checkForInput(pygame.mouse.get_pos()):
+                    return selectfood_page2()  # Call the next page and exit this loop
+                if selectMB_btn.checkForInput(pygame.mouse.get_pos()):
+                    if "B" in unlocked_machine:
+                        selectfood_page2()
+                    else:
+                        current_upgrade = "MACHINE B "
+                        remind_unlock = True
+                        message_timer = 60
+                if selectMC_btn.checkForInput(pygame.mouse.get_pos()):
+                    if "C" in unlocked_machine:
+                        selectfood_page2()
+                    else:
+                        current_upgrade = "MACHINE C "
+                        remind_unlock = True
+                        message_timer = 60
+
+        money_bar()
+        happyhour_bar(hhactive)
+
+        if remind_unlock:
+            remind_unlock_popout()
+
+        pygame.display.update()
+        clock.tick(60)
+
+# Assume current_page starts from 1 and max_items_per_page is 3
+current_page = 1
+max_items_per_page = 3
+
+# Calculate the total number of pages
+total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
+
+def selectfood_page2():
+    while True:
+        global current_page
+        screen.blit(background, (0, 0))  # Clear the screen before drawing
+        ori_machineA_button.update()
+        ori_machineB_button.update()
+        ori_machineC_button.update() 
+
+        # Render the food selection UI
+        food_selection1_rect = pygame.Rect(400, 120, 800, 600)
+        food_selection2_rect = pygame.Rect(425, 195, 752, 495)
+        pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
+        pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
+        pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+
+        draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
+
+        # Determine items to display on the current page
+        start_index = (current_page - 1) * max_items_per_page
+        end_index = start_index + max_items_per_page
+        items_on_page = food_lists[start_index:end_index]
+
+        # Render the items
+        for i in range(len(items_on_page)):
+            food_item = items_on_page[i]
+            y_position = 216 + i * 144
+            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+            screen.blit(food_item["image"], (460, y_position + 4))
+            draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
+            draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
+
+        # Handle next/back buttons
+        total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
+        if current_page < total_pages:
+            next_btn.update()
+
+        if current_page > 1:
+            back_btn.update()
+
+        # Event handling for buttons
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                    return main()
+                if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
+                    current_page += 1
+                if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
+                    current_page -= 1
+        
+        money_bar()
+        profilebutton.update()
+        menu_button.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        close_button.update()
+        happyhour_bar(hhactive)
+        pygame.display.update()
+        clock.tick(60)
+
+
 def main():
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -572,6 +780,8 @@ def main():
                     profile()
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     upgrade_process()
+                if menu_button.checkForInput(pygame.mouse.get_pos()): 
+                    selectfood_page1()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
