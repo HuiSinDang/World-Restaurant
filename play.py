@@ -85,19 +85,19 @@ coin2_img = pygame.transform.scale(coin2_img, (25, 25))
 background = pygame.image.load("./picture/lobby.jpg")
 background = pygame.transform.scale(background, (1400, 750))
 
-corndog_img = pygame.image.load("corndog.png")
+corndog_img = pygame.image.load("./picture/corndog.png")
 corndog_img = pygame.transform.scale(corndog_img, (100, 127))
 
-tokbokki_img = pygame.image.load("tokbokki.png")
+tokbokki_img = pygame.image.load("./picture/tokbokki.png")
 tokbokki_img = pygame.transform.scale(tokbokki_img, (100, 127))
 
-corndogcheese_img = pygame.image.load("corndogcheese.png")
+corndogcheese_img = pygame.image.load("./picture/corndogcheese.png")
 corndogcheese_img = pygame.transform.scale(corndogcheese_img, (100, 127))
 
-roticanai_img = pygame.image.load("roticanai.png")
+roticanai_img = pygame.image.load("./picture/roticanai.png")
 roticanai_img = pygame.transform.scale(roticanai_img, (100, 127))
 
-dumpling_img = pygame.image.load("dumpling.png")
+dumpling_img = pygame.image.load("./picture/dumpling.png")
 dumpling_img = pygame.transform.scale(dumpling_img, (100, 127))
 
 food_lists =[
@@ -490,7 +490,7 @@ def select_upgrade_machineC():
         selected_upgradeC = False
 
 def draw_complete_upgrade():
-    global current_upgrade, message_timer,already_upgrade
+    global current_upgrade, message_timer,already_upgrade,not_enough_money
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (255, 229, 215), popup2_rect)
     draw_text(f"Machine has already upgraded to {current_upgrade}!", upgrade_font, "navyblue", screen, 800, 550)
@@ -642,9 +642,8 @@ def remind_unlock_popout():
 def selectfood_page1():
     while True:
         global message_timer, remind_unlock, current_upgrade
-        screen.blit(background, (0, 0))  # Add this to clear the screen properly before drawing
+        screen.blit(background, (0, 0)) 
         
-        # Draw UI elements
         ori_machineA_button.update()
         ori_machineB_button.update()
         ori_machineC_button.update()
@@ -695,22 +694,19 @@ def selectfood_page1():
         pygame.display.update()
         clock.tick(60)
 
-# Assume current_page starts from 1 and max_items_per_page is 3
 current_page = 1
 max_items_per_page = 3
 
-# Calculate the total number of pages
 total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
 
 def selectfood_page2():
     while True:
         global current_page
-        screen.blit(background, (0, 0))  # Clear the screen before drawing
+        screen.blit(background, (0, 0))  
         ori_machineA_button.update()
         ori_machineB_button.update()
         ori_machineC_button.update() 
 
-        # Render the food selection UI
         food_selection1_rect = pygame.Rect(400, 120, 800, 600)
         food_selection2_rect = pygame.Rect(425, 195, 752, 495)
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
@@ -719,12 +715,10 @@ def selectfood_page2():
 
         draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
 
-        # Determine items to display on the current page
         start_index = (current_page - 1) * max_items_per_page
         end_index = start_index + max_items_per_page
         items_on_page = food_lists[start_index:end_index]
 
-        # Render the items
         for i in range(len(items_on_page)):
             food_item = items_on_page[i]
             y_position = 216 + i * 144
@@ -733,7 +727,6 @@ def selectfood_page2():
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-        # Handle next/back buttons
         total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
             next_btn.update()
@@ -741,7 +734,6 @@ def selectfood_page2():
         if current_page > 1:
             back_btn.update()
 
-        # Event handling for buttons
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
