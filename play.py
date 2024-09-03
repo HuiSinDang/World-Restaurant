@@ -666,12 +666,16 @@ def order():
                             list2 = load_list_from_file(list2_filename)
 
                             if len(list2) < len(list1):
-                                print("Fail")
+                                draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
                                 return
 
                             for item in list1:
                                 if list1.count(item) > list2.count(item):
-                                    print("Fail")
+                                    draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                    pygame.display.flip()
+                                    pygame.time.wait(1000)
                                     return
 
                             for item in list1:
@@ -682,7 +686,9 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
 
-                            print("Success")
+                            draw_text("Order Completed!!!", main_font, "red", screen, 650, 500)  # On top of button 1
+                            pygame.display.flip()
+                            pygame.time.wait(1000)
 
                         list1_filename = './picture/order1.txt'
                         list2_filename = './picture/waitingtable.txt'
@@ -705,12 +711,16 @@ def order():
                             list2 = load_list_from_file(list2_filename)
 
                             if len(list2) < len(list1):
-                                print("Fail")
+                                draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
                                 return
 
                             for item in list1:
                                 if list1.count(item) > list2.count(item):
-                                    print("Fail")
+                                    draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                    pygame.display.flip()
+                                    pygame.time.wait(1000)
                                     return
 
                             for item in list1:
@@ -721,7 +731,9 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
 
-                            print("Success")
+                            draw_text("Order Completed!!!", main_font, "red", screen, 650, 500)  # On top of button 1
+                            pygame.display.flip()
+                            pygame.time.wait(1000)
 
                         list1_filename = './picture/order2.txt'
                         list2_filename = './picture/waitingtable.txt'
@@ -745,12 +757,16 @@ def order():
                             list2 = load_list_from_file(list2_filename)
 
                             if len(list2) < len(list1):
-                                print("Fail")
+                                draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
                                 return
 
                             for item in list1:
                                 if list1.count(item) > list2.count(item):
-                                    print("Fail")
+                                    draw_text("You're not ready yet", main_font, "red", screen, 650, 500)  # On top of button 1
+                                    pygame.display.flip()
+                                    pygame.time.wait(1000)
                                     return
 
                             for item in list1:
@@ -761,7 +777,9 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
 
-                            print("Success")
+                            draw_text("Order Completed!!!", main_font, "red", screen, 650, 500)  # On top of button 1
+                            pygame.display.flip()
+                            pygame.time.wait(1000)
 
                         list1_filename = './picture/order3.txt'
                         list2_filename = './picture/waitingtable.txt'
