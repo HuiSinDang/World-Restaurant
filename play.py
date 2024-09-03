@@ -54,8 +54,8 @@ clock = pygame.time.Clock()
 
 # Machine criteria
 machine_criteria = { 
-    "B": "Criteria - Cooking process speed up to 40s",
-    "C": "Criteria - Cooking process speed up to 30s",
+    "B": "Criteria - Cooking process reduced to 40s",
+    "C": "Criteria - Cooking process reduced to 30s",
 }
 
 # Define the cost for each machine upgrade
@@ -157,6 +157,13 @@ class Button():
             click_sfx.play()
             return True
         return False
+
+
+# SELECT button
+selectbutton_surface = pygame.Surface((130, 40))
+selectprepare_button_rect = pygame.Rect(1010, 90, 150, 40) 
+SELECT_text = food_title_font.render(" SELECT ", True, "black")
+text_rect = SELECT_text.get_rect(center=(selectbutton_surface.get_width()/2, selectbutton_surface.get_height()/2))
 
 # Initialize the button
 button_surface = pygame.image.load("./picture/close_windowBtn.png")
@@ -446,8 +453,8 @@ def draw_popup():
     draw_text("Default", upgrade_font, "black", screen, 710, 343)
     draw_text("Machine B", upgrade_font, "black", screen, 890, 350)
     draw_text("Machine C", upgrade_font, "black", screen, 1060, 350)
-    draw_text("Machine Features - B: Cooking process speed up to 40s", upgrade_font, "black", screen, 714, 380)
-    draw_text("- C: Cooking process speed up to 30s", upgrade_font, "black", screen, 805, 408)
+    draw_text("Machine Features - B: Cooking process reduced to 40s", upgrade_font, "black", screen, 714, 380)
+    draw_text("- C: Cooking process reduced to 30s", upgrade_font, "black", screen, 805, 408)
 
     close_button.update()
 
@@ -726,6 +733,15 @@ def selectfood_page2():
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
+
+            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(selectbutton_surface, (24, 203, 24), (1, 1, 148, 48))  
+            else:
+                pygame.draw.rect(selectbutton_surface, (225, 255, 225), (2, 2, 148, 48)) 
+
+
+            selectbutton_surface.blit(SELECT_text, text_rect)
+            screen.blit(selectbutton_surface, (selectprepare_button_rect.x, selectprepare_button_rect.y))
 
         total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
