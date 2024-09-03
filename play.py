@@ -1109,11 +1109,13 @@ def selectfood_page2():
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
+            selectprepare_button_rect.y = y_position + 43
+            selectbutton_surface = pygame.Surface((130, 40))
+
             if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.draw.rect(selectbutton_surface, (24, 203, 24), (1, 1, 148, 48))  
             else:
                 pygame.draw.rect(selectbutton_surface, (225, 255, 225), (2, 2, 148, 48)) 
-
 
             selectbutton_surface.blit(SELECT_text, text_rect)
             screen.blit(selectbutton_surface, (selectprepare_button_rect.x, selectprepare_button_rect.y))
