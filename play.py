@@ -4,6 +4,7 @@ import sys
 import time
 import os.path
 import datetime
+import random
 from pygame import mixer
 
 pygame.init()
@@ -25,6 +26,11 @@ screen_rect.x = 200
 screen_rect.y = 150
 surface = pygame.Surface((900,500),pygame.SRCALPHA)
 pygame.draw.rect(surface,(231, 175, 195  ,200),surface.get_rect(),0)
+
+screen_rect1 = screen.get_rect()
+screen_rect1.x = 200
+screen_rect1.y = 150
+pygame.draw.rect(surface,(215, 228, 231 ,200),surface.get_rect(),0)
 
 white = (255,255,255)
 black = (0,0,0)
@@ -177,7 +183,7 @@ profilebutton = Button(profilebutton_surface, 75, 75, "")
 
 upgrade_btn = pygame.image.load("./picture/upgrade-shop.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (110, 110))
-upgrade_btn= Button(upgrade_btn, 76, 430, "")
+upgrade_btn= Button(upgrade_btn, 76, 500, "")
 
 default_machineA_button = pygame.image.load("./picture/machineA.png")
 default_machineA_button = pygame.transform.scale(default_machineA_button, (160, 160))
@@ -225,11 +231,11 @@ close_button = Button(close_button, 1190, 130, "")
 
 menu_button = pygame.image.load("./picture/menu.png")
 menu_button = pygame.transform.scale(menu_button, (110,100))
-menu_button = Button(menu_button, 76, 250, "")
+menu_button = Button(menu_button, 76, 225, "")
 
 setting_button = pygame.image.load("./picture/setting.png")
 setting_button = pygame.transform.scale(setting_button, (120, 120))
-setting_button = Button(setting_button, 73, 620, "")
+setting_button = Button(setting_button, 73, 650, "")
 
 next_btn = pygame.image.load("./picture/nextbutton.png")
 next_btn = pygame.transform.scale(next_btn, (50, 60))
@@ -250,6 +256,35 @@ selectMB_btn = Button(selectMB_btn, 800, 450, "")
 selectMC_btn = pygame.image.load("./picture/select-mc.png")
 selectMC_btn = pygame.transform.scale(selectMC_btn, (600,90))
 selectMC_btn = Button(selectMC_btn, 800, 560, "")
+
+order1button_surface = pygame.image.load("./picture/order.png")
+order1button_surface = pygame.transform.scale(order1button_surface, (400, 400))
+order1button = Button(order1button_surface, 350, 350,"")
+
+order2button_surface = pygame.image.load("./picture/order.png")
+order2button_surface = pygame.transform.scale(order2button_surface, (400, 400))
+order2button = Button(order2button_surface, 650, 350,"")
+
+order3button_surface = pygame.image.load("./picture/order.png")
+order3button_surface = pygame.transform.scale(order3button_surface, (400, 400))
+order3button = Button(order3button_surface, 950, 350,"")
+
+completebutton1_surface = pygame.image.load("./picture/reset_btn.png")
+completebutton1_surface = pygame.transform.scale(completebutton1_surface, (250, 250))
+completebutton1 = Button(completebutton1_surface, 600, 575,"Complete")
+
+completebutton2_surface = pygame.image.load("./picture/reset_btn.png")
+completebutton2_surface = pygame.transform.scale(completebutton2_surface, (250, 250))
+completebutton2 = Button(completebutton2_surface, 600, 575,"Complete")
+
+completebutton3_surface = pygame.image.load("./picture/reset_btn.png")
+completebutton3_surface = pygame.transform.scale(completebutton3_surface, (250, 250))
+completebutton3 = Button(completebutton3_surface, 600, 575,"Complete")
+
+orderbtn_surface = pygame.image.load("./picture/order_btn.png")
+orderbtn_surface = pygame.transform.scale(orderbtn_surface, (175, 175))
+orderbtn = Button(orderbtn_surface, 75, 360,"")
+
 
 # Main loop
 show_popup = False
@@ -414,10 +449,328 @@ def profile():
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
+        orderbtn.update()
         money_bar()
         happyhour_bar(hhactive)
 
         pygame.display.flip()
+
+def order():
+    global show_complete_button1, show_complete_button2, show_complete_button3
+
+    show_complete_button1 = False
+    show_complete_button2 = False
+    show_complete_button3 = False
+    last_clicked_order = None
+    
+    while True:
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))  # Draw the background
+        ori_machineA_button.update()
+        ori_machineB_button.update()
+        ori_machineC_button.update()
+        screen.blit(surface,screen_rect1)
+
+        order1button.update()  # Draw the first button
+        order2button.update()  # Draw the second button
+        order3button.update()  # Draw the third button
+        button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        orderbtn.update()
+        money_bar()
+        happyhour_bar(hhactive)
+
+        draw_text("Order", main_font, "black", screen, 650, 200)  # On top of button 1
+
+        f = open("./picture/food.txt", "r")
+        food = [line.strip() for line in f.readlines() if line.strip()]
+
+        #order1
+        path1= './picture/order1.txt'
+        check_file1 = os.path.isfile(path1)
+
+        if check_file1:
+            ffood1 = open(path1, "r") 
+            order1 = [line.strip() for line in ffood1.readlines() if line.strip()]
+            y_offset = 275
+            if  order1 == []:
+                ffood1 = open(path1, "a") 
+                nofood = random.randint(1, 3)
+
+                for i in range(nofood):
+                    y = random.randint(0, len(food) - 1)
+                    print(y)
+                    f1 = food[y]
+                    order1.append(f1)
+                    ffood1.write(f'{f1}\n')
+                    draw_text(f1, main_font, "black", screen, 350, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood1.close()
+            else:
+                for i in range(len(order1)):
+                    f1 = order1[i]
+                    draw_text(f1, main_font, "black", screen, 350, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood1.close()
+        else:
+            ffood1 = open(path1, "x") 
+            ffood1 = open(path1, "r") 
+            order1 = [line.strip() for line in ffood1.readlines() if line.strip()]
+            ffood1 = open(path1, "a")     
+            y_offset = 275
+            nofood = random.randint(1, 3)
+
+            for i in range(nofood):
+                y = random.randint(0, len(food) - 1)
+                print(y)
+                f1 = food[y]
+                order1.append(f1)
+                ffood1.write(f'{f1}\n')
+                draw_text(f1, main_font, "black", screen, 350, y_offset)  # On top of button 1
+                y_offset = y_offset + 50
+            ffood1.close()
+
+        #order2
+        path2= './picture/order2.txt'
+        check_file2 = os.path.isfile(path2)
+
+        if check_file2:
+            ffood2 = open(path2, "r") 
+            order2 = [line.strip() for line in ffood2.readlines() if line.strip()]
+            y_offset = 275
+            if  order2 == []:
+                ffood2 = open(path2, "a") 
+                nofood = random.randint(1, 3)
+
+                for i in range(nofood):
+                    y = random.randint(0, len(food) - 1)
+                    print(y)
+                    f2 = food[y]
+                    order2.append(f2)
+                    ffood2.write(f'{f2}\n')
+                    draw_text(f2, main_font, "black", screen, 650, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood2.close()
+            else:
+                for i in range(len(order2)):
+                    f2 = order2[i]
+                    draw_text(f2, main_font, "black", screen, 650, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood2.close()
+        else:
+            ffood2 = open(path2, "x") 
+            ffood2 = open(path2, "r") 
+            order2 = [line.strip() for line in ffood2.readlines() if line.strip()]
+            ffood2 = open(path2, "a")     
+            y_offset = 275
+            nofood = random.randint(1, 3)
+
+            for i in range(nofood):
+                y = random.randint(0, len(food) - 1)
+                print(y)
+                f2 = food[y]
+                order2.append(f2)
+                ffood2.write(f'{f2}\n')
+                draw_text(f2, main_font, "black", screen, 650, y_offset)  # On top of button 1
+                y_offset = y_offset + 50
+            ffood2.close()
+
+        #order3
+        path3= './picture/order3.txt'
+        check_file3 = os.path.isfile(path3)
+
+        if check_file3:
+            ffood3 = open(path3, "r") 
+            order3 = [line.strip() for line in ffood3.readlines() if line.strip()]
+            y_offset = 275
+            if  order3 == []:
+                ffood3 = open(path3, "a") 
+                nofood = random.randint(1, 3)
+
+                for i in range(nofood):
+                    y = random.randint(0, len(food) - 1)
+                    print(y)
+                    f3 = food[y]
+                    order3.append(f3)
+                    ffood3.write(f'{f3}\n')
+                    draw_text(f3, main_font, "black", screen, 950, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood3.close()
+            else:
+                for i in range(len(order3)):
+                    f3 = order3[i]
+                    draw_text(f3, main_font, "black", screen, 950, y_offset)  # On top of button 1
+                    y_offset = y_offset + 50
+                ffood3.close()
+        else:
+            ffood3 = open(path3, "x") 
+            ffood3 = open(path3, "r") 
+            order3 = [line.strip() for line in ffood3.readlines() if line.strip()]
+            ffood3 = open(path3, "a")     
+            y_offset = 275
+            nofood = random.randint(1, 3)
+
+            for i in range(nofood):
+                y = random.randint(0, len(food) - 1)
+                print(y)
+                f3 = food[y]
+                order3.append(f3)
+                ffood3.write(f'{f3}\n')
+                draw_text(f3, main_font, "black", screen, 950, y_offset)  # On top of button 1
+                y_offset = y_offset + 50
+            ffood3.close()
+        
+        if show_complete_button1:
+            completebutton1.update()
+        if show_complete_button2:
+            completebutton2.update()
+        if show_complete_button3:
+            completebutton3.update()
+
+        # Check for events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button.checkForInput(pygame.mouse.get_pos()):
+                    main()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if order1button.checkForInput(mouse_pos):
+                    show_complete_button1 = True  # Show complete button when any order button is clicked
+                    last_clicked_order = "order1"
+                if order2button.checkForInput(mouse_pos):
+                    show_complete_button2 = True  # Show complete button when any order button is clicked
+                    last_clicked_order = "order2"
+                if order3button.checkForInput(mouse_pos):
+                    show_complete_button3 = True  # Show complete button when any order button is clicked
+                    last_clicked_order = "order3"
+                if show_complete_button1 and completebutton1.checkForInput(mouse_pos):
+                    if last_clicked_order == "order1":
+                        def load_list_from_file(filename):
+                            file =  open(filename, 'r') 
+                            return [line.strip() for line in file.readlines()]
+                        
+                        def save_list_to_file(filename, data_list):
+                            file = open(filename, 'w') 
+                            for item in data_list:
+                                file.write(f"{item}\n")
+
+                        def check_and_update_lists(list1_filename, list2_filename):
+                            pygame.display.flip()
+                            list1 = load_list_from_file(list1_filename)
+                            list2 = load_list_from_file(list2_filename)
+
+                            if len(list2) < len(list1):
+                                print("Fail")
+                                return
+
+                            for item in list1:
+                                if list1.count(item) > list2.count(item):
+                                    print("Fail")
+                                    return
+
+                            for item in list1:
+                                list2.remove(item)
+
+                            list1.clear()  
+
+                            save_list_to_file(list1_filename, list1)
+                            save_list_to_file(list2_filename, list2)
+
+                            print("Success")
+
+                        list1_filename = './picture/order1.txt'
+                        list2_filename = './picture/waitingtable.txt'
+
+                        check_and_update_lists(list1_filename, list2_filename)
+                if show_complete_button2 and completebutton2.checkForInput(mouse_pos):
+                    pygame.display.flip()
+                    if last_clicked_order == "order2":
+                        def load_list_from_file(filename):
+                            file =  open(filename, 'r') 
+                            return [line.strip() for line in file.readlines()]
+
+                        def save_list_to_file(filename, data_list):
+                            file = open(filename, 'w') 
+                            for item in data_list:
+                                file.write(f"{item}\n")
+
+                        def check_and_update_lists(list1_filename, list2_filename):
+                            list1 = load_list_from_file(list1_filename)
+                            list2 = load_list_from_file(list2_filename)
+
+                            if len(list2) < len(list1):
+                                print("Fail")
+                                return
+
+                            for item in list1:
+                                if list1.count(item) > list2.count(item):
+                                    print("Fail")
+                                    return
+
+                            for item in list1:
+                                list2.remove(item)
+
+                            list1.clear()  
+
+                            save_list_to_file(list1_filename, list1)
+                            save_list_to_file(list2_filename, list2)
+
+                            print("Success")
+
+                        list1_filename = './picture/order2.txt'
+                        list2_filename = './picture/waitingtable.txt'
+
+                        check_and_update_lists(list1_filename, list2_filename)
+
+                if show_complete_button3 and completebutton2.checkForInput(mouse_pos):
+                    pygame.display.flip()
+                    if last_clicked_order == "order3":
+                        def load_list_from_file(filename):
+                            file =  open(filename, 'r') 
+                            return [line.strip() for line in file.readlines()]
+
+                        def save_list_to_file(filename, data_list):
+                            file = open(filename, 'w') 
+                            for item in data_list:
+                                file.write(f"{item}\n")
+
+                        def check_and_update_lists(list1_filename, list2_filename):
+                            list1 = load_list_from_file(list1_filename)
+                            list2 = load_list_from_file(list2_filename)
+
+                            if len(list2) < len(list1):
+                                print("Fail")
+                                return
+
+                            for item in list1:
+                                if list1.count(item) > list2.count(item):
+                                    print("Fail")
+                                    return
+
+                            for item in list1:
+                                list2.remove(item)
+
+                            list1.clear()  
+
+                            save_list_to_file(list1_filename, list1)
+                            save_list_to_file(list2_filename, list2)
+
+                            print("Success")
+
+                        list1_filename = './picture/order3.txt'
+                        list2_filename = './picture/waitingtable.txt'
+
+                        check_and_update_lists(list1_filename, list2_filename)
+
+       
+        pygame.display.flip()
+        clock.tick(30)
 
 def draw_popup():
     ori_machineA_button.update()
@@ -427,6 +780,7 @@ def draw_popup():
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
+    orderbtn.update()
     pygame.draw.rect(screen, (255, 201, 254), popup_rect)
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     
@@ -541,6 +895,7 @@ def upgrade_process():
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
+    orderbtn.update()
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money, unlocked_machine,current_upgrade, already_upgrade
     
@@ -625,6 +980,7 @@ def upgrade_process():
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
+        orderbtn.update()
         money_bar()
         pygame.display.update()
         clock.tick(60)
@@ -650,6 +1006,7 @@ def selectfood_page1():
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
+        orderbtn.update()
         setting_button.update()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
@@ -753,6 +1110,7 @@ def selectfood_page2():
         menu_button.update()
         setting_button.update()
         close_button.update()
+        orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
@@ -774,6 +1132,8 @@ def main():
                     upgrade_process()
                 if menu_button.checkForInput(pygame.mouse.get_pos()): 
                     selectfood_page1()
+                if orderbtn.checkForInput(pygame.mouse.get_pos()): 
+                    order()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
@@ -788,6 +1148,7 @@ def main():
         menu_button.update()
         setting_button.update()
         happyhour_bar(hhactive)
+        orderbtn.update()
 
         pygame.display.flip()
         clock.tick(60)
