@@ -106,6 +106,18 @@ roticanai_img = pygame.transform.scale(roticanai_img, (100, 127))
 dumpling_img = pygame.image.load("./picture/dumpling.png")
 dumpling_img = pygame.transform.scale(dumpling_img, (100, 127))
 
+dimsum_img = pygame.image.load("./picture/dimsum.png")
+dimsum_img = pygame.transform.scale(dimsum_img, (100, 127))
+
+mooncake_img = pygame.image.load("./picture/mooncake.png")
+mooncake_img = pygame.transform.scale(mooncake_img, (100, 115))
+
+nasilemak_img = pygame.image.load("./picture/nasilemak.png")
+nasilemak_img = pygame.transform.scale(nasilemak_img, (100, 127))
+
+satay_img = pygame.image.load("./picture/satay.png")
+satay_img = pygame.transform.scale(satay_img, (100, 120))
+
 food_lists =[
     {
     "image": tokbokki_img,
@@ -135,7 +147,26 @@ food_lists =[
     "image": dumpling_img,
     "name": "Dumpling",
     "price": "RM6.00",
-    }
+    },
+
+        {
+    "image": dimsum_img,
+    "name": "Dimsum",
+    "price": "RM12.00",
+    },
+
+    {
+    "image": mooncake_img,
+    "name": "Mooncake",
+    "price": "RM16.00",
+    },
+
+    {
+    "image": satay_img,
+    "name": "Satay(10 sticks)",
+    "price": "RM10.00",
+    },
+
 ]
 
 def draw_text(text, font, color, surface, x, y):
