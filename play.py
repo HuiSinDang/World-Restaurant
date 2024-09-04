@@ -323,6 +323,37 @@ orderbtn_surface = pygame.image.load("./picture/order_btn.png")
 orderbtn_surface = pygame.transform.scale(orderbtn_surface, (175, 175))
 orderbtn = Button(orderbtn_surface, 75, 360,"")
 
+nasilemak = pygame.image.load('./picture/nasilemak.png')
+nasilemak = pygame.transform.scale(nasilemak, (100,100))
+
+roticanai = pygame.image.load('./picture/roticanai.png')
+roticanai = pygame.transform.scale(roticanai, (100,100))
+
+satay = pygame.image.load('./picture/satay.png')
+satay = pygame.transform.scale(satay, (100,100))
+
+#Level 2(Korea)-Corndog(Cheese/Origin)-Kimchi-Tokbokki
+corndogcheese = pygame.image.load('./picture/corndogcheese.png')
+corndogcheese = pygame.transform.scale(corndogcheese, (100,100))
+
+corndog = pygame.image.load('./picture/corndog.png')
+corndog = pygame.transform.scale(corndog, (100,100))
+
+kimchi = pygame.image.load('./picture/kimchi.png')
+kimchi = pygame.transform.scale(kimchi, (100,100))
+
+tokbokki = pygame.image.load('./picture/tokbokki.png')
+tokbokki = pygame.transform.scale(tokbokki, (100,100))
+
+#Level 3(China)-Dumpling-Mooncake-DimSum
+dumpling = pygame.image.load('./picture/dumpling.png')
+dumpling = pygame.transform.scale(dumpling, (100,100))
+
+mooncake = pygame.image.load('./picture/mooncake.png')
+mooncake = pygame.transform.scale(mooncake, (100,100))
+
+dimsum = pygame.image.load('./picture/dimsum.png')
+dimsum = pygame.transform.scale(dimsum, (100,100))
 
 # Main loop
 show_popup = False
@@ -1223,10 +1254,23 @@ def main():
 money_amount = 0
 max_display_money = 1000000
 
+def show_money():
+    try:
+        with open("money.txt","r")as file:
+            return int(file.read())
+    except FileNotFoundError:
+        return 0
+    
+def save_money():
+    with open("money.txt","w") as file:
+        file.write(str(money_amount))
+
 def money_bar():
-    money_text = font2.render(f"{money_amount}", True, black)
+    money_text = font2.render(f"{money_amount}",True,black)
     text_rect = money_text.get_rect(center=(1250,55))
-    screen.blit(money_text, text_rect)
+    screen.blit(money_text,text_rect)
+
+money_amount = show_money()
 
 #happy hour
 order_completed = 0
@@ -1417,8 +1461,8 @@ noticeboard_rect = noticeboard.get_rect(center=(700,400))
 closebutton_rect = closebutton.get_rect(topright=(900,100))
 nextbutton_rect = nextbutton.get_rect(bottomright=(900,700))
 notice_font = pygame.font.Font('./picture/jugnle.ttf',20)
-noticetext1 = "Welcome to World Restaurant!\nIntroduction of the game..."
-noticetext2 = "Many tutorial...\nBla bla bla..."
+noticetext1 = "Welcome to the restaurant!\nLet us introduce the game for you ...\n\nProfile\nIt show your profile...of course.\nand also you can change your name there.\n\nMenu\nYou can prepare your food there!\n\nOrder\nYou have to check your order there.\nAfter done preparing the food,\nremember to click the complete button!"
+noticetext2 = "Shop\nYou can unlock your machine there.\nBy unlocking your machine,\ndifferent food will be unlock also.\n\nSound\nYou can adjust your music sound there.\n\nHappy hour\nBy completed every 5 order,\nyou can earn double profit for 30second!\n\nWish your business is\nbooming,thriving and thriving!"
 
 
 
@@ -1508,6 +1552,7 @@ while running:
 
     pygame.display.flip()
     pygame.time.Clock().tick(30)
-    
+
+save_money()    
 pygame.quit()
 sys.exit()
