@@ -355,6 +355,42 @@ mooncake = pygame.transform.scale(mooncake, (100,100))
 dimsum = pygame.image.load('./picture/dimsum.png')
 dimsum = pygame.transform.scale(dimsum, (100,100))
 
+man1_surface = pygame.image.load("./picture/man.png")
+man1_surface = pygame.transform.scale(man1_surface, (50, 50))
+man1 = Button(man1_surface, 260, 435,"")
+
+man2_surface = pygame.image.load("./picture/man.png")
+man2_surface = pygame.transform.scale(man2_surface, (50, 50))
+man2 = Button(man2_surface, 570, 435,"")
+
+man3_surface = pygame.image.load("./picture/man.png")
+man3_surface = pygame.transform.scale(man3_surface, (50, 50))
+man3 = Button(man3_surface, 875, 435,"")
+
+chick1_surface = pygame.image.load("./picture/chick.png")
+chick1_surface = pygame.transform.scale(chick1_surface, (50, 50))
+chick1 = Button(chick1_surface, 260, 435,"")
+
+chick2_surface = pygame.image.load("./picture/chick.png")
+chick2_surface = pygame.transform.scale(chick2_surface, (50, 50))
+chick2 = Button(chick2_surface, 570, 435,"")
+
+chick3_surface = pygame.image.load("./picture/chick.png")
+chick3_surface = pygame.transform.scale(chick3_surface, (50, 50))
+chick3 = Button(chick3_surface, 875, 435,"")
+
+robot1_surface = pygame.image.load("./picture/robot.png")
+robot1_surface = pygame.transform.scale(robot1_surface, (50, 50))
+robot1 = Button(robot1_surface, 260, 435,"")
+
+robot2_surface = pygame.image.load("./picture/robot.png")
+robot2_surface = pygame.transform.scale(robot2_surface, (50, 50))
+robot2 = Button(robot2_surface, 570, 435,"")
+
+robot3_surface = pygame.image.load("./picture/robot.png")
+robot3_surface = pygame.transform.scale(robot3_surface, (50, 50))
+robot3 = Button(robot3_surface, 875, 435,"")
+
 # Main loop
 show_popup = False
 show_popup2B = False
@@ -525,41 +561,30 @@ def profile():
         pygame.display.flip()
 
 def order():
-    global show_complete_button1, show_complete_button2, show_complete_button3
-
     show_complete_button1 = False
     show_complete_button2 = False
     show_complete_button3 = False
-    last_clicked_order = None
-    
+    last_clicked_order = None    
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))  # Draw the background
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
         screen.blit(surface,screen_rect1)
 
         order1button.update()  # Draw the first button
         order2button.update()  # Draw the second button
         order3button.update()  # Draw the third button
-        button.update()
-        profilebutton.update()
-        upgrade_btn.update()
-        menu_button.update()
-        setting_button.update()
-        orderbtn.update()
-        money_bar()
-        happyhour_bar(hhactive)
 
         draw_text("Order", main_font, "black", screen, 650, 200)  # On top of button 1
 
         f = open("./picture/food.txt", "r")
         food = [line.strip() for line in f.readlines() if line.strip()]
 
+
         #order1
         path1= './picture/order1.txt'
         check_file1 = os.path.isfile(path1)
+        fstaff1 = open("./picture/staff.txt", "r") 
+        staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
 
         if check_file1:
             ffood1 = open(path1, "r") 
@@ -568,6 +593,19 @@ def order():
             if  order1 == []:
                 ffood1 = open(path1, "a") 
                 nofood = random.randint(1, 3)
+
+                people1 = random.randint(1, 3)
+                staff1.insert(0, people1)
+                fstaff1 = open("./picture/staff.txt", "w")
+                for i in staff1 :
+                    fstaff1.write(f'{i}\n')
+                if int(people1) == int(1):
+                    man1.update()
+                elif int(people1) == int(2):
+                    chick1.update()
+                else:
+                    robot1.update()
+                fstaff1.close()
 
                 for i in range(nofood):
                     y = random.randint(0, len(food) - 1)
@@ -578,7 +616,16 @@ def order():
                     draw_text(f1, main_font, "black", screen, 350, y_offset)  # On top of button 1
                     y_offset = y_offset + 50
                 ffood1.close()
+
             else:
+                if int(staff1[0]) == 1:
+                    man1.update()
+                elif int(staff1[0]) == 2:
+                    chick1.update()
+                else:
+                    robot1.update()
+                fstaff1.close()
+
                 for i in range(len(order1)):
                     f1 = order1[i]
                     draw_text(f1, main_font, "black", screen, 350, y_offset)  # On top of button 1
@@ -591,6 +638,19 @@ def order():
             ffood1 = open(path1, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
+
+            people1 = random.randint(1, 3)
+            staff1.insert(0, people1)
+            fstaff1 = open("./picture/staff.txt", "w")
+            for i in staff1 :
+                fstaff1.write(f'{i}\n')
+            if int(people1) == int(1):
+                man1.update()
+            elif int(people1) == int(2):
+                chick1.update()
+            else:
+                robot1.update()
+            fstaff1.close()
 
             for i in range(nofood):
                 y = random.randint(0, len(food) - 1)
@@ -605,6 +665,8 @@ def order():
         #order2
         path2= './picture/order2.txt'
         check_file2 = os.path.isfile(path2)
+        fstaff2 = open("./picture/staff.txt", "r") 
+        staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
 
         if check_file2:
             ffood2 = open(path2, "r") 
@@ -613,6 +675,19 @@ def order():
             if  order2 == []:
                 ffood2 = open(path2, "a") 
                 nofood = random.randint(1, 3)
+
+                people2 = random.randint(1, 3)
+                staff2.insert(1, people2)
+                fstaff2 = open("./picture/staff.txt", "w")
+                for i in staff2 :
+                    fstaff2.write(f'{i}\n')
+                if int(people2) == int(1):
+                    man2.update()
+                elif int(people2) == int(2):
+                    chick2.update()
+                else:
+                    robot2.update()
+                fstaff2.close()
 
                 for i in range(nofood):
                     y = random.randint(0, len(food) - 1)
@@ -624,6 +699,14 @@ def order():
                     y_offset = y_offset + 50
                 ffood2.close()
             else:
+                if int(staff2[1]) == int(1):
+                    man2.update()
+                elif int(staff2[1]) == int(2):
+                    chick2.update()
+                else:
+                    robot2.update()
+                fstaff2.close()
+
                 for i in range(len(order2)):
                     f2 = order2[i]
                     draw_text(f2, main_font, "black", screen, 650, y_offset)  # On top of button 1
@@ -636,6 +719,19 @@ def order():
             ffood2 = open(path2, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
+
+            people2 = random.randint(1, 3)
+            staff2.insert(1, people2)
+            fstaff2 = open("./picture/staff.txt", "w")
+            for i in staff2 :
+                fstaff2.write(f'{i}\n')
+            if int(people2) == int(1):
+                man2.update()
+            elif int(people2) == int(2):
+                chick2.update()
+            else:
+                robot2.update()
+            fstaff2.close()
 
             for i in range(nofood):
                 y = random.randint(0, len(food) - 1)
@@ -650,6 +746,8 @@ def order():
         #order3
         path3= './picture/order3.txt'
         check_file3 = os.path.isfile(path3)
+        fstaff3 = open("./picture/staff.txt", "r") 
+        staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
 
         if check_file3:
             ffood3 = open(path3, "r") 
@@ -658,6 +756,20 @@ def order():
             if  order3 == []:
                 ffood3 = open(path3, "a") 
                 nofood = random.randint(1, 3)
+
+                people3 = random.randint(1, 3)
+                staff3.insert(2, people3)
+                fstaff3 = open("./picture/staff.txt", "w")
+                for i in staff3 :
+                    fstaff3.write(f'{i}\n')
+
+                if int(people3) == int(1):
+                    man3.update()
+                elif int(people3) == int(2):
+                    chick3.update()
+                else:
+                    robot3.update()
+                fstaff3.close()
 
                 for i in range(nofood):
                     y = random.randint(0, len(food) - 1)
@@ -669,6 +781,14 @@ def order():
                     y_offset = y_offset + 50
                 ffood3.close()
             else:
+                if int(staff3[2]) == int(1):
+                    man3.update()
+                elif int(staff3[2]) == int(2):
+                    chick3.update()
+                else:
+                    robot3.update()
+                fstaff3.close()
+            
                 for i in range(len(order3)):
                     f3 = order3[i]
                     draw_text(f3, main_font, "black", screen, 950, y_offset)  # On top of button 1
@@ -681,6 +801,20 @@ def order():
             ffood3 = open(path3, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
+
+            people3 = random.randint(1, 3)
+            staff3.insert(2, people3)
+            fstaff3 = open("./picture/staff.txt", "w")
+            for i in staff3 :
+                fstaff3.write(f'{i}\n')
+
+            if int(people3) == int(1):
+                man3.update()
+            elif int(people3) == int(2):
+                chick3.update()
+            else:
+                robot3.update()
+            fstaff3.close()
 
             for i in range(nofood):
                 y = random.randint(0, len(food) - 1)
@@ -704,9 +838,6 @@ def order():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if button.checkForInput(pygame.mouse.get_pos()):
-                    main()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if order1button.checkForInput(mouse_pos):
@@ -752,6 +883,14 @@ def order():
 
                             list1.clear()  
 
+                            fstaff1 = open("./picture/staff.txt", "r") 
+                            staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
+                            del staff1[0]
+                            fstaff1 = open("./picture/staff.txt", "w")
+                            for i in staff1 :
+                                fstaff1.write(f'{i}\n')
+                            fstaff1.close()
+
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
 
@@ -796,6 +935,13 @@ def order():
                                 list2.remove(item)
 
                             list1.clear()  
+                            fstaff2 = open("./picture/staff.txt", "r") 
+                            staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
+                            del staff2[1]
+                            fstaff2 = open("./picture/staff.txt", "w")
+                            for i in staff2 :
+                                fstaff2.write(f'{i}\n')
+                            fstaff2.close()
 
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
@@ -842,6 +988,14 @@ def order():
                                 list2.remove(item)
 
                             list1.clear()  
+                            fstaff3 = open("./picture/staff.txt", "r") 
+                            staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
+                            del staff3[2]
+                            fstaff3 = open("./picture/staff.txt", "w")
+                            for i in staff3 :
+                                fstaff3.write(f'{i}\n')
+                            fstaff3.close()
+
 
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
