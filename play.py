@@ -118,40 +118,40 @@ nasilemak_img = pygame.transform.scale(nasilemak_img, (100, 127))
 satay_img = pygame.image.load("./picture/satay.png")
 satay_img = pygame.transform.scale(satay_img, (100, 120))
 
-friedrice_img = pygame.image.load("friedrice.png")
+friedrice_img = pygame.image.load("./picture/friedrice.png")
 friedrice_img = pygame.transform.scale(friedrice_img, (121, 110))
 
-oden_img = pygame.image.load("oden.png")
+oden_img = pygame.image.load("./picture/oden.png")
 oden_img = pygame.transform.scale(oden_img, (125, 120))
 
-bibimbap_img = pygame.image.load("bibimbap.png")
+bibimbap_img = pygame.image.load("./picture/bibimbap.png")
 bibimbap_img = pygame.transform.scale(bibimbap_img, (140, 110))
 
-dialogbox_img = pygame.image.load("dialog-box.png")
+dialogbox_img = pygame.image.load("./picture/dialog-box.png")
 dialogbox_img = pygame.transform.scale(dialogbox_img, (100, 100))
 
-armystew_img = pygame.image.load("armystew.png")
+armystew_img = pygame.image.load("./picture/armystew.png")
 armystew_img = pygame.transform.scale(armystew_img, (150, 120))
 
-steamfish_img = pygame.image.load("steamfish.png")
+steamfish_img = pygame.image.load("./picture/steamfish.png")
 steamfish_img = pygame.transform.scale(steamfish_img, (140, 120))
 
-kfry_img = pygame.image.load("kfry.png")
+kfry_img = pygame.image.load("./picture/kfry.png")
 kfry_img = pygame.transform.scale(kfry_img, (130, 120))
 
-calamari_img = pygame.image.load("calamari.png")
+calamari_img = pygame.image.load("./picture/calamari.png")
 calamari_img = pygame.transform.scale(calamari_img, (110, 127))
 
-rainbowcake_img = pygame.image.load("rainbowcake.png")
+rainbowcake_img = pygame.image.load("./picture/rainbowcake.png")
 rainbowcake_img = pygame.transform.scale(rainbowcake_img, (120, 115))
 
-redvelvet_img = pygame.image.load("redvelvet.png")
+redvelvet_img = pygame.image.load("./picture/redvelvet.png")
 redvelvet_img = pygame.transform.scale(redvelvet_img, (120, 110))
 
-blackforest_img = pygame.image.load("blackforest.png")
+blackforest_img = pygame.image.load("./picture/blackforest.png")
 blackforest_img = pygame.transform.scale(blackforest_img, (150, 110))
 
-pandanrollcake_img = pygame.image.load("pandanrollcake.png")
+pandanrollcake_img = pygame.image.load("./picture/pandanrollcake.png")
 pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
 
 
