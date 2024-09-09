@@ -2370,24 +2370,6 @@ def main():
                     selectfood_page1()
                 if orderbtn.checkForInput(pygame.mouse.get_pos()): 
                     order()
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                     # Reset all running states and food indexes
-                    print("Close button clicked") 
-                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
-                    stovepot_running = False
-                    steamer_running = False
-                    oven_running = False
-                    
-                    stovepot_food_index = -1
-                    steamer_food_index = -1
-                    oven_food_index = -1
-                    print("Close button clicked") 
-                   
-                    
-                    # Return to the main screen without any active processes
-                    return
-          
-
                 if stovepot_button_rect.collidepoint(event.pos) and not stovepot_running:
                     click_sfx.play()
                     selectfood_page2()  # Select food from the page
@@ -2411,6 +2393,24 @@ def main():
                     if oven_food_index >= 0:
                         oven_process(oven_food_index)
 
+                        
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                     # Reset all running states and food indexes
+                    print("Close button clicked") 
+                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
+                    stovepot_running = False
+                    steamer_running = False
+                    oven_running = False
+                    
+                    stovepot_food_index = -1
+                    steamer_food_index = -1
+                    oven_food_index = -1
+                    print("Close button clicked") 
+                   
+                    
+                    # Return to the main screen without any active processes
+                    return
+          
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
