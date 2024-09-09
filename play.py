@@ -1079,6 +1079,8 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
+                        profit_per_order = order_profits['order1']
+                        add_money(profit_per_order)
 
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
@@ -1118,6 +1120,8 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
+                        profit_per_order = order_profits['order2']
+                        add_money(profit_per_order)
 
                     elif last_clicked_order == "order3":
                         def load_list_from_file(filename):
@@ -1157,6 +1161,8 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
+                        profit_per_order = order_profits['order3']
+                        add_money(profit_per_order)
                     
                     else :
                         draw_text("Please select a order", main_font, "red", screen, 650, 510)  # On top of button 1
@@ -1165,7 +1171,6 @@ def order():
 
         pygame.display.flip()
         clock.tick(30)
-
 
 def draw_popup():
     ori_machineA_button.update()
