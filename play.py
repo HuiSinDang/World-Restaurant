@@ -417,9 +417,101 @@ current_upgrade = None
 already_upgrade = False
 not_enough_money = False 
 message_timer = 0  
-money = 2000
 unlocked_machine = set() 
 remind_unlock = False
+
+#money#
+money_amount = 0
+max_display_money = 1000000
+money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
+
+def show_money():
+    if os.path.exists(money_file_path):
+        try:
+            with open("./picture/money.txt","r")as file:
+                return int(file.read())
+        except (ValueError,IOError):
+            return 0
+    else:
+        return 0
+    
+def save_money():
+    with open("./picture/money.txt","w") as file:
+        file.write(str(money_amount))
+
+def money_bar():
+    money_text = font2.render(f"{money_amount}",True,black)
+    text_rect = money_text.get_rect(center=(1250,55))
+    screen.blit(money_text,text_rect)
+
+def add_money(amount):
+    global money_amount
+    money_amount += amount
+    money_amount = min(money_amount,max_display_money)
+    save_money()
+
+def subtract_money(amount):
+    global money_amount
+    if money_amount >= amount:
+        money_amount -= amount
+        money_amount = max(money_amount,0)
+        save_money()
+        return True
+    else:
+        return False
+    
+money_amount = show_money()
+
+#happy hour
+order_completed = 0
+hhactive = False
+hhtime = 30
+hh_start_time = None
+hh_file_path = os.path.join(os.getcwd(),"./picture/happyhour.txt")
+
+def show_order_completed():
+    if os.path.exists(money_file_path):
+        try:
+            with open("./picture/happyhour.txt","r")as file:
+                return int(file.read())
+        except (ValueError,IOError):
+            return 0
+    else:
+        return 0
+    
+def save_order():
+    with open("./picture/happyhour.txt","w") as file:
+        file.write(str(order_completed))
+
+def add_order(amount):
+    global order_completed
+    order_completed += amount
+    save_order()
+
+def update_happy_hour_status():
+    global hhactive,order_completed,hh_start_time
+    if order_completed >= 5:
+        hhactive = True
+        hh_start_time = time.time()
+        order_completed = order_completed % 5
+        save_order()
+    elif hhactive and (time.time() - hh_start_time) >= hhtime:
+        hhactive = False
+
+def happyhour_bar(happyhour):
+    update_happy_hour_status()
+    remaining_order = (order_completed % 5 - 5) % 5
+    if hhactive:
+        hhtext = font2.render(f"Happy Hour Active! {remaining_order} /5", True, black)
+    else:
+        hhtext = font2.render(f"Happy Hour {remaining_order} /5", True, black)
+    text_rect = hhtext.get_rect(center=(650,60))
+    screen.blit(hhtext,text_rect)
+
+def hhprofit(origin_profit):
+    if hhactive:
+        return origin_profit * 2
+    return origin_profit
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -1081,6 +1173,7 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order1']
                         add_money(profit_per_order)
+                        order_completed +=1
 
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
@@ -1122,6 +1215,7 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order2']
                         add_money(profit_per_order)
+                        order_completed +=1
 
                     elif last_clicked_order == "order3":
                         def load_list_from_file(filename):
@@ -1163,6 +1257,7 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order3']
                         add_money(profit_per_order)
+                        order_completed +=1
                     
                     else :
                         draw_text("Please select a order", main_font, "red", screen, 650, 510)  # On top of button 1
@@ -1193,7 +1288,7 @@ def draw_popup():
     pygame.draw.rect(screen, (162, 164, 164), inputmoney_rect)
 
     draw_text("Money: ", upgrade_font, "black", screen, 700, 170)
-    draw_text(money, upgrade_font, "navyblue", screen, 836, 170)
+    draw_text(money_amount, upgrade_font, "navyblue", screen, 836, 170)
     draw_text("Machine Types: ", upgrade_font, "black", screen, 520, 250)
     draw_text("1800", upgrade_font, "black", screen, 900, 328)
     draw_text("4000", upgrade_font, "black", screen, 1068, 328)
@@ -1297,7 +1392,7 @@ def upgrade_process():
     setting_button.update()
     orderbtn.update()
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
-    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money, unlocked_machine,current_upgrade, already_upgrade
+    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
     
     show_popup= True
     while True:
@@ -1319,7 +1414,7 @@ def upgrade_process():
                         already_upgrade = True
                         message_timer = 60
                     else:
-                        if money < upgrade_costs["B"]:
+                        if money_amount < upgrade_costs["B"]:
                             not_enough_money = True
                             message_timer = 60
                         else:
@@ -1330,8 +1425,8 @@ def upgrade_process():
                         already_upgrade = True  # Ensure money is not deducted
                         message_timer = 60
                         show_popup2B = False
-                    elif money >= upgrade_costs["B"]:
-                        money -= upgrade_costs["B"]
+                    elif money_amount >= upgrade_costs["B"]:
+                        money_amount -= upgrade_costs["B"]
                         unlocked_machine.add("B")
                         selected_upgradeB = "B"
                         current_upgrade = "MACHINE B"
@@ -1347,7 +1442,7 @@ def upgrade_process():
                         already_upgrade = True
                         message_timer = 60
                     else:
-                        if money < upgrade_costs["C"]:
+                        if money_amount < upgrade_costs["C"]:
                             not_enough_money = True
                             message_timer = 60
                         else:
@@ -1358,8 +1453,8 @@ def upgrade_process():
                         already_upgrade = True
                         message_timer = 60
                         show_popup2C = False
-                    elif money >= upgrade_costs["C"]:
-                        money -= upgrade_costs["C"]
+                    elif money_amount >= upgrade_costs["C"]:
+                        money_amount -= upgrade_costs["C"]
                         unlocked_machine.add("C")
                         selected_upgradeC = "C"
                         current_upgrade = "MACHINE C"
@@ -1563,77 +1658,6 @@ def main():
 
         pygame.display.flip()
         clock.tick(60)
-#money
-money_amount = 0
-max_display_money = 1000000
-money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
-
-def show_money():
-    if os.path.exists(money_file_path):
-        try:
-            with open("./picture/money.txt","r")as file:
-                return int(file.read())
-        except (ValueError,IOError):
-            return 0
-    else:
-        return 0
-    
-def save_money():
-    with open("./picture/money.txt","w") as file:
-        file.write(str(money_amount))
-
-def money_bar():
-    money_text = font2.render(f"{money_amount}",True,black)
-    text_rect = money_text.get_rect(center=(1250,55))
-    screen.blit(money_text,text_rect)
-
-def add_money(amount):
-    global money_amount
-    money_amount += amount
-    money_amount = min(money_amount,max_display_money)
-    save_money()
-
-def subtract_money(amount):
-    global money_amount
-    if money_amount >= amount:
-        money_amount -= amount
-        money_amount = max(money_amount,0)
-        save_money()
-        return True
-    else:
-        return False
-    
-money_amount = show_money()
-
-#happy hour
-order_completed = 0
-hhactive = False
-hhtime = 30
-hh_start_time = None
-
-def update_happy_hour_status():
-    global hhactive,order_completed,hh_start_time
-    if order_completed >= 5:
-        hhactive = True
-        hh_start_time = time.time()
-        order_completed = order_completed % 5
-    elif hhactive and (time.time() - hh_start_time) >= hhtime:
-        hhactive = False
-
-def happyhour_bar(happyhour):
-    update_happy_hour_status()
-    remaining_order = (order_completed % 5 - 5) % 5
-    if hhactive:
-        hhtext = font2.render(f"Happy Hour Active! {remaining_order} /5", True, black)
-    else:
-        hhtext = font2.render(f"Happy Hour {remaining_order} /5", True, black)
-    text_rect = hhtext.get_rect(center=(650,60))
-    screen.blit(hhtext,text_rect)
-
-def hhprofit(origin_profit):
-    if hhactive:
-        return origin_profit * 2
-    return origin_profit
 
 def show_name_from_file(restaurant_name):
     while True:
