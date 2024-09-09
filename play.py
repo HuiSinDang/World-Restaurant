@@ -621,7 +621,19 @@ def order():
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))  # Draw the background
+        ori_machineA_button.update()
+        ori_machineB_button.update()
+        ori_machineC_button.update()
         screen.blit(surface,screen_rect1)
+
+        button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        orderbtn.update()
+        money_bar()
+        happyhour_bar(hhactive)
 
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
 
@@ -987,6 +999,18 @@ def order():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button.checkForInput(pygame.mouse.get_pos()):
+                    main()
+                if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                    profile()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    profile()
+                if event.key == pygame.K_ESCAPE:
+                    main()
+
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
