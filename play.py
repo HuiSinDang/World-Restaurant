@@ -60,14 +60,14 @@ clock = pygame.time.Clock()
 
 # Machine criteria
 machine_criteria = { 
-    "B": "Criteria - Cooking process reduced to 40s",
-    "C": "Criteria - Cooking process reduced to 30s",
+    "B": "Criteria - Cooking process lowered to 40s",
+    "C": "Criteria - Cooking process lowered to 30s",
 }
 
 # Define the cost for each machine upgrade
 upgrade_costs = {
-    "B": 1800,  
-    "C": 4000   
+    "STEAMER": 1800,  
+    "OVEN": 4000   
 }
 
 # Rectangle to display money
@@ -92,7 +92,7 @@ background = pygame.image.load("./picture/lobby.jpg")
 background = pygame.transform.scale(background, (1400, 750))
 
 corndog_img = pygame.image.load("./picture/corndog.png")
-corndog_img = pygame.transform.scale(corndog_img, (100, 127))
+corndog_img = pygame.transform.scale(corndog_img, (130, 127))
 
 tokbokki_img = pygame.image.load("./picture/tokbokki.png")
 tokbokki_img = pygame.transform.scale(tokbokki_img, (100, 127))
@@ -118,56 +118,95 @@ nasilemak_img = pygame.transform.scale(nasilemak_img, (100, 127))
 satay_img = pygame.image.load("./picture/satay.png")
 satay_img = pygame.transform.scale(satay_img, (100, 120))
 
+friedrice_img = pygame.image.load("friedrice.png")
+friedrice_img = pygame.transform.scale(friedrice_img, (121, 110))
+
+oden_img = pygame.image.load("oden.png")
+oden_img = pygame.transform.scale(oden_img, (125, 120))
+
+bibimbap_img = pygame.image.load("bibimbap.png")
+bibimbap_img = pygame.transform.scale(bibimbap_img, (140, 110))
+
+dialogbox_img = pygame.image.load("dialog-box.png")
+dialogbox_img = pygame.transform.scale(dialogbox_img, (100, 100))
+
+armystew_img = pygame.image.load("armystew.png")
+armystew_img = pygame.transform.scale(armystew_img, (150, 120))
+
+steamfish_img = pygame.image.load("steamfish.png")
+steamfish_img = pygame.transform.scale(steamfish_img, (140, 120))
+
+kfry_img = pygame.image.load("kfry.png")
+kfry_img = pygame.transform.scale(kfry_img, (130, 120))
+
+calamari_img = pygame.image.load("calamari.png")
+calamari_img = pygame.transform.scale(calamari_img, (110, 127))
+
+rainbowcake_img = pygame.image.load("rainbowcake.png")
+rainbowcake_img = pygame.transform.scale(rainbowcake_img, (120, 115))
+
+redvelvet_img = pygame.image.load("redvelvet.png")
+redvelvet_img = pygame.transform.scale(redvelvet_img, (120, 110))
+
+blackforest_img = pygame.image.load("blackforest.png")
+blackforest_img = pygame.transform.scale(blackforest_img, (150, 110))
+
+pandanrollcake_img = pygame.image.load("pandanrollcake.png")
+pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
+
+
+
 food_lists =[
-    {
-    "image": tokbokki_img,
-    "name": "Tokbokki",
-    "price": "RM10.00",
-    },
+    {"image": tokbokki_img, "name": "Tokbokki", "price": "RM10.00"},
 
-    {
-    "image": corndogcheese_img,
-    "name": "Cheese Corndog",
-    "price": "RM10.00",
-    },
+    {"image": friedrice_img, "name": "Fried rice", "price": "RM5.00"},
 
-    {
-    "image": corndog_img,
-    "name": "Original Corndog",
-    "price": "RM8.00",
-    },
+    {"image": oden_img, "name": "Oden", "price": "RM10.00"},
 
-    {
-    "image": roticanai_img,
-    "name": "Roti Canai",
-    "price": "RM1.50",
-    },
+    {"image": bibimbap_img, "name": "Bibimbap", "price": "RM12.50"},
 
-    {
-    "image": dumpling_img,
-    "name": "Dumpling",
-    "price": "RM6.00",
-    },
+    {"image": armystew_img, "name": "Korean Army Stew", "price": "RM60.00" },
 
-        {
-    "image": dimsum_img,
-    "name": "Dimsum",
-    "price": "RM12.00",
-    },
+    {"image": mooncake_img, "name": "Mooncake", "price": "RM16.00"},
 
-    {
-    "image": mooncake_img,
-    "name": "Mooncake",
-    "price": "RM16.00",
-    },
+    {"image": satay_img, "name": "Satay(10 sticks)", "price": "RM10.00" },
 
-    {
-    "image": satay_img,
-    "name": "Satay(10 sticks)",
-    "price": "RM10.00",
-    },
 
 ]
+
+foodlist_steamer = [
+    {"image": steamfish_img, "name": "Thai Steamed Fish", "price": "RM50.00"},
+
+    {"image": dimsum_img, "name": "Dimsum", "price": "RM12.00" },
+
+    {"image": dumpling_img, "name": "Dumpling", "price": "RM6.00"},
+
+    {"image": steamfish_img, "name": "Thai Steamed Fish", "price": "RM50.00"},
+
+    {"image": dimsum_img, "name": "Dimsum", "price": "RM12.00" },
+
+    
+]
+
+foodlist_oven = [
+    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM25.00"},
+
+    {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM22.00"},
+
+    {"image": calamari_img, "name": "Calamari Rings", "price": "RM30.00"},
+
+    {"image": rainbowcake_img, "name": "Rainbow cake (1 slice)", "price": "RM16.00"},
+
+    {"image": redvelvet_img, "name": "Red Velvet (4-inch)", "price": "RM55.00"},
+
+    {"image": blackforest_img, "name": "Black Forest (4-inch)", "price": "RM60.00"},
+
+    {"image": pandanrollcake_img, "name": "Pandan Roll Cake", "price": "RM16.00"},
+
+    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM25.00"},
+]
+
+
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
@@ -194,6 +233,28 @@ class Button():
             click_sfx.play()
             return True
         return False
+
+
+class CookingBar: # draw cooking bar
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.hp = max_hp
+        self.max_hp = max_hp
+        self.start_time = None
+
+    def draw(self, surface):
+        # Calculate health ratio
+        ratio = self.hp / self.max_hp
+        pygame.draw.rect(surface, "red", (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(surface, "green", (self.x, self.y, self.w * ratio, self.h))
+
+    def update(self, elapsed_time, duration):
+        # Decrease hp based on elapsed time and duration
+        self.hp = max(0, self.max_hp * (1 - elapsed_time / duration))
+    
 
 
 # SELECT button
@@ -223,29 +284,29 @@ upgrade_btn = pygame.image.load("./picture/upgrade-shop.png")
 upgrade_btn = pygame.transform.scale(upgrade_btn, (110, 110))
 upgrade_btn= Button(upgrade_btn, 76, 500, "")
 
-default_machineA_button = pygame.image.load("./picture/machineA.png")
-default_machineA_button = pygame.transform.scale(default_machineA_button, (160, 160))
-default_machineA_button = Button(default_machineA_button, 710, 260, "")
+pan_unlock_button = pygame.image.load("./picture/pan-border.png")
+pan_unlock_button = pygame.transform.scale(pan_unlock_button, (140, 130))
+pan_unlock_button = Button(pan_unlock_button, 710, 260, "")
 
-machineB_button = pygame.image.load("./picture/machineB.png")
-machineB_button = pygame.transform.scale(machineB_button, (160, 150))
-machineB_button = Button(machineB_button, 890, 255, "")
+steamer_unlock_button = pygame.image.load("./picture/steamer-border.png")
+steamer_unlock_button = pygame.transform.scale(steamer_unlock_button, (140, 130))
+steamer_unlock_button = Button(steamer_unlock_button, 890, 258, "")
 
-machineC_button = pygame.image.load("./picture/machineC.png")
-machineC_button = pygame.transform.scale(machineC_button, (160, 150))
-machineC_button = Button(machineC_button, 1060, 255, "")
+oven_unlock_button = pygame.image.load("./picture/oven-border.png")
+oven_unlock_button = pygame.transform.scale(oven_unlock_button, (140, 130))
+oven_unlock_button = Button(oven_unlock_button, 1068, 255, "")
 
-ori_machineA_button = pygame.image.load("./picture/ori-machineA.png")
-ori_machineA_button = pygame.transform.scale(ori_machineA_button, (210, 240))
-ori_machineA_button = Button(ori_machineA_button, 420, 260, "")
+pan_default_button = pygame.image.load("./picture/pan.png")
+pan_default_button = pygame.transform.scale(pan_default_button, (260, 240))
+pan_default_button = Button(pan_default_button, 440, 250, "")
 
-ori_machineB_button = pygame.image.load("./picture/ori-machineB.png")
-ori_machineB_button = pygame.transform.scale(ori_machineB_button, (210, 180))
-ori_machineB_button = Button(ori_machineB_button, 740, 255, "")
+steamer_button = pygame.image.load("./picture/steamer.png")
+steamer_button = pygame.transform.scale(steamer_button, (220, 247))
+steamer_button = Button(steamer_button, 740, 254, "")
 
-ori_machineC_button = pygame.image.load("./picture/ori-machineC.png")
-ori_machineC_button = pygame.transform.scale(ori_machineC_button, (210, 180))
-ori_machineC_button = Button(ori_machineC_button, 1050, 255, "")
+oven_button = pygame.image.load("./picture/oven.png")
+oven_button = pygame.transform.scale(oven_button, (240, 210))
+oven_button = Button(oven_button, 1050, 255, "")
 
 yesC_button = pygame.image.load("./picture/yesButton.png")
 yesC_button = pygame.transform.scale(yesC_button, (90, 43))
@@ -283,17 +344,8 @@ back_btn = pygame.image.load("./picture/back_btn.png")
 back_btn = pygame.transform.scale(back_btn, (60, 70))
 back_btn = Button(back_btn, 460, 665, "")
 
-selectDM_btn = pygame.image.load("./picture/select-default.png")
-selectDM_btn = pygame.transform.scale(selectDM_btn, (600,100))
-selectDM_btn = Button(selectDM_btn, 800, 340, "")
 
-selectMB_btn = pygame.image.load("./picture/select-mb.png")
-selectMB_btn = pygame.transform.scale(selectMB_btn, (600,90))
-selectMB_btn = Button(selectMB_btn, 800, 450, "")
 
-selectMC_btn = pygame.image.load("./picture/select-mc.png")
-selectMC_btn = pygame.transform.scale(selectMC_btn, (600,90))
-selectMC_btn = Button(selectMC_btn, 800, 560, "")
 
 nasilemak = pygame.image.load('./picture/nasilemak.png')
 nasilemak = pygame.transform.scale(nasilemak, (100,100))
@@ -407,7 +459,7 @@ frame3_surface = pygame.image.load("./picture/frame.png")
 frame3_surface = pygame.transform.scale(frame3_surface, (295, 295))
 frame3 = Button(frame3_surface, 945, 350,"")
 
-# Main loop
+# Main loop(irene)
 show_popup = False
 show_popup2B = False
 show_popup2C = False
@@ -415,10 +467,14 @@ selected_upgradeB = None
 selected_upgradeC = None
 current_upgrade = None
 already_upgrade = False
-not_enough_money = False 
-message_timer = 0  
-unlocked_machine = set() 
+not_enough_money = False  # indicate not enough money
+message_timer = 0  # Timer to show messages temporarily
+money = 5000     #不确定要不要
+unlocked_machine = set() # Set to track unlocked machines
 remind_unlock = False
+stovepot_call = False
+steamer_call = False
+oven_call = False
 
 #money#
 money_amount = 0
@@ -593,9 +649,9 @@ def profile():
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
         screen.blit(surface,screen_rect)
 
         draw_text("Profile", font, "black", screen, 650, 200)
@@ -713,9 +769,9 @@ def order():
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))  # Draw the background
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
         screen.blit(surface,screen_rect1)
 
         button.update()
@@ -1268,85 +1324,90 @@ def order():
         clock.tick(30)
 
 def draw_popup():
-    ori_machineA_button.update()
-    ori_machineB_button.update()
-    ori_machineC_button.update()
+    pan_default_button.update()
+    steamer_button.update()
+    oven_button.update()
     profilebutton.update()
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
-    orderbtn.update()
     pygame.draw.rect(screen, (255, 201, 254), popup_rect)
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     
-    screen.blit(coin1_img,(850, 318))
-    screen.blit(coin1_img,(1018, 318))
-    default_machineA_button.update()
-    machineB_button.update()
-    machineC_button.update()
+    screen.blit(coin1_img,(852, 322))
+    screen.blit(coin1_img,(1023, 322))
+    pan_unlock_button.update()
+    steamer_unlock_button.update()
+    oven_unlock_button.update()
     inputmoney_rect = pygame.Rect(740,150, 200, 33)
     pygame.draw.rect(screen, (162, 164, 164), inputmoney_rect)
 
     draw_text("Money: ", upgrade_font, "black", screen, 700, 170)
-    draw_text(money_amount, upgrade_font, "navyblue", screen, 836, 170)
+    draw_text(money, upgrade_font, "navyblue", screen, 836, 170)
     draw_text("Machine Types: ", upgrade_font, "black", screen, 520, 250)
-    draw_text("1800", upgrade_font, "black", screen, 900, 328)
-    draw_text("4000", upgrade_font, "black", screen, 1068, 328)
+    draw_text("1800", upgrade_font, "black", screen, 908, 336)
+    draw_text("4000", upgrade_font, "black", screen, 1078, 336)
     draw_text("Default", upgrade_font, "black", screen, 710, 343)
-    draw_text("Machine B", upgrade_font, "black", screen, 890, 350)
-    draw_text("Machine C", upgrade_font, "black", screen, 1060, 350)
-    draw_text("Machine Features - B: Cooking process reduced to 40s", upgrade_font, "black", screen, 714, 380)
-    draw_text("- C: Cooking process reduced to 30s", upgrade_font, "black", screen, 805, 408)
+    draw_text("Steamer", upgrade_font, "black", screen, 892, 358)
+    draw_text("Oven", upgrade_font, "black", screen, 1073, 358)
+    draw_text("Machine Features - B: Cooking process lowered to 40s", upgrade_font, "black", screen, 714, 380)
+    draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
 
     close_button.update()
+
 
 def draw_popup2B():
     # (width,height,x,y)
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
     draw_text("INSTRUCTIONS: ", upgrade_font, "black", screen, 520, 449)
-    draw_text("1. Do you want to upgrade your machine?", upgrade_font, "black", screen, 650, 478)
+    draw_text("1. Do you want to unlock the steamer?", upgrade_font, "black", screen, 650, 478)
 
     yesB_button.update()
     noB_button.update()
+
 
 def draw_popup2C():
     # (width,height,x,y)
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (224, 248, 253), popup2_rect)
     draw_text("INSTRUCTIONS: ", upgrade_font, "black", screen, 520, 449)
-    draw_text("1. Do you want to upgrade your machine?", upgrade_font, "black", screen, 650, 478)
+    draw_text("1. Do you want to unlock the oven?", upgrade_font, "black", screen, 650, 478)
 
     yesC_button.update()
     noC_button.update()
 
-def select_upgrade_machineB():
+
+def select_upgrade_steamer_unlock():
     global selected_upgradeB, message_timer
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (243, 191, 215), popup2_rect)
-    draw_text(f"Machine upgraded to {selected_upgradeB}!", upgrade_font, "navyblue", screen, 800, 550)
+    draw_text(f"Unlocked {selected_upgradeB}!", upgrade_font, "navyblue", screen, 800, 550)
     message_timer -= 1  
     if message_timer == 0:
         selected_upgradeB = False
 
-def select_upgrade_machineC():
+
+def select_upgrade_oven_unlock():
     global selected_upgradeC, message_timer
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (224, 248, 253), popup2_rect)
-    draw_text(f"Machine upgraded to {selected_upgradeC}!", upgrade_font, "navyblue", screen, 800, 550)
+    draw_text(f"Unlocked {selected_upgradeC}!", upgrade_font, "navyblue", screen, 800, 550)
     message_timer -= 1  
     if message_timer == 0:
         selected_upgradeC = False
 
+
 def draw_complete_upgrade():
-    global current_upgrade, message_timer,already_upgrade,not_enough_money
+    global current_upgrade, message_timer,already_upgrade, not_enough_money
     popup2_rect = pygame.Rect(423, 430, 750, 230)
     pygame.draw.rect(screen, (255, 229, 215), popup2_rect)
-    draw_text(f"Machine has already upgraded to {current_upgrade}!", upgrade_font, "navyblue", screen, 800, 550)
+    draw_text(f"Congratulations, you have unlocked a {current_upgrade}!", upgrade_font, "navyblue", screen, 800, 550)
     message_timer -= 1  
     if message_timer == 0:
         already_upgrade = False
         not_enough_money = False
+
 
 def less_money():
     global message_timer, not_enough_money, show_popup2B, show_popup2C
@@ -1358,6 +1419,7 @@ def less_money():
         not_enough_money = False
         show_popup2B = False
         show_popup2C = False
+
 
 def handle_upgrades(): 
     global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB, selected_upgradeC, message_timer, current_upgrade, already_upgrade
@@ -1371,10 +1433,10 @@ def handle_upgrades():
         draw_popup2C()
 
     if selected_upgradeB:
-        select_upgrade_machineB()
+        select_upgrade_steamer_unlock()
 
     if selected_upgradeC:
-        select_upgrade_machineC()
+        select_upgrade_oven_unlock()
 
     if already_upgrade:
         draw_complete_upgrade()
@@ -1382,17 +1444,17 @@ def handle_upgrades():
     if not_enough_money:
         less_money()
 
+
 def upgrade_process():
-    ori_machineA_button.update()
-    ori_machineB_button.update()
-    ori_machineC_button.update()
+    pan_default_button.update()
+    steamer_button.update()
+    oven_button.update()
     profilebutton.update()
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
-    orderbtn.update()
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
-    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
+    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money, unlocked_machine,current_upgrade, already_upgrade
     
     show_popup= True
     while True:
@@ -1408,56 +1470,56 @@ def upgrade_process():
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     draw_popup()
 
-                if machineB_button.checkForInput(pygame.mouse.get_pos()):
-                    if "B" in unlocked_machine:
-                        current_upgrade = "MACHINE B"
+                if steamer_unlock_button.checkForInput(pygame.mouse.get_pos()):
+                    if "STEAMER" in unlocked_machine:
+                        current_upgrade = "STEAMER"
                         already_upgrade = True
                         message_timer = 60
                     else:
-                        if money_amount < upgrade_costs["B"]:
+                        if money < upgrade_costs["STEAMER"]:
                             not_enough_money = True
                             message_timer = 60
                         else:
                             show_popup2B = True
                         
                 if yesB_button.checkForInput(pygame.mouse.get_pos()) and show_popup2B:
-                    if "B" in unlocked_machine:
+                    if "STEAMER" in unlocked_machine:
                         already_upgrade = True  # Ensure money is not deducted
                         message_timer = 60
                         show_popup2B = False
-                    elif money_amount >= upgrade_costs["B"]:
-                        money_amount -= upgrade_costs["B"]
-                        unlocked_machine.add("B")
-                        selected_upgradeB = "B"
-                        current_upgrade = "MACHINE B"
+                    elif money >= upgrade_costs["STEAMER"]:
+                        money -= upgrade_costs["STEAMER"]
+                        unlocked_machine.add("STEAMER")
+                        selected_upgradeB = "STEAMER"
+                        current_upgrade = "STEAMER"
                         message_timer = 60
                         show_popup2B = False
                     else:
                         not_enough_money = True
                         message_timer = 60
                 
-                if machineC_button.checkForInput(pygame.mouse.get_pos()):
-                    if "C" in unlocked_machine:
-                        current_upgrade = "MACHINE C"
+                if oven_unlock_button.checkForInput(pygame.mouse.get_pos()):
+                    if "OVEN" in unlocked_machine:
+                        current_upgrade = "OVEN"
                         already_upgrade = True
                         message_timer = 60
                     else:
-                        if money_amount < upgrade_costs["C"]:
+                        if money < upgrade_costs["OVEN"]:
                             not_enough_money = True
                             message_timer = 60
                         else:
                             show_popup2C = True
                     
                 if yesC_button.checkForInput(pygame.mouse.get_pos()) and show_popup2C:
-                    if "C" in unlocked_machine:
+                    if "OVEN" in unlocked_machine:
                         already_upgrade = True
                         message_timer = 60
                         show_popup2C = False
-                    elif money_amount >= upgrade_costs["C"]:
-                        money_amount -= upgrade_costs["C"]
-                        unlocked_machine.add("C")
-                        selected_upgradeC = "C"
-                        current_upgrade = "MACHINE C"
+                    elif money >= upgrade_costs["OVEN"]:
+                        money -= upgrade_costs["OVEN"]
+                        unlocked_machine.add("OVEN")
+                        selected_upgradeC = "OVEN"
+                        current_upgrade = "OVEN"
                         message_timer = 60
                         show_popup2C = False
                     else:
@@ -1475,41 +1537,87 @@ def upgrade_process():
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
-        orderbtn.update()
         money_bar()
         pygame.display.update()
         clock.tick(60)
 
         happyhour_bar(hhactive)
-        money_bar()
+
 
 def remind_unlock_popout():
     global message_timer, remind_unlock,current_upgrade
-    draw_text(f"You haven't unlocked {current_upgrade }!", food_selection_font, "red", screen, 800, 640)
+    draw_text(f"You haven't unlocked the {current_upgrade}!", food_selection_font, "red", screen, 800, 640)
     message_timer -= 1  
     if message_timer == 0:
         remind_unlock = False
 
-def selectfood_page1():
+machinetype_surface = pygame.Surface ((160, 60))
+machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
+machinetype_button_rect2 = pygame.Rect(480, 400, 160, 50)
+machinetype_button_rect3 = pygame.Rect(480, 600, 160, 50)
+
+font_button_machine = pygame.font.SysFont("Comic Sans MS", 21, bold=True)
+
+ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
+ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+
+ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
+ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+
+ChooseMachine_text3 = font_button_machine.render(" OVEN", True, "white")
+ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+
+
+def selectfood_page1(): # select which type of machine to use
     while True:
         global message_timer, remind_unlock, current_upgrade
-        screen.blit(background, (0, 0)) 
-        
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
+        screen.blit(background, (0, 0))  
+
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
-        orderbtn.update()
         setting_button.update()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         draw_text("Please select the machine you want to prepare your food: ", food_selection_font, "black", screen, 800, 240)
 
-        selectDM_btn.update()
-        selectMB_btn.update()
-        selectMC_btn.update()
+        machinetype_surface1 = pygame.Surface ((160, 60))
+        machinetype_button_rect1 = pygame.Rect(480, 300, 160, 50)
+
+        machinetype_surface2 = pygame.Surface ((160, 60))
+        machinetype_button_rect2 = pygame.Rect(480, 400, 160, 50)
+
+        machinetype_surface3 = pygame.Surface ((160, 60))
+        machinetype_button_rect3 = pygame.Rect(480, 500, 160, 50)
+  
+
+        if  machinetype_button_rect1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(machinetype_surface1, (21, 28, 125), (0, 0, 160, 50))  
+        else:
+            pygame.draw.rect(machinetype_surface1, (151, 155, 213), (0, 0, 160, 50)) 
+
+        if  machinetype_button_rect2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(machinetype_surface2, (21, 28, 125), (0, 0, 160, 50))  
+        else:
+            pygame.draw.rect(machinetype_surface2, (151, 155, 213), (0, 0, 160, 50)) 
+
+        if  machinetype_button_rect3.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(machinetype_surface3, (21, 28, 125), (0, 0, 160, 50))  
+        else:
+            pygame.draw.rect(machinetype_surface3, (151, 155, 213), (0, 0,160, 50)) 
+
+        machinetype_surface1.blit(ChooseMachine_text1, ChooseMachine_text_rect1)
+        screen.blit( machinetype_surface1, machinetype_button_rect1.topleft)
+
+        machinetype_surface2.blit(ChooseMachine_text2, ChooseMachine_text_rect2)
+        screen.blit( machinetype_surface2, machinetype_button_rect2.topleft)
+
+        machinetype_surface3.blit(ChooseMachine_text3, ChooseMachine_text_rect3)
+        screen.blit( machinetype_surface3, machinetype_button_rect3.topleft)
+
         close_button.update()
 
         for event in pygame.event.get():
@@ -1520,20 +1628,23 @@ def selectfood_page1():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if close_button.checkForInput(pygame.mouse.get_pos()):
                     main()
-                if selectDM_btn.checkForInput(pygame.mouse.get_pos()):
+                if machinetype_button_rect1.collidepoint(event.pos):
+                    click_sfx.play()
                     return selectfood_page2()  # Call the next page and exit this loop
-                if selectMB_btn.checkForInput(pygame.mouse.get_pos()):
-                    if "B" in unlocked_machine:
-                        selectfood_page2()
+                if machinetype_button_rect2.collidepoint(event.pos):
+                    click_sfx.play()
+                    if "STEAMER" in unlocked_machine:
+                        selectfood_page3()
                     else:
-                        current_upgrade = "MACHINE B "
+                        current_upgrade = "STEAMER "
                         remind_unlock = True
                         message_timer = 60
-                if selectMC_btn.checkForInput(pygame.mouse.get_pos()):
-                    if "C" in unlocked_machine:
-                        selectfood_page2()
+                if machinetype_button_rect3.collidepoint(event.pos):
+                    click_sfx.play()
+                    if "OVEN" in unlocked_machine:
+                        selectfood_page4()
                     else:
-                        current_upgrade = "MACHINE C "
+                        current_upgrade = "OVEN "
                         remind_unlock = True
                         message_timer = 60
 
@@ -1546,21 +1657,52 @@ def selectfood_page1():
         pygame.display.update()
         clock.tick(60)
 
+
+# Assume current_page starts from 1 and max_items_per_page is 3
 current_page = 1
 max_items_per_page = 3
 
 total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
 
-def selectfood_page2():
+machinetype_surface1 = pygame.Surface ((180, 50))
+machinetype_button_rect1 = pygame.Rect(315, 310, 180, 40)
+ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
+ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface1.get_width()/2, machinetype_surface1.get_height()/2))
+
+machinetype_surface2 = pygame.Surface ((180, 50))
+machinetype_button_rect2 = pygame.Rect(638, 310, 180, 40)
+ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
+ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface2.get_width()/2, machinetype_surface2.get_height()/2))
+
+machinetype_surface3 = pygame.Surface ((180, 50))
+machinetype_button_rect3 = pygame.Rect(960, 310, 180, 40)
+ChooseMachine_text3 = font_button_machine.render(" OVEN ", True, "white")
+ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface3.get_width()/2, machinetype_surface3.get_height()/2))
+
+
+def selectfood_page2(): # after player click STOVE POT button rect
+    global stovepot_food_index, current_page
+     
+    print(f"Initial stovepot_food_index: {stovepot_food_index}")
     while True:
-        global current_page
-        screen.blit(background, (0, 0))  
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update() 
+        screen.blit(background, (0, 0))
+
+        waiting_table()
+
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update() 
+      
 
         food_selection1_rect = pygame.Rect(400, 120, 800, 600)
         food_selection2_rect = pygame.Rect(425, 195, 752, 495)
+        stovepot_button_select()
+        steamer_button_select()
+        oven_button_select()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
@@ -1571,6 +1713,8 @@ def selectfood_page2():
         end_index = start_index + max_items_per_page
         items_on_page = food_lists[start_index:end_index]
 
+       
+
         for i in range(len(items_on_page)):
             food_item = items_on_page[i]
             y_position = 216 + i * 144
@@ -1579,16 +1723,19 @@ def selectfood_page2():
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            selectprepare_button_rect.y = y_position + 43
+            # Define the rect for the select button
+            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
             selectbutton_surface = pygame.Surface((130, 40))
 
+            select_button_color = (186, 255, 184)
             if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(selectbutton_surface, (24, 203, 24), (1, 1, 148, 48))  
-            else:
-                pygame.draw.rect(selectbutton_surface, (225, 255, 225), (2, 2, 148, 48)) 
-
+                select_button_color = (18, 255, 50)
+            
+            selectbutton_surface.fill(select_button_color)
+        
+            # Render the "SELECT" button text
             selectbutton_surface.blit(SELECT_text, text_rect)
-            screen.blit(selectbutton_surface, (selectprepare_button_rect.x, selectprepare_button_rect.y))
+            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
 
         total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
@@ -1601,31 +1748,614 @@ def selectfood_page2():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if close_button.checkForInput(pygame.mouse.get_pos()):
-                    return main()
+                    print("Close button clicked")
+                    stovepot_food_index = -1
+                    return 
+                    
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
                     current_page += 1
+
                 if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
                     current_page -= 1
-        
+
+                # Check if the select button is clicked
+                for i in range(len(items_on_page)):
+                    y_position = 216 + i * 144
+                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                    if selectprepare_button_rect.collidepoint(event.pos):
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        stovepot_food_index = selected_food_index  # Update the global index
+                        return stovepot_process(selected_food_index)
+
+
         money_bar()
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
-        menu_button.update()
         setting_button.update()
         close_button.update()
-        orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
 
 
+def selectfood_page3(): # after player click steamer
+    global steamer_food_index, current_page
+
+    print(f"Initial steamer_food_index: {steamer_food_index}")
+    while True:
+        screen.blit(background, (0, 0))  
+
+        waiting_table()
+
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()  
+
+        
+        
+        food_selection1_rect = pygame.Rect(400, 120, 800, 600)
+        food_selection2_rect = pygame.Rect(425, 195, 752, 495)
+        stovepot_button_select()
+        steamer_button_select()
+        oven_button_select()
+        pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
+        pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
+        pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+
+        draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
+
+        start_index = (current_page - 1) * max_items_per_page
+        end_index = start_index + max_items_per_page
+        items_on_page = foodlist_steamer[start_index:end_index]
+
+        for i in range(len(items_on_page)):
+            food_item = items_on_page[i]
+            y_position = 216 + i * 144
+            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+            screen.blit(food_item["image"], (460, y_position + 4))
+            draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
+            draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
+
+            # Define the rect for the select button
+            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+            selectbutton_surface = pygame.Surface((130, 40))
+
+            select_button_color =(255, 204, 159)
+            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                select_button_color = (255, 129, 31)
+            
+            selectbutton_surface.fill(select_button_color)
+
+            # Render the "SELECT" button text
+            selectbutton_surface.blit(SELECT_text, text_rect)
+            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
+
+        total_pages = (len(foodlist_steamer) + max_items_per_page - 1) // max_items_per_page
+        if current_page < total_pages:
+            next_btn.update()
+
+        if current_page > 1:
+            back_btn.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                   print("Close button clicked")
+                   steamer_food_index = -1
+                   return
+
+                if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
+                    current_page += 1
+
+                if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
+                    current_page -= 1
+
+                # Check if the select button is clicked
+                for i in range(len(items_on_page)):
+                    y_position = 216 + i * 144
+                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                    if selectprepare_button_rect.collidepoint(event.pos):
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        steamer_food_index = selected_food_index  # Update the global index
+                        return steamer_process(selected_food_index)
+                
+ 
+        money_bar()
+        profilebutton.update()
+        menu_button.update()
+        upgrade_btn.update()
+        setting_button.update()
+        close_button.update()
+        happyhour_bar(hhactive)
+        pygame.display.update()
+        clock.tick(60)
+
+
+def selectfood_page4(): # after player click oven
+    global current_page, oven_food_index
+
+    print(f"Initial oven_food_index: {oven_food_index}")
+    while True:
+        screen.blit(background, (0, 0)) 
+
+        waiting_table()
+
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+
+      
+       
+        food_selection1_rect = pygame.Rect(400, 120, 800, 600)
+        food_selection2_rect = pygame.Rect(425, 195, 752, 495)
+        stovepot_button_select()
+        steamer_button_select()
+        oven_button_select()
+        pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
+        pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
+        pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+
+        draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
+
+        start_index = (current_page - 1) * max_items_per_page
+        end_index = start_index + max_items_per_page
+        items_on_page = foodlist_oven[start_index:end_index]
+
+        for i in range(len(items_on_page)):
+            food_item = items_on_page[i]
+            y_position = 216 + i * 144
+            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+            screen.blit(food_item["image"], (460, y_position + 4))
+            draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
+            draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
+
+            # Define the rect for the select button
+            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+            selectbutton_surface = pygame.Surface((130, 40))
+
+            select_button_color = (255, 255, 199)
+            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                select_button_color = (255, 255, 41)
+            
+            selectbutton_surface.fill(select_button_color)
+        
+            # Render the "SELECT" button text
+            selectbutton_surface.blit(SELECT_text, text_rect)
+            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
+
+        total_pages = (len(foodlist_oven) + max_items_per_page - 1) // max_items_per_page
+        if current_page < total_pages:
+            next_btn.update()
+
+        if current_page > 1:
+            back_btn.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                    print("Close button clicked")
+                    oven_food_index = -1
+                    return
+
+                if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
+                    current_page += 1
+
+                if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
+                    current_page -= 1
+
+                # Check if the select button is clicked
+                for i in range(len(items_on_page)):
+                    y_position = 216 + i * 144
+                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                    if selectprepare_button_rect.collidepoint(event.pos):
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        oven_food_index = selected_food_index  # Update the global index
+                        return oven_process(selected_food_index)
+
+        money_bar()
+        profilebutton.update()
+        menu_button.update()
+        upgrade_btn.update()
+        setting_button.update()
+        close_button.update()
+        happyhour_bar(hhactive)
+        pygame.display.update()
+        clock.tick(60)
+
+
+def stovepot_button_select(): # STOVE POT button on main screen   
+    machinetype_surface1 = pygame.Surface ((180, 50), pygame.SRCALPHA)
+    machinetype_button_rect1 = pygame.Rect(315, 310, 180, 50)
+
+    stovepot_button_color =  (151, 155, 213)
+    if machinetype_button_rect1.collidepoint(pygame.mouse.get_pos()):
+        stovepot_button_color = (21, 28, 125) 
+
+    machinetype_surface1.fill(stovepot_button_color)
+
+    ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
+    ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface1.get_width()/2, machinetype_surface1.get_height()/2))
+    machinetype_surface1.blit(ChooseMachine_text1, ChooseMachine_text_rect1)
+    
+    screen.blit( machinetype_surface1, machinetype_button_rect1.topleft)
+    return machinetype_button_rect1  # Return the rect for click detection
+
+
+def steamer_button_select(): # STEAMER button on main screen
+    machinetype_surface2 = pygame.Surface ((180, 50),pygame.SRCALPHA)
+    machinetype_button_rect2 = pygame.Rect(638, 310, 180, 50)
+
+    steamer_button_color = (151, 155, 213)
+    if machinetype_button_rect2.collidepoint(pygame.mouse.get_pos()):
+        steamer_button_color = (21, 28, 125) 
+
+    machinetype_surface2.fill(steamer_button_color)
+
+    ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
+    ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface2.get_width()/2, machinetype_surface2.get_height()/2))
+    machinetype_surface2.blit(ChooseMachine_text2, ChooseMachine_text_rect2)
+    
+    screen.blit( machinetype_surface2, machinetype_button_rect2.topleft)
+    return machinetype_button_rect2
+
+
+def oven_button_select(): # OVEN button on main screen
+    machinetype_surface3 = pygame.Surface ((180, 50), pygame.SRCALPHA)
+    machinetype_button_rect3 = pygame.Rect(960, 310, 180, 50)
+
+    oven_button_color = (151, 155, 213)
+    if machinetype_button_rect3.collidepoint(pygame.mouse.get_pos()):
+        oven_button_color = (21, 28, 125) 
+
+    machinetype_surface3.fill(oven_button_color)
+
+    
+    ChooseMachine_text3 = font_button_machine.render(" OVEN ", True, "white")
+    ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface3.get_width()/2, machinetype_surface3.get_height()/2))
+    machinetype_surface3.blit(ChooseMachine_text3, ChooseMachine_text_rect3)
+
+    screen.blit( machinetype_surface3, machinetype_button_rect3.topleft)
+    return machinetype_button_rect3
+
+
+# Initialize process states and start times
+stovepot_running = False
+steamer_running = False
+oven_running = False
+
+stovepot_start_time = 0
+steamer_start_time = 0
+oven_start_time = 0
+
+# Duration in seconds for each cooking process
+stovepot_duration = 10
+steamer_duration = 15
+oven_duration = 20
+
+# x, y, w, h, max_hp
+cooking_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
+cooking_bar_steamer = CookingBar(651, 120, 160, 20, 100)
+cooking_bar_oven = CookingBar(965, 119, 160, 20, 100)
+
+
+def stovepot_process(selected_food_index):
+    global stovepot_start_time, stovepot_running, stovepot_duration, stovepot_food_index
+
+    # Validate the selected food index
+    if selected_food_index < 0 or selected_food_index >= len(food_lists):
+        print(f"Invalid food index: {selected_food_index}")
+        return       # Exit if the index is invalid
+
+    stovepot_running = True
+    stovepot_start_time = time.time()
+    stovepot_duration = 10 
+    stovepot_food_index = selected_food_index
+
+    # Debug statement 
+    print(f"Stovepot started with food index: {stovepot_food_index}, start time: {stovepot_start_time}")
+
+    # make sure not block the game loop
+    return
+      
+
+def steamer_process(selected_food_index):
+    global steamer_start_time, steamer_running, steamer_duration, steamer_food_index
+
+    # Validate the selected food index
+    if selected_food_index < 0 or selected_food_index >= len(foodlist_steamer):
+        print(f"Invalid food index: {selected_food_index}")
+        return         # Exit if the index is invalid
+
+    steamer_running = True
+    steamer_start_time = time.time()
+    steamer_duration = 15  
+    steamer_food_index = selected_food_index
+
+    # Debug statement 
+    print(f"Steamer started with food index: {steamer_food_index}, start time: {steamer_start_time}")
+
+    return
+
+
+def oven_process(selected_food_index):
+    global oven_start_time, oven_running, oven_duration, oven_food_index
+
+    # Validate the selected food index
+    if selected_food_index < 0 or selected_food_index >= len(foodlist_oven):
+        print(f"Invalid food index: {selected_food_index}")
+        return            # Exit if the index is invalid
+
+    oven_running = True
+    oven_start_time = time.time()
+    oven_duration = 20 
+    oven_food_index = selected_food_index
+
+    # Debug statement to confirm the process
+    print(f"Oven started with food index: {oven_food_index}, start time: {oven_start_time}")
+
+    return
+       
+
+def pastefood_stovepot(selected_food_index):
+    global food_lists
+
+    food_image = food_lists[selected_food_index]["image"]
+
+    stovepot_button_color =  (255, 0, 102) 
+    machinetype_surface1.fill(stovepot_button_color)
+
+    # Resize the food image to the desired size (e.g., 100x100 pixels)
+    new_food_image = pygame.transform.scale(food_image, (80, 80))
+        
+    # Coordinates of the dialog box
+    dialog_x, dialog_y = 230, 147
+
+    screen.blit(dialogbox_img, ( dialog_x, dialog_y))
+    food_x = dialog_x + (dialogbox_img.get_width() - (new_food_image.get_width()))//2
+    food_y = dialog_y + (dialogbox_img.get_height() - (new_food_image.get_height()))/2
+    screen.blit(new_food_image, (food_x, food_y)) 
+
+ 
+def pastefood_steamer(selected_food_index):
+    global foodlist_steamer
+    food_image = foodlist_steamer[selected_food_index]["image"]
+
+    # Resize the food image to the desired size (e.g., 100x100 pixels)
+    new_food_image = pygame.transform.scale(food_image, (80, 80))
+
+    steamer_button_color =  (255, 0, 102) 
+    machinetype_surface2.fill(steamer_button_color)
+        
+    # Coordinates of the dialog box
+    dialog_x, dialog_y = 555, 147
+
+    screen.blit(dialogbox_img, ( dialog_x, dialog_y))
+    food_x = dialog_x + (dialogbox_img.get_width() - (new_food_image.get_width()))//2
+    food_y = dialog_y + (dialogbox_img.get_height() - (new_food_image.get_height()))/2
+    screen.blit(new_food_image, (food_x, food_y)) 
+
+    
+def pastefood_oven(selected_food_index):
+    global foodlist_oven
+    food_image = foodlist_oven[selected_food_index]["image"]
+
+    # Resize the food image to the desired size (e.g., 100x100 pixels)
+    new_food_image = pygame.transform.scale(food_image, (80, 80))
+
+    oven_button_color =  (255, 0, 102) 
+    machinetype_surface3.fill(oven_button_color)
+        
+    # Coordinates of the dialog box
+    dialog_x, dialog_y = 840, 147
+
+    screen.blit(dialogbox_img, ( dialog_x, dialog_y))
+    food_x = dialog_x + (dialogbox_img.get_width() - (new_food_image.get_width()))//2
+    food_y = dialog_y + (dialogbox_img.get_height() - (new_food_image.get_height()))/2
+    screen.blit(new_food_image, (food_x, food_y))
+
+
+def waiting_table():
+    table_rect = pygame.Rect(195, 620, 1070, 140)
+    table_color = (188,143,143)
+    pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)  
+
+
+    # 6个格子在1 row (代表table width被分割六份）
+    slot_width = table_rect.width // 6         # Divide the table into 6 equal slots
+    slot_height = table_rect.height            # The height of each slot is the full height of the table
+
+
+    # Iterate through the 6 slots to draw them
+    for col in range(6):  # 6 columns for 6 slots
+        slot_rect = pygame.Rect(
+            table_rect.x + col * slot_width,
+            table_rect.y,
+            slot_width, slot_height
+        )
+        pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # Draw slot rectangles with gray borders
+
+
+        if slots[col] is not None:
+            food_item = slots[col]
+            food_image = food_item["image"]
+            new_food_image = pygame.transform.scale(food_image, (slot_width, slot_height))
+            screen.blit(new_food_image, slot_rect.topleft)
+
+
+slots = [None]*6
+
+def determine_available_slots():
+    index = 0
+    while index < len(slots):
+        if slots[index] is None:
+            return index
+        index +=1
+    return None 
+
+
+def update_slots(slot_index, food_item):    
+    if slot_index is not None and 0 <= slot_index < len(slots):
+        slots[slot_index] = food_item
+        print(f"Slot {slot_index} updated with {food_item}")
+
+
+def remind_no_empty_slots():
+    global message_timer, full_slot_remind
+    full_slot_remind = True
+    message_timer = 5
+    print("Reminder triggered: Full slots")
+
+        
+def put_food_to_slots(selected_food_index, machine_type):
+    print(f"Putting food with index {selected_food_index} into slots")
+    slot_index = determine_available_slots()
+    if slot_index is not None:
+        print(f"Available slot found at index {slot_index}")
+        if machine_type == "oven":
+            update_slots(slot_index, foodlist_oven[selected_food_index])
+        elif machine_type == "stovepot":
+            update_slots(slot_index, food_lists[selected_food_index])
+        elif machine_type == "steamer":
+            update_slots(slot_index, foodlist_steamer[selected_food_index])
+        else:
+            print(f"Unknown machine type: {machine_type}")
+    else:
+        print("No available slots now")
+        remind_no_empty_slots()
+
+
 def main():
+    global stovepot_running, steamer_running, oven_running
+    global stovepot_start_time, steamer_start_time, oven_start_time
+    global stovepot_food_index, steamer_food_index, oven_food_index
+    global  machine_type, food_item, message_timer, full_slot_remind
+
+    stovepot_running = False
+    steamer_running = False
+    oven_running = False
+    full_slot_remind = False
+
+    message_timer = 0
+
+    stovepot_start_time = 0
+    steamer_start_time = 0
+    oven_start_time = 0
+
+    stovepot_food_index = -1
+    steamer_food_index = -1
+    oven_food_index = -1
+
+    stovepot_duration = 10
+    steamer_duration = 15
+    oven_duration = 20
+
+    slot_index = None
+    machine_type = None
+    food_item = None
+
+
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
+
+
+        # Draw buttons for each machine
+        stovepot_button_rect = stovepot_button_select()
+        steamer_button_rect = steamer_button_select()
+        oven_button_rect = oven_button_select()
+
+
+        # Handle stovepot cooking process
+        if stovepot_running:
+            elapsed_time = time.time() - stovepot_start_time
+            if elapsed_time >= stovepot_duration:
+                stovepot_running = False
+                put_food_to_slots(stovepot_food_index, "stovepot") 
+                stovepot_food_index = -1
+               
+            cooking_bar_stovepot.update(elapsed_time, stovepot_duration)
+            cooking_bar_stovepot.draw(screen)
+            pastefood_stovepot(stovepot_food_index)
+
+            machinetype_surface1 = pygame.Surface ((180, 50), pygame.SRCALPHA)
+            stovepot_button_color = (255, 0, 128)
+            machinetype_surface1.fill (stovepot_button_color)
+
+            machinetype_surface1.blit(ChooseMachine_text1, ChooseMachine_text_rect1)
+            screen.blit( machinetype_surface1, machinetype_button_rect1.topleft)
+
+        # Handle steamer cooking process
+        if steamer_running:
+            elapsed_time = time.time() - steamer_start_time
+            if elapsed_time >= steamer_duration:
+                steamer_running = False
+                put_food_to_slots(steamer_food_index, "steamer") 
+                steamer_food_index = -1
+               
+
+            cooking_bar_steamer.update(elapsed_time, steamer_duration)
+            cooking_bar_steamer.draw(screen)
+            pastefood_steamer(steamer_food_index)    
+            machinetype_surface2 = pygame.Surface ((180, 50), pygame.SRCALPHA)
+            steamer_button_color = (255, 0, 128)
+            machinetype_surface2.fill (steamer_button_color)
+
+            machinetype_surface2.blit(ChooseMachine_text2, ChooseMachine_text_rect2)
+            screen.blit( machinetype_surface2, machinetype_button_rect2.topleft)
+
+        # Handle oven cooking process
+        if oven_running:
+            elapsed_time = time.time() - oven_start_time
+            if elapsed_time >= oven_duration:
+                oven_running = False
+                put_food_to_slots(oven_food_index, "oven") 
+                oven_food_index = -1
+
+            cooking_bar_oven.update(elapsed_time, oven_duration)
+            cooking_bar_oven.draw(screen)
+            pastefood_oven(oven_food_index)      
+
+            machinetype_surface3 = pygame.Surface ((180, 50), pygame.SRCALPHA)
+            oven_button_color = (255, 0, 128)
+            machinetype_surface3.fill (oven_button_color)
+
+            machinetype_surface3.blit(ChooseMachine_text3, ChooseMachine_text_rect3)
+            screen.blit( machinetype_surface3, machinetype_button_rect3.topleft)
+       
+        if full_slot_remind:
+            font_slot = pygame.font.SysFont("cambria", 20)
+            draw_text("Full slots now", font_slot,"red", screen, 100, 200)
+            print(f"Message Timer: {message_timer}") 
+            message_timer -= 1  
+            if message_timer <= 0:
+                full_slot_remind = False  
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -1640,6 +2370,47 @@ def main():
                     selectfood_page1()
                 if orderbtn.checkForInput(pygame.mouse.get_pos()): 
                     order()
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                     # Reset all running states and food indexes
+                    print("Close button clicked") 
+                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
+                    stovepot_running = False
+                    steamer_running = False
+                    oven_running = False
+                    
+                    stovepot_food_index = -1
+                    steamer_food_index = -1
+                    oven_food_index = -1
+                    print("Close button clicked") 
+                   
+                    
+                    # Return to the main screen without any active processes
+                    return
+          
+
+                if stovepot_button_rect.collidepoint(event.pos) and not stovepot_running:
+                    click_sfx.play()
+                    selectfood_page2()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if stovepot_food_index >= 0:
+                        stovepot_process(stovepot_food_index)
+
+
+                if steamer_button_rect.collidepoint(event.pos) and not steamer_running:
+                    click_sfx.play()
+                    selectfood_page3()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if steamer_food_index >= 0:
+                        steamer_process(steamer_food_index)
+
+
+                if oven_button_rect.collidepoint(event.pos) and not oven_running:
+                    click_sfx.play()
+                    selectfood_page4()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if oven_food_index >= 0:
+                        oven_process(oven_food_index)
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
@@ -1648,13 +2419,15 @@ def main():
         money_bar()
         profilebutton.update()
         upgrade_btn.update()
-        ori_machineA_button.update()
-        ori_machineB_button.update()
-        ori_machineC_button.update()
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
         menu_button.update()
         setting_button.update()
         happyhour_bar(hhactive)
         orderbtn.update()
+        waiting_table()
+        update_slots(slot_index, food_item)
 
         pygame.display.flip()
         clock.tick(60)
