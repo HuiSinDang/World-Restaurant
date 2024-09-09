@@ -1,6 +1,9 @@
-dimsun
+satay
+satay
 cookie
-dimsun
+satay
+cookie
+satay
 cookie
 satay
 dimsun
@@ -13,54 +16,3 @@ nasi lemak
 satay
 dimsun
 cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake
-nasi lemak
-satay
-dimsun
-cookie
-cake

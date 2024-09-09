@@ -560,6 +560,11 @@ def profile():
 
         pygame.display.flip()
 
+order_profits = {
+    'order1': 25,
+    'order2': 43,
+    'order3': 52
+}
 def order():
     show_complete_button1 = False
     show_complete_button2 = False
@@ -925,6 +930,9 @@ def order():
                         list2_filename = './picture/waitingtable.txt'
 
                         check_and_update_lists(list1_filename, list2_filename)
+                        profit_per_order = order_profits['order1']
+                        add_money(profit_per_order)
+
                 if show_complete_button2 and completebutton2.checkForInput(mouse_pos):
                     pygame.display.flip()
                     if last_clicked_order == "order2":
@@ -977,6 +985,8 @@ def order():
                         list2_filename = './picture/waitingtable.txt'
 
                         check_and_update_lists(list1_filename, list2_filename)
+                        profit_per_order = order_profits['order2']
+                        add_money(profit_per_order)
 
                 if show_complete_button3 and completebutton2.checkForInput(mouse_pos):
                     pygame.display.flip()
@@ -1031,6 +1041,8 @@ def order():
                         list2_filename = './picture/waitingtable.txt'
 
                         check_and_update_lists(list1_filename, list2_filename)
+                        profit_per_order = order_profits['order3']
+                        add_money(profit_per_order)
 
        
         pygame.display.flip()
@@ -1430,16 +1442,20 @@ def main():
 #money
 money_amount = 0
 max_display_money = 1000000
+money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
 
 def show_money():
-    try:
-        with open("money.txt","r")as file:
-            return int(file.read())
-    except FileNotFoundError:
+    if os.path.exists(money_file_path):
+        try:
+            with open("./picture/money.txt","r")as file:
+                return int(file.read())
+        except (ValueError,IOError):
+            return 0
+    else:
         return 0
     
 def save_money():
-    with open("money.txt","w") as file:
+    with open("./picture/money.txt","w") as file:
         file.write(str(money_amount))
 
 def money_bar():
@@ -1447,6 +1463,22 @@ def money_bar():
     text_rect = money_text.get_rect(center=(1250,55))
     screen.blit(money_text,text_rect)
 
+def add_money(amount):
+    global money_amount
+    money_amount += amount
+    money_amount = min(money_amount,max_display_money)
+    save_money()
+
+def subtract_money(amount):
+    global money_amount
+    if money_amount >= amount:
+        money_amount -= amount
+        money_amount = max(money_amount,0)
+        save_money()
+        return True
+    else:
+        return False
+    
 money_amount = show_money()
 
 #happy hour
