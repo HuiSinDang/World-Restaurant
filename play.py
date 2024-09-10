@@ -269,7 +269,7 @@ button_surface = pygame.transform.scale(button_surface, (75, 75))
 button = Button(button_surface, 1100, 150, "")
 
 resetbutton_surface = pygame.image.load("./picture/reset_btn.png")
-resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 250))
+resetbutton_surface = pygame.transform.scale(resetbutton_surface, (250, 60))
 resetbutton = Button(resetbutton_surface, 600, 575, "Reset Name")
 
 backbutton_surface = pygame.image.load("./picture/back_btn.png")
@@ -384,24 +384,24 @@ orderbtn_surface = pygame.transform.scale(orderbtn_surface, (175, 175))
 orderbtn = Button(orderbtn_surface, 75, 360,"")
 
 order1button_surface = pygame.image.load("./picture/order.png")
-order1button_surface = pygame.transform.scale(order1button_surface, (400, 400))
+order1button_surface = pygame.transform.scale(order1button_surface, (270, 270))
 order1button = Button(order1button_surface, 350, 350,"")
 
 order2button_surface = pygame.image.load("./picture/order.png")
-order2button_surface = pygame.transform.scale(order2button_surface, (400, 400))
+order2button_surface = pygame.transform.scale(order2button_surface, (270, 270))
 order2button = Button(order2button_surface, 650, 350,"")
 
 order3button_surface = pygame.image.load("./picture/order.png")
-order3button_surface = pygame.transform.scale(order3button_surface, (400, 400))
+order3button_surface = pygame.transform.scale(order3button_surface, (270, 270))
 order3button = Button(order3button_surface, 950, 350,"")
 
 completebutton_surface = pygame.image.load("./picture/reset_btn.png")
-completebutton_surface = pygame.transform.scale(completebutton_surface, (250, 250))
+completebutton_surface = pygame.transform.scale(completebutton_surface, (250, 60))
 completebutton = Button(completebutton_surface, 600, 575,"Complete")
 
 man1_surface = pygame.image.load("./picture/man.png")
 man1_surface = pygame.transform.scale(man1_surface, (50, 50))
-man1 = Button(man1_surface, 260, 435,"")
+man1 = Button(man1_surface, 275, 435,"")
 
 man2_surface = pygame.image.load("./picture/man.png")
 man2_surface = pygame.transform.scale(man2_surface, (50, 50))
@@ -413,11 +413,11 @@ man3 = Button(man3_surface, 875, 435,"")
 
 chick1_surface = pygame.image.load("./picture/chick.png")
 chick1_surface = pygame.transform.scale(chick1_surface, (50, 50))
-chick1 = Button(chick1_surface, 260, 435,"")
+chick1 = Button(chick1_surface, 275, 435,"")
 
 chick2_surface = pygame.image.load("./picture/chick.png")
 chick2_surface = pygame.transform.scale(chick2_surface, (50, 50))
-chick2 = Button(chick2_surface, 570, 435,"")
+chick2 = Button(chick2_surface, 575, 435,"")
 
 chick3_surface = pygame.image.load("./picture/chick.png")
 chick3_surface = pygame.transform.scale(chick3_surface, (50, 50))
@@ -425,7 +425,7 @@ chick3 = Button(chick3_surface, 875, 435,"")
 
 robot1_surface = pygame.image.load("./picture/robot.png")
 robot1_surface = pygame.transform.scale(robot1_surface, (50, 50))
-robot1 = Button(robot1_surface, 260, 435,"")
+robot1 = Button(robot1_surface, 275, 435,"")
 
 robot2_surface = pygame.image.load("./picture/robot.png")
 robot2_surface = pygame.transform.scale(robot2_surface, (50, 50))
@@ -449,15 +449,15 @@ unorder3button = Button(unorder3button_surface, 950, 350,"")
 
 frame1_surface = pygame.image.load("./picture/frame.png")
 frame1_surface = pygame.transform.scale(frame1_surface, (295, 295))
-frame1 = Button(frame1_surface, 345, 350,"")
+frame1 = Button(frame1_surface, 355, 350,"")
 
 frame2_surface = pygame.image.load("./picture/frame.png")
 frame2_surface = pygame.transform.scale(frame2_surface, (295, 295))
-frame2 = Button(frame2_surface, 645, 350,"")
+frame2 = Button(frame2_surface, 655, 350,"")
 
 frame3_surface = pygame.image.load("./picture/frame.png")
 frame3_surface = pygame.transform.scale(frame3_surface, (295, 295))
-frame3 = Button(frame3_surface, 945, 350,"")
+frame3 = Button(frame3_surface, 955, 350,"")
 
 # Main loop(irene)
 show_popup = False
@@ -830,7 +830,7 @@ def order():
                         color = "green"
                     else :
                         color = "red"
-                    draw_text(f1, main_font, color, screen, 350, y_offset)  # On top of button 1
+                    draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
                     y_offset += 50
                 ffood1.close()
 
@@ -865,7 +865,7 @@ def order():
                         color = "red"
                     if f1 in waitingtable_copy1:
                         waitingtable_copy1.remove(f1)
-                    draw_text(f1, main_font, color, screen, 350, y_offset)  # On top of button 1
+                    draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
                     y_offset += 50
                 ffood1.close()
         else:
@@ -898,7 +898,7 @@ def order():
                 order1.append(f1)
                 ffood1.write(f'{f1}\n')
                 color = "green" if f1 in waitingtable1 else "red"
-                draw_text(f1, main_font, color, screen, 350, y_offset)  # On top of button 1
+                draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
                 y_offset += 50
             ffood1.close()
 
@@ -942,7 +942,7 @@ def order():
                         color = "green"
                     else :
                         color = "red"
-                    draw_text(f2, main_font, color, screen, 650, y_offset)  # On top of button 2
+                    draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
                     y_offset += 50
                 ffood2.close()
 
@@ -978,7 +978,7 @@ def order():
                         color = "red"
                     if f2 in waitingtable_copy2:
                         waitingtable_copy2.remove(f2)  # 成功匹配后移除该项
-                    draw_text(f2, main_font, color, screen, 650, y_offset)  # On top of button 2
+                    draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
                     y_offset += 50
                 ffood2.close()
         else:
@@ -1014,7 +1014,7 @@ def order():
                     color = "green"
                 else:
                     color = "red"
-                draw_text(f2, main_font, color, screen, 650, y_offset)  # On top of button 2
+                draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
                 y_offset += 50
             ffood2.close()
 
@@ -1058,7 +1058,7 @@ def order():
                         color = "green"
                     else:
                         color = "red"
-                    draw_text(f3, main_font, color, screen, 950, y_offset)  # On top of button 3
+                    draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
                     y_offset += 50
                 ffood3.close()
 
@@ -1094,7 +1094,7 @@ def order():
                         color = "red"
                     if f3 in waitingtable_copy3:
                         waitingtable_copy3.remove(f3)  # 成功匹配后移除该项
-                    draw_text(f3, main_font, color, screen, 950, y_offset)  # On top of button 3
+                    draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
                     y_offset += 50
                 ffood3.close()
         else:
@@ -1130,7 +1130,7 @@ def order():
                     color = "green"
                 else:
                     color = "red"
-                draw_text(f3, main_font, color, screen, 950, y_offset)  # On top of button 3
+                draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
                 y_offset += 50
             ffood3.close()
         
