@@ -2198,7 +2198,9 @@ def main():
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
 
-
+        money_bar()
+        profilebutton.update()
+        upgrade_btn.update()
         pan_default_button.update()
         steamer_button.update()
         oven_button.update()
@@ -2282,12 +2284,13 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+                    
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     upgrade_process()
-                if menu_button.checkForInput(pygame.mouse.get_pos()): 
-                    selectfood_page1()
+
                 if orderbtn.checkForInput(pygame.mouse.get_pos()): 
                     order()
+
                 if stovepot_button_rect.collidepoint(event.pos) and not stovepot_running:
                     click_sfx.play()
                     selectfood_page2()  # Select food from the page
@@ -2315,7 +2318,7 @@ def main():
                 if close_button.checkForInput(pygame.mouse.get_pos()):
                      # Reset all running states and food indexes
                     print("Close button clicked") 
-                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
+                    
                     stovepot_running = False
                     steamer_running = False
                     oven_running = False
@@ -2326,7 +2329,6 @@ def main():
                     print("Close button clicked") 
                    
                     
-                    # Return to the main screen without any active processes
                     return
           
             if event.type == pygame.KEYDOWN:
