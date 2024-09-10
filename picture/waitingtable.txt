@@ -1,17 +1,12 @@
-<<<<<<< HEAD
-dimsum
-
-
 cookie
-
+dimsum
+cookie
 cake
 cake
-
-=======
-cake
-nasi lemak
 cake
 nasi lemak
+satay
+dimsun
 cookie
 cake
 nasi lemak
@@ -19,4 +14,3 @@ satay
 dimsun
 cookie
 cake
->>>>>>> fd72c4fe41bf57d0694e2b825efa4ae4a79c35cc
