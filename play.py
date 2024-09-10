@@ -477,7 +477,7 @@ steamer_call = False
 oven_call = False
 
 #money#
-money_amount = 0
+money_amount = 100
 max_display_money = 1000000
 money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
 
@@ -487,9 +487,9 @@ def show_money():
             with open("./picture/money.txt","r")as file:
                 return int(file.read())
         except (ValueError,IOError):
-            return 0
+            return 100
     else:
-        return 0
+        return 100
     
 def save_money():
     with open("./picture/money.txt","w") as file:
@@ -520,6 +520,11 @@ money_amount = show_money()
 
 #happy hour
 order_completed = 0
+order_profits = {
+    'order1': 25,
+    'order2': 43,
+    'order3': 52
+}
 hhactive = False
 hhtime = 30
 hh_start_time = None
@@ -539,10 +544,14 @@ def save_order():
     with open("./picture/happyhour.txt","w") as file:
         file.write(str(order_completed))
 
-def add_order(amount):
+def add_order(order_type):
     global order_completed
-    order_completed += amount
+    base_profit = order_profits.get(order_type,0)
+    final_profit = hhprofit(base_profit)
+    add_money(final_profit)
+    order_completed += 1
     save_order()
+    update_happy_hour_status()
 
 def update_happy_hour_status():
     global hhactive,order_completed,hh_start_time
@@ -564,10 +573,10 @@ def happyhour_bar(happyhour):
     text_rect = hhtext.get_rect(center=(650,60))
     screen.blit(hhtext,text_rect)
 
-def hhprofit(origin_profit):
+def hhprofit(base_profit):
     if hhactive:
-        return origin_profit * 2
-    return origin_profit
+        return base_profit * 2
+    return base_profit
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -723,12 +732,6 @@ def profile():
         happyhour_bar(hhactive)
 
         pygame.display.flip()
-
-order_profits = {
-    'order1': 25,
-    'order2': 43,
-    'order3': 52
-}
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
@@ -1241,11 +1244,9 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order1']
                         add_money(profit_per_order)
-                        # order_completed += 1
-
                         add_order('order1')
 
-                        # order_completed +=1
+                        
 
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
