@@ -1246,11 +1246,11 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order1']
                         add_money(profit_per_order)
-<<<<<<< HEAD
+
                         add_order('order1')
-=======
+
                         # order_completed +=1
->>>>>>> fd72c4fe41bf57d0694e2b825efa4ae4a79c35cc
+
 
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
