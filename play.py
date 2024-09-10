@@ -2282,10 +2282,16 @@ def put_food_to_slots(selected_food_index, machine_type):
     if slot_index is not None:
         print(f"Available slot found at index {slot_index}")
         if machine_type == "oven":
+            food_name = foodlist_oven[selected_food_index]["name"]
+            food_price = foodlist_oven[selected_food_index]["price"]
             update_slots(slot_index, foodlist_oven[selected_food_index])
         elif machine_type == "stovepot":
+            food_name = food_lists[selected_food_index]["name"]
+            food_price = food_lists[selected_food_index]["price"]
             update_slots(slot_index, food_lists[selected_food_index])
         elif machine_type == "steamer":
+            food_name = foodlist_steamer[selected_food_index]["name"]
+            food_price = foodlist_steamer[selected_food_index]["price"]
             update_slots(slot_index, foodlist_steamer[selected_food_index])
         else:
             print(f"Unknown machine type: {machine_type}")
