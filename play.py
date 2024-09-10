@@ -720,6 +720,7 @@ def profile():
         setting_button.update()
         orderbtn.update()
         money_bar()
+        waiting_table()
         happyhour_bar(hhactive)
 
         pygame.display.flip()
@@ -1320,6 +1321,7 @@ def order():
                         pygame.display.flip()
                         pygame.time.wait(1000)
 
+        waiting_table()
         pygame.display.flip()
         clock.tick(30)
 
@@ -1538,6 +1540,7 @@ def upgrade_process():
         menu_button.update()
         setting_button.update()
         money_bar()
+        waiting_table()
         pygame.display.update()
         clock.tick(60)
 
@@ -2139,32 +2142,6 @@ def update_slots(slot_index, food_item):
         print(f"Slot {slot_index} updated with {food_item}")
 
 
-def remind_no_empty_slots():
-    global message_timer, full_slot_remind
-    full_slot_remind = True
-    message_timer = 5
-    print("Reminder triggered: Full slots")
-
-        
-def put_food_to_slots(selected_food_index, machine_type):
-    print(f"Putting food with index {selected_food_index} into slots")
-    slot_index = determine_available_slots()
-    if slot_index is not None:
-        print(f"Available slot found at index {slot_index}")
-        if machine_type == "oven":
-            update_slots(slot_index, foodlist_oven[selected_food_index])
-        elif machine_type == "stovepot":
-            update_slots(slot_index, food_lists[selected_food_index])
-        elif machine_type == "steamer":
-            update_slots(slot_index, foodlist_steamer[selected_food_index])
-        else:
-            print(f"Unknown machine type: {machine_type}")
-    else:
-        print("No available slots now")
-        remind_no_empty_slots()
-
-
-
 def cooking_process():
     global stovepot_running, steamer_running, oven_running
     global stovepot_start_time, steamer_start_time, oven_start_time
@@ -2226,13 +2203,36 @@ def cooking_process():
         screen.blit(machinetype_surface3, machinetype_button_rect3.topleft)
 
     if full_slot_remind:
-        font_slot = pygame.font.SysFont("cambria", 20)
-        draw_text("Full slots now", font_slot, "red", screen, 100, 200)
+        font_slot = pygame.font.SysFont("cambria", 30, bold=True)
+        draw_text("Full    slots    now !", font_slot, "red", screen, 710, 600)
         print(f"Message Timer: {message_timer}")
         message_timer -= 1
         if message_timer <= 0:
             full_slot_remind = False
 
+def remind_no_empty_slots():
+    global message_timer, full_slot_remind
+    full_slot_remind = True
+    message_timer = 180
+    print("Reminder triggered: Full slots")
+
+
+def put_food_to_slots(selected_food_index, machine_type):
+    print(f"Putting food with index {selected_food_index} into slots")
+    slot_index = determine_available_slots()
+    if slot_index is not None:
+        print(f"Available slot found at index {slot_index}")
+        if machine_type == "oven":
+            update_slots(slot_index, foodlist_oven[selected_food_index])
+        elif machine_type == "stovepot":
+            update_slots(slot_index, food_lists[selected_food_index])
+        elif machine_type == "steamer":
+            update_slots(slot_index, foodlist_steamer[selected_food_index])
+        else:
+            print(f"Unknown machine type: {machine_type}")
+    else:
+        print("No available slots now")
+        remind_no_empty_slots()
 
 
 def main():
@@ -2258,9 +2258,9 @@ def main():
     steamer_food_index = -1
     oven_food_index = -1
 
-    stovepot_duration = 10
-    steamer_duration = 15
-    oven_duration = 20
+    # stovepot_duration = 10
+    # steamer_duration = 15
+    # oven_duration = 20
 
     slot_index = None
     machine_type = None
@@ -2302,7 +2302,7 @@ def main():
                 if close_button.checkForInput(pygame.mouse.get_pos()):
                     # Reset all running states and food indexes
                     print("Close button clicked")
-                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
+                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}, oven_food_index = {oven_food_index}")
                     stovepot_running = False
                     steamer_running = False
                     oven_running = False
