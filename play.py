@@ -2164,21 +2164,6 @@ def put_food_to_slots(selected_food_index, machine_type):
         remind_no_empty_slots()
 
 
-def reset_mainscreen():
-    bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-    screen.blit(bg_img, (0, 0))
-
-
-    money_bar()
-    profilebutton.update()
-    upgrade_btn.update()
-    pan_default_button.update()
-    steamer_button.update()
-    oven_button.update()
-    orderbtn.update()
-    
-    pygame.display.flip()
-    clock.tick(60)
 
 def cooking_process():
     print("Cooking Main loop running")
