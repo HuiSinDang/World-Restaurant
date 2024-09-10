@@ -1241,6 +1241,10 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order1']
                         add_money(profit_per_order)
+                        # order_completed += 1
+
+                        add_order('order1')
+
                         # order_completed +=1
 
                     elif last_clicked_order == "order2":
@@ -1287,7 +1291,14 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order2']
                         add_money(profit_per_order)
+
                         # order_completed +=1
+
+
+                        add_order('order2')
+
+                        # order_completed +=1
+
 
                     elif last_clicked_order == "order3":
                         
@@ -1335,7 +1346,15 @@ def order():
 
                         profit_per_order = order_profits['order3']
                         add_money(profit_per_order)
+
                         # order_completed +=1
+
+
+                        add_order('order3')
+
+                        # order_completed +=1
+
+
                     
                     else :
                         draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
