@@ -2353,7 +2353,7 @@ def cooking_process():
 
 def main():
     while True:
-        bg_img = pygame.image.load("lobby.jpg").convert()
+        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
 
         money_bar()
