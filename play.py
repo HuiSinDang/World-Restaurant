@@ -2180,9 +2180,9 @@ def reset_mainscreen():
     pygame.display.flip()
     clock.tick(60)
 
+def cooking_process():
+    print("Cooking Main loop running")
 
-
-def main():
     global stovepot_running, steamer_running, oven_running
     global stovepot_start_time, steamer_start_time, oven_start_time
     global stovepot_food_index, steamer_food_index, oven_food_index
@@ -2211,9 +2211,8 @@ def main():
     machine_type = None
     food_item = None
 
-
     while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+        bg_img = pygame.image.load("lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
 
         money_bar()
@@ -2222,12 +2221,12 @@ def main():
         pan_default_button.update()
         steamer_button.update()
         oven_button.update()
+        orderbtn.update()
 
         # Draw buttons for each machine
         stovepot_button_rect = stovepot_button_select()
         steamer_button_rect = steamer_button_select()
         oven_button_rect = oven_button_select()
-
 
         # Handle stovepot cooking process
         if stovepot_running:
@@ -2294,6 +2293,82 @@ def main():
             if message_timer <= 0:
                 full_slot_remind = False  
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:    
+                if close_button.checkForInput(pygame.mouse.get_pos()):
+                     # Reset all running states and food indexes
+                    print("Close button clicked") 
+                    print(f"Before reset: stovepot_food_index={stovepot_food_index}, steamer_food_index={steamer_food_index}")
+                    stovepot_running = False
+                    steamer_running = False
+                    oven_running = False
+                    
+                    stovepot_food_index = -1
+                    steamer_food_index = -1
+                    oven_food_index = -1
+                    print("Close button clicked") 
+                   
+                    
+                    # Return to the main screen without any active processes
+                    return
+          
+                if stovepot_button_rect.collidepoint(event.pos) and not stovepot_running:
+                    click_sfx.play()
+                    selectfood_page2()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if stovepot_food_index >= 0:
+                        stovepot_process(stovepot_food_index)
+
+                if steamer_button_rect.collidepoint(event.pos) and not steamer_running:
+                    click_sfx.play()
+                    selectfood_page3()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if steamer_food_index >= 0:
+                        steamer_process(steamer_food_index)
+
+                if oven_button_rect.collidepoint(event.pos) and not oven_running:
+                    click_sfx.play()
+                    selectfood_page4()  # Select food from the page
+                    # After selecting, ensure `stovepot_food_index` is updated before processing
+                    if oven_food_index >= 0:
+                        oven_process(oven_food_index)
+            
+        
+        menu_button.update()
+        setting_button.update()
+        upgrade_btn.update()
+        profilebutton.update()
+        orderbtn.update()
+        happyhour_bar(hhactive)
+        waiting_table()
+        update_slots(slot_index, food_item)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def main():
+    while True:
+        bg_img = pygame.image.load("lobby.jpg").convert()
+        screen.blit(bg_img, (0, 0))
+
+        money_bar()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        setting_button.update()
+        orderbtn.update()
+        happyhour_bar(hhactive)
+
+        
+        # Draw buttons for each machine
+        stovepot_button_rect = stovepot_button_select()
+        steamer_button_rect = steamer_button_select()
+        oven_button_rect = oven_button_select()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -2309,65 +2384,22 @@ def main():
                 if orderbtn.checkForInput(pygame.mouse.get_pos()): 
                     order()
 
-                if stovepot_button_rect.collidepoint(event.pos) and not stovepot_running:
-                    click_sfx.play()
-                    selectfood_page2()  # Select food from the page
-                    # After selecting, ensure `stovepot_food_index` is updated before processing
-                    if stovepot_food_index >= 0:
-                        stovepot_process(stovepot_food_index)
+                if stovepot_button_rect.collidepoint(event.pos):
+                    stovepot_button_select()
 
+                if steamer_button_rect.collidepoint(event.pos):
+                    steamer_button_select()
+                
+                if oven_button_rect.collidepoint(event.pos):
+                    oven_button_select()
 
-                if steamer_button_rect.collidepoint(event.pos) and not steamer_running:
-                    click_sfx.play()
-                    selectfood_page3()  # Select food from the page
-                    # After selecting, ensure `stovepot_food_index` is updated before processing
-                    if steamer_food_index >= 0:
-                        steamer_process(steamer_food_index)
-
-
-                if oven_button_rect.collidepoint(event.pos) and not oven_running:
-                    click_sfx.play()
-                    selectfood_page4()  # Select food from the page
-                    # After selecting, ensure `stovepot_food_index` is updated before processing
-                    if oven_food_index >= 0:
-                        oven_process(oven_food_index)
-
-                        
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                     # Reset all running states and food indexes
-                    print("Close button clicked") 
-                    
-                    stovepot_running = False
-                    steamer_running = False
-                    oven_running = False
-                    
-                    stovepot_food_index = -1
-                    steamer_food_index = -1
-                    oven_food_index = -1
-    
-                    message_timer = 0
-                    full_slot_remind = False   
-
-                    reset_mainscreen()
-                    return
-          
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
-                    profile()
-
-
-        money_bar()
-        profilebutton.update()
-        upgrade_btn.update()
-        menu_button.update()
-        setting_button.update()
-        happyhour_bar(hhactive)
-        orderbtn.update()
-        waiting_table()
-        update_slots(slot_index, food_item)
-
+            
+        cooking_process()
         pygame.display.flip()
         clock.tick(60)
+
+
+
 
 def show_name_from_file(restaurant_name):
     while True:
