@@ -674,7 +674,7 @@ def profile():
             draw_text(f"Opened in: {date}", font, "black",screen,650, 425)
             if check_file :
                 y= open("./picture/totalearned.txt", 'r')
-                totalmoney = [int(i) for i in y.read().split("\n")]
+                totalmoney = [int(i) for i in y.read().split("\n") if i.strip()]
                 y.close()
                 total = sum(totalmoney)
                 draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
@@ -685,7 +685,7 @@ def profile():
             draw_text(f"Opened in: {date}", font, "black",screen,650, 400)
             if check_file :
                 y= open("./picture/totalearned.txt", 'r')
-                totalmoney = [int(i) for i in y.read().split("\n")]
+                totalmoney = [int(i) for i in y.read().split("\n") if i.strip()]
                 y.close()
                 total = sum(totalmoney)
                 draw_text(f"Total earned money: $ {total}", font, "black",screen,650, 500)
@@ -1141,6 +1141,13 @@ def order():
         elif last_clicked_order == "order3" :
             frame3.update()
 
+        pathtotal1 = './picture/totalearned.txt'
+        check_file11 = os.path.isfile(pathtotal1)
+        if check_file11 == True:
+            ftotal = open("./picture/totalearned.txt", "a")
+        else:
+            ftotal = open("./picture/totalearned.txt","x")
+            check_file11 == True
 
         # Check for events
         for event in pygame.event.get():
@@ -1187,6 +1194,7 @@ def order():
                         pygame.time.wait(1000)
 
                 if completebutton.checkForInput(pygame.mouse.get_pos()):
+
                     if last_clicked_order == "order1":
                         def load_list_from_file(filename):
                             file =  open(filename, 'r') 
@@ -1217,6 +1225,10 @@ def order():
 
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
+                            
+                            profit = int(order_profits['order1'])
+                            ftotal.write(f'{profit}\n')
+                            ftotal.close
 
                             draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                             pygame.display.flip()
@@ -1229,7 +1241,7 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order1']
                         add_money(profit_per_order)
-                        order_completed +=1
+                        # order_completed +=1
 
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
@@ -1259,6 +1271,10 @@ def order():
 
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
+                            
+                            profit = int(order_profits['order2'])
+                            ftotal.write(f'{profit}\n')
+                            ftotal.close
 
                             draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                             pygame.display.flip()
@@ -1271,7 +1287,7 @@ def order():
                         last_clicked_order = None
                         profit_per_order = order_profits['order2']
                         add_money(profit_per_order)
-                        order_completed +=1
+                        # order_completed +=1
 
                     elif last_clicked_order == "order3":
                         def load_list_from_file(filename):
@@ -1301,6 +1317,10 @@ def order():
 
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
+                            
+                            profit = int(order_profits['order3'])
+                            ftotal.write(f'{profit}\n')
+                            ftotal.close
 
                             draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                             pygame.display.flip()
@@ -1311,12 +1331,13 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
+
                         profit_per_order = order_profits['order3']
                         add_money(profit_per_order)
-                        order_completed +=1
+                        # order_completed +=1
                     
                     else :
-                        draw_text("Please select a order", main_font, "red", screen, 650, 510)  # On top of button 1
+                        draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
                         pygame.display.flip()
                         pygame.time.wait(1000)
 
