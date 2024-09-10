@@ -2239,11 +2239,11 @@ def put_food_to_slots(selected_food_index, machine_type):
             print(f"Unknown machine type: {machine_type}")
             return
         
-        f = open("food-complete-name.txt", "a")
+        f = open("./picture/food-complete-name.txt", "a")
         f.write (f"{food_name}\n")
         f.close()
 
-        f = open("food-complete-price.txt", "a")
+        f = open("./picture/food-complete-price.txt", "a")
         f.write(f"{food_price}\n")
         f.close()
 
