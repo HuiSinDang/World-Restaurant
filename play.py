@@ -2285,6 +2285,10 @@ def main():
         screen.blit(bg_img, (0, 0))
 
 
+        pan_default_button.update()
+        steamer_button.update()
+        oven_button.update()
+
         # Draw buttons for each machine
         stovepot_button_rect = stovepot_button_select()
         steamer_button_rect = steamer_button_select()
@@ -2419,9 +2423,6 @@ def main():
         money_bar()
         profilebutton.update()
         upgrade_btn.update()
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
         menu_button.update()
         setting_button.update()
         happyhour_bar(hhactive)
