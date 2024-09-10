@@ -2164,6 +2164,51 @@ def put_food_to_slots(selected_food_index, machine_type):
         remind_no_empty_slots()
 
 
+def reset_mainscreen():
+
+    bg_img = pygame.image.load("./picture/lobby.jpg").convert()
+    screen.blit(bg_img, (0, 0))
+
+    money_bar()
+    profilebutton.update()
+    upgrade_btn.update()
+    pan_default_button.update()
+    steamer_button.update()
+    oven_button.update()
+
+    
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if profilebutton.checkForInput(pygame.mouse.get_pos()):
+                profile()
+                
+            if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
+                upgrade_process()
+
+            if orderbtn.checkForInput(pygame.mouse.get_pos()): 
+                order()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                profile()
+    
+    money_bar()
+    profilebutton.update()
+    upgrade_btn.update()
+    menu_button.update()
+    setting_button.update()
+    happyhour_bar(hhactive)
+    orderbtn.update()
+
+
+    pygame.display.flip()
+    clock.tick(60)
+
+
+
 def main():
     global stovepot_running, steamer_running, oven_running
     global stovepot_start_time, steamer_start_time, oven_start_time
@@ -2328,7 +2373,7 @@ def main():
                     oven_food_index = -1
                     print("Close button clicked") 
                    
-                    
+                    reset_mainscreen()
                     return
           
             if event.type == pygame.KEYDOWN:
