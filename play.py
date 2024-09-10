@@ -2197,6 +2197,7 @@ def cooking_process():
         cooking_bar_stovepot.draw(screen)
         pastefood_stovepot(stovepot_food_index)
 
+    
         machinetype_surface1 = pygame.Surface((180, 50), pygame.SRCALPHA)
         stovepot_button_color = (255, 0, 128)
         machinetype_surface1.fill(stovepot_button_color)
@@ -2295,9 +2296,6 @@ def main():
     steamer_food_index = -1
     oven_food_index = -1
 
-    # stovepot_duration = 10
-    # steamer_duration = 15
-    # oven_duration = 20
 
     slot_index = None
     machine_type = None
