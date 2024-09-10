@@ -548,10 +548,13 @@ def add_order(order_type):
     global order_completed
     base_profit = order_profits.get(order_type,0)
     final_profit = hhprofit(base_profit)
-    add_money(final_profit)
     order_completed += 1
     save_order()
     update_happy_hour_status()
+    if hhactive:
+        add_money(final_profit *2)
+    else:
+        add_money(final_profit)
 
 def update_happy_hour_status():
     global hhactive,order_completed,hh_start_time
@@ -575,7 +578,7 @@ def happyhour_bar(happyhour):
 
 def hhprofit(base_profit):
     if hhactive:
-        return base_profit * 2
+        return base_profit *2
     return base_profit
 
 def rename():
@@ -1242,8 +1245,6 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
-                        profit_per_order = order_profits['order1']
-                        add_money(profit_per_order)
                         add_order('order1')
 
                         
@@ -1290,15 +1291,7 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
-                        profit_per_order = order_profits['order2']
-                        add_money(profit_per_order)
-
-                        # order_completed +=1
-
-
                         add_order('order2')
-
-                        # order_completed +=1
 
 
                     elif last_clicked_order == "order3":
@@ -1344,16 +1337,7 @@ def order():
 
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
-
-                        profit_per_order = order_profits['order3']
-                        add_money(profit_per_order)
-
-                        # order_completed +=1
-
-
                         add_order('order3')
-
-                        # order_completed +=1
 
 
                     
