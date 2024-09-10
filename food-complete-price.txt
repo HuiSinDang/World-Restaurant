@@ -1,0 +1,7 @@
+[food_price]
+[food_price]
+[food_price]
+[food_price]
+RM10.00
+RM50.00
+RM30.00
