@@ -2289,6 +2289,17 @@ def put_food_to_slots(selected_food_index, machine_type):
             update_slots(slot_index, foodlist_steamer[selected_food_index])
         else:
             print(f"Unknown machine type: {machine_type}")
+
+            return
+        
+        f = open("./picture/food-complete-name.txt", "a")
+        f.write (f"{food_name}\n")
+        f.close()
+
+        f = open("./picture/food-complete-price.txt", "a")
+        f.write(f"{food_price}\n")
+        f.close()
+
     else:
         print("No available slots now")
         remind_no_empty_slots()
