@@ -2686,7 +2686,7 @@ def main():
                 if event.key == pygame.K_p:
                     profile()
 
-        screen.blit(dustbin_img,(1105, 140))
+        screen.blit(dustbin_img,(1220, 140))
         cooking_process()
         money_bar()
         profilebutton.update()
