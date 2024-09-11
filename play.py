@@ -154,59 +154,59 @@ blackforest_img = pygame.transform.scale(blackforest_img, (150, 110))
 pandanrollcake_img = pygame.image.load("./picture/pandanrollcake.png")
 pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
 
-friednoodle_img = pygame.image.load("./picture/fried-noodle.png")
-friednoodle_img = pygame.transform.scale(friednoodle_img, (100, 127))
+# friednoodle_img = pygame.image.load("./picture/fried-noodle.png")
+# friednoodle_img = pygame.transform.scale(friednoodle_img, (100, 127))
 
-bihun_img = pygame.image.load("./picture/bihun.png") 
-bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
+# bihun_img = pygame.image.load("./picture/bihun.png") 
+# bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
 
-hokkienmee_img = pygame.image.load("./picture/hokkien-mee.png") 
-hokkienmee_img = pygame.transform.scale(hokkienmee_img, (120, 120))
+# hokkienmee_img = pygame.image.load("./picture/hokkien-mee.png") 
+# hokkienmee_img = pygame.transform.scale(hokkienmee_img, (120, 120))
 
-ramen_img = pygame.image.load("./picture/ramen.png") 
-ramen_img = pygame.transform.scale(ramen_img, (120, 115))
+# ramen_img = pygame.image.load("./picture/ramen.png") 
+# ramen_img = pygame.transform.scale(ramen_img, (120, 115))
 
-udon_img = pygame.image.load("./picture/friedudon.png") 
-udon_img = pygame.transform.scale(udon_img, (120, 120))
+# udon_img = pygame.image.load("./picture/friedudon.png") 
+# udon_img = pygame.transform.scale(udon_img, (120, 120))
 
-currymee_img = pygame.image.load("./picture/curry-mee.png") 
-currymee_img = pygame.transform.scale(currymee_img, (120, 120))
+# currymee_img = pygame.image.load("./picture/curry-mee.png") 
+# currymee_img = pygame.transform.scale(currymee_img, (120, 120))
 
-kueyteow_img = pygame.image.load("./picture/kueyteow.png") 
-kueyteow_img = pygame.transform.scale(kueyteow_img, (120, 115))
+# kueyteow_img = pygame.image.load("./picture/kueyteow.png") 
+# kueyteow_img = pygame.transform.scale(kueyteow_img, (120, 115))
 
-horfun_img = pygame.image.load("./picture/horfun.png") 
-horfun_img = pygame.transform.scale(horfun_img, (120, 115))
+# horfun_img = pygame.image.load("./picture/horfun.png") 
+# horfun_img = pygame.transform.scale(horfun_img, (120, 115))
 
-mala_img = pygame.image.load("./picture/mala.png") 
-mala_img = pygame.transform.scale(mala_img, (110, 115))
+# mala_img = pygame.image.load("./picture/mala.png") 
+# mala_img = pygame.transform.scale(mala_img, (110, 115))
 
-youtiao_img = pygame.image.load("./picture/youtiao.png")  
-youtiao_img = pygame.transform.scale(youtiao_img, (100, 112))
+# youtiao_img = pygame.image.load("./picture/youtiao.png")  
+# youtiao_img = pygame.transform.scale(youtiao_img, (100, 112))
 
-hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
-hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
+# hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
+# hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
 
-steamegg_img = pygame.image.load("./picture/steamegg.png") ##
-steamegg_img = pygame.transform.scale(steamegg_img, (100, 127))
+# steamegg_img = pygame.image.load("./picture/steamegg.png") ##
+# steamegg_img = pygame.transform.scale(steamegg_img, (100, 127))
 
-hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
-hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
+# hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
+# hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
 
-lomaigai_img = pygame.image.load("./picture/lomaigai.png") 
-lomaigai_img = pygame.transform.scale(lomaigai_img, (100, 127))
+# lomaigai_img = pygame.image.load("./picture/lomaigai.png") 
+# lomaigai_img = pygame.transform.scale(lomaigai_img, (100, 127))
 
-herbalchicken_img = pygame.image.load("./picture/herbalchicken.png") 
-herbalchicken_img = pygame.transform.scale(herbalchicken_img, (100, 127))
+# herbalchicken_img = pygame.image.load("./picture/herbalchicken.png") 
+# herbalchicken_img = pygame.transform.scale(herbalchicken_img, (100, 127))
 
-shrimpdumpling_img = pygame.image.load("./picture/shrimpdumpling.png") 
-shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
+# shrimpdumpling_img = pygame.image.load("./picture/shrimpdumpling.png") 
+# shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
 
-custardbun_img = pygame.image.load("./picture/custardbun.png") 
-custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
+# custardbun_img = pygame.image.load("./picture/custardbun.png") 
+# custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
 
 dustbin_img = pygame.image.load("./picture/dustbin.png")
-dustbin_img = pygame.transform.scale(dustbin_img, (120, 120))
+dustbin_img = pygame.transform.scale(dustbin_img, (200, 140))
 
 
 
@@ -221,27 +221,27 @@ food_lists =[
 
     {"image": armystew_img, "name": "Korean Army Stew", "price": "RM68.00" },
 
-    {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
+    # {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
 
-    {"image": bihun_img, "name": "Fried Vermicelli Noodles", "price": "RM18.00"},
+    # {"image": bihun_img, "name": "Fried Vermicelli Noodles", "price": "RM18.00"},
 
-    {"image": hokkienmee_img, "name": "Hokkien Mee", "price": "RM6.00"},
+    # {"image": hokkienmee_img, "name": "Hokkien Mee", "price": "RM6.00"},
 
-    {"image": ramen_img, "name": "Ramen", "price": "RM8.00"},
+    # {"image": ramen_img, "name": "Ramen", "price": "RM8.00"},
     
-    {"image": udon_img, "name": "Fried Udon", "price": "RM8.00"},
+    # {"image": udon_img, "name": "Fried Udon", "price": "RM8.00"},
 
-    {"image": currymee_img, "name": "Curry Mee", "price": "RM5.00"},
+    # {"image": currymee_img, "name": "Curry Mee", "price": "RM5.00"},
 
-    {"image": kueyteow_img, "name": "Cantonese Kuey Tiaw", "price": "RM6.00"},
+    # {"image": kueyteow_img, "name": "Cantonese Kuey Tiaw", "price": "RM6.00"},
 
-    {"image": horfun_img, "name": "Shredded Chicken Hor Fun", "price": "RM7.00"},
+    # {"image": horfun_img, "name": "Shredded Chicken Hor Fun", "price": "RM7.00"},
 
-    {"image": mala_img, "name": "Mala Xiang Guo", "price": "RM10.00"},
+    # {"image": mala_img, "name": "Mala Xiang Guo", "price": "RM10.00"},
 
-    {"image": youtiao_img, "name": "Youtiao", "price": "RM4.00"},
+    # {"image": youtiao_img, "name": "Youtiao", "price": "RM4.00"},
 
-    {"image": hanjiben_img, "name": "HanJiBen", "price": "RM2.00"},
+    # {"image": hanjiben_img, "name": "HanJiBen", "price": "RM2.00"},
 
 ]
 
@@ -250,17 +250,17 @@ foodlist_steamer = [
 
     {"image": dimsum_img, "name": "Xiu Mai", "price": "RM8.00" },
 
-    {"image": steamegg_img, "name": "Steamed egg", "price": "RM6.00"},
+    # {"image": steamegg_img, "name": "Steamed egg", "price": "RM6.00"},
 
-    {"image": lomaigai_img, "name": "Lo Mai Gai", "price": "RM9.00"},
+    # {"image": lomaigai_img, "name": "Lo Mai Gai", "price": "RM9.00"},
 
-    {"image": herbalchicken_img, "name": "Steamed Herbal Chicken", "price": "RM20.00"},
+    # {"image": herbalchicken_img, "name": "Steamed Herbal Chicken", "price": "RM20.00"},
 
     {"image": dumpling_img, "name": "Dumpling", "price": "RM10.00"},
 
-    {"image": shrimpdumpling_img, "name": "Crystal Shrimp Dumpling", "price": "RM12.00"},
+    # {"image": shrimpdumpling_img, "name": "Crystal Shrimp Dumpling", "price": "RM12.00"},
 
-    {"image": custardbun_img, "name": "Egg Custard Bun", "price": "RM8.00"},
+    # {"image": custardbun_img, "name": "Egg Custard Bun", "price": "RM8.00"},
 
 ]
 
@@ -1637,7 +1637,9 @@ def upgrade_process():
                 if noC_button.checkForInput(pygame.mouse.get_pos()):
                     show_popup2C = False 
 
+
         handle_upgrades()
+        screen.blit(dustbin_img, (1250,  160))
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
@@ -1880,6 +1882,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
 
 
         money_bar()
+        screen.blit(dustbin_img, (1250,  160))
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
@@ -1986,6 +1989,7 @@ def selectfood_page3(): # after player click steamer
                 
  
         money_bar()
+        screen.blit(dustbin_img, (1250,  160))
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
@@ -2024,8 +2028,10 @@ def selectfood_page4(): # after player click oven
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+        screen.blit(dustbin_img, (1030, 160))
 
         draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
+        
 
         start_index = (current_page - 1) * max_items_per_page
         end_index = start_index + max_items_per_page
@@ -2090,6 +2096,7 @@ def selectfood_page4(): # after player click oven
                         return oven_process(selected_food_index)
 
         money_bar()
+
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
@@ -2449,18 +2456,21 @@ def cooking_process():
         if message_timer <= 0:
             full_slot_remind = False  
 
-# def exceed_time_collect():
-#     global full_slot_remind, message_timer, elapsed_time
+def exceed_time_collect():
+    global full_slot_remind, message_timer, elapsed_time, throw_start_time
 
-#     throw_start_time = time.time()
-#     elapsed_time = time.time() - throw_start_time
-#     waiting_duration = 10
+    if throw_start_time == None:
+        throw_start_time = time.time()
+
+    elapsed_time = time.time() - throw_start_time
+    waiting_duration = 10
     
-#     cooking_bar_dustbin = CookingBar(651, 120, 160, 20, 100)
-#     cooking_bar_dustbin.update(elapsed_time, waiting_duration)
+    cooking_bar_dustbin = CookingBar(600, 90, 160, 20, 100)
+    cooking_bar_dustbin.update(elapsed_time, waiting_duration)
 
-#     if waiting_duration >= elapsed_time:
-
+    if waiting_duration >= elapsed_time:  #如果食物做好后发现没有空的位置放好后它就会再出现一个新的cooking bar，比如差不多10秒酱紫需要把当前超时的食物丢去垃圾桶里
+        print("Food exceeded time, throwing it to the dustbin!")
+        throw_start_time = None
         
 
 
@@ -2468,7 +2478,7 @@ def main():
     global stovepot_running, steamer_running, oven_running
     global stovepot_start_time, steamer_start_time, oven_start_time
     global stovepot_food_index, steamer_food_index, oven_food_index
-    global  machine_type, food_item, message_timer, full_slot_remind
+    global  machine_type, food_item, message_timer, full_slot_remind, throw_start_time
 
     stovepot_running = False
     steamer_running = False
@@ -2551,7 +2561,8 @@ def main():
                     stovepot_food_index = -1
                     steamer_food_index = -1
                     oven_food_index = -1
-                    print("Close button clicked") 
+
+                    throw_start_time = None
                    
                     
                     # Return to the main screen without any active processes
@@ -2561,7 +2572,7 @@ def main():
                 if event.key == pygame.K_p:
                     profile()
 
-        screen.blit(dustbin_img,(750, 200))
+        screen.blit(dustbin_img,(1250, 160))
         cooking_process()
         money_bar()
         profilebutton.update()
