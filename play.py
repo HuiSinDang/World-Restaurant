@@ -160,31 +160,31 @@ friednoodle_img = pygame.image.load("./picture/fried-noodle.png")
 friednoodle_img = pygame.transform.scale(friednoodle_img, (100, 127))
 
 bihun_img = pygame.image.load("./picture/bihun.png") 
-bihun_img = pygame.transform.scale(friednoodle_img, (100, 127))
+bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
 
 hokkienmee_img = pygame.image.load("./picture/hokkien-mee.png") 
-hokkienmee_img = pygame.transform.scale(hokkienmee_img, (100, 127))
+hokkienmee_img = pygame.transform.scale(hokkienmee_img, (120, 120))
 
 ramen_img = pygame.image.load("./picture/ramen.png") 
-ramen_img = pygame.transform.scale(ramen_img, (100, 127))
+ramen_img = pygame.transform.scale(ramen_img, (120, 115))
 
 udon_img = pygame.image.load("./picture/friedudon.png") 
-udon_img = pygame.transform.scale(udon_img, (100, 127))
+udon_img = pygame.transform.scale(udon_img, (120, 120))
 
 currymee_img = pygame.image.load("./picture/curry-mee.png") 
-currymee_img = pygame.transform.scale(currymee_img, (100, 127))
+currymee_img = pygame.transform.scale(currymee_img, (120, 120))
 
 kueyteow_img = pygame.image.load("./picture/kueyteow.png") 
-kueyteow_img = pygame.transform.scale(kueyteow_img, (100, 127))
+kueyteow_img = pygame.transform.scale(kueyteow_img, (120, 115))
 
 horfun_img = pygame.image.load("./picture/horfun.png") 
-horfun_img = pygame.transform.scale(horfun_img, (100, 127))
+horfun_img = pygame.transform.scale(horfun_img, (120, 115))
 
 mala_img = pygame.image.load("./picture/mala.png") 
-mala_img = pygame.transform.scale(mala_img, (100, 127))
+mala_img = pygame.transform.scale(mala_img, (110, 115))
 
 youtiao_img = pygame.image.load("./picture/youtiao.png")  
-youtiao_img = pygame.transform.scale(youtiao_img, (100, 127))
+youtiao_img = pygame.transform.scale(youtiao_img, (100, 112))
 
 hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
 hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
