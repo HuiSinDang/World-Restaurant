@@ -205,6 +205,9 @@ shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
 custardbun_img = pygame.image.load("./picture/custardbun.png") 
 custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
 
+dustbin_img = pygame.image.load("./picture/dustbin_img.png")
+dustbin_img = pygame.transform.scale(dustbin_img, (120, 120))
+
 
 
 food_lists =[
@@ -2558,6 +2561,7 @@ def main():
                 if event.key == pygame.K_p:
                     profile()
 
+        screen.blit(dustbin_img,(750, 200))
         cooking_process()
         money_bar()
         profilebutton.update()
