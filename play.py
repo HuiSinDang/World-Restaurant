@@ -156,6 +156,57 @@ blackforest_img = pygame.transform.scale(blackforest_img, (150, 110))
 pandanrollcake_img = pygame.image.load("./picture/pandanrollcake.png")
 pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
 
+friednoodle_img = pygame.image.load("./picture/fried-noodle.png")
+friednoodle_img = pygame.transform.scale(friednoodle_img, (100, 127))
+
+bihun_img = pygame.image.load("./picture/bihun.png") 
+bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
+
+hokkienmee_img = pygame.image.load("./picture/hokkien-mee.png") 
+hokkienmee_img = pygame.transform.scale(hokkienmee_img, (120, 120))
+
+ramen_img = pygame.image.load("./picture/ramen.png") 
+ramen_img = pygame.transform.scale(ramen_img, (120, 115))
+
+udon_img = pygame.image.load("./picture/friedudon.png") 
+udon_img = pygame.transform.scale(udon_img, (120, 120))
+
+currymee_img = pygame.image.load("./picture/curry-mee.png") 
+currymee_img = pygame.transform.scale(currymee_img, (120, 120))
+
+kueyteow_img = pygame.image.load("./picture/kueyteow.png") 
+kueyteow_img = pygame.transform.scale(kueyteow_img, (120, 115))
+
+horfun_img = pygame.image.load("./picture/horfun.png") 
+horfun_img = pygame.transform.scale(horfun_img, (120, 115))
+
+mala_img = pygame.image.load("./picture/mala.png") 
+mala_img = pygame.transform.scale(mala_img, (110, 115))
+
+youtiao_img = pygame.image.load("./picture/youtiao.png")  
+youtiao_img = pygame.transform.scale(youtiao_img, (100, 112))
+
+hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
+hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
+
+steamegg_img = pygame.image.load("./picture/steamegg.png") ##
+steamegg_img = pygame.transform.scale(steamegg_img, (100, 127))
+
+hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
+hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
+
+lomaigai_img = pygame.image.load("./picture/lomaigai.png") 
+lomaigai_img = pygame.transform.scale(lomaigai_img, (100, 127))
+
+herbalchicken_img = pygame.image.load("./picture/herbalchicken.png") 
+herbalchicken_img = pygame.transform.scale(herbalchicken_img, (100, 127))
+
+shrimpdumpling_img = pygame.image.load("./picture/shrimpdumpling.png") 
+shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
+
+custardbun_img = pygame.image.load("./picture/custardbun.png") 
+custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
+
 
 
 food_lists =[
@@ -163,49 +214,74 @@ food_lists =[
 
     {"image": friedrice_img, "name": "Fried rice", "price": "RM5.00"},
 
-    {"image": oden_img, "name": "Oden", "price": "RM10.00"},
+    {"image": oden_img, "name": "Oden", "price": "RM18.00"},
 
-    {"image": bibimbap_img, "name": "Bibimbap", "price": "RM12.50"},
+    {"image": bibimbap_img, "name": "Bibimbap", "price": "RM8.00"},
 
-    {"image": armystew_img, "name": "Korean Army Stew", "price": "RM60.00" },
+    {"image": armystew_img, "name": "Korean Army Stew", "price": "RM68.00" },
 
-    {"image": mooncake_img, "name": "Mooncake", "price": "RM16.00"},
+    {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
 
-    {"image": satay_img, "name": "Satay(10 sticks)", "price": "RM10.00" },
+    {"image": bihun_img, "name": "Fried Vermicelli Noodles", "price": "RM18.00"},
 
+    {"image": hokkienmee_img, "name": "Hokkien Mee", "price": "RM6.00"},
+
+    {"image": ramen_img, "name": "Ramen", "price": "RM8.00"},
+    
+    {"image": udon_img, "name": "Fried Udon", "price": "RM8.00"},
+
+    {"image": currymee_img, "name": "Curry Mee", "price": "RM5.00"},
+
+    {"image": kueyteow_img, "name": "Cantonese Kuey Tiaw", "price": "RM6.00"},
+
+    {"image": horfun_img, "name": "Shredded Chicken Hor Fun", "price": "RM7.00"},
+
+    {"image": mala_img, "name": "Mala Xiang Guo", "price": "RM10.00"},
+
+    {"image": youtiao_img, "name": "Youtiao", "price": "RM4.00"},
+
+    {"image": hanjiben_img, "name": "HanJiBen", "price": "RM2.00"},
 
 ]
 
 foodlist_steamer = [
     {"image": steamfish_img, "name": "Thai Steamed Fish", "price": "RM50.00"},
 
-    {"image": dimsum_img, "name": "Dimsum", "price": "RM12.00" },
+    {"image": dimsum_img, "name": "Xiu Mai", "price": "RM8.00" },
 
-    {"image": dumpling_img, "name": "Dumpling", "price": "RM6.00"},
+    {"image": steamegg_img, "name": "Steamed egg", "price": "RM6.00"},
 
-    {"image": steamfish_img, "name": "Thai Steamed Fish", "price": "RM50.00"},
+    {"image": lomaigai_img, "name": "Lo Mai Gai", "price": "RM9.00"},
 
-    {"image": dimsum_img, "name": "Dimsum", "price": "RM12.00" },
+    {"image": herbalchicken_img, "name": "Steamed Herbal Chicken", "price": "RM20.00"},
 
-    
+    {"image": dumpling_img, "name": "Dumpling", "price": "RM10.00"},
+
+    {"image": shrimpdumpling_img, "name": "Crystal Shrimp Dumpling", "price": "RM12.00"},
+
+    {"image": custardbun_img, "name": "Egg Custard Bun", "price": "RM8.00"},
+
 ]
 
 foodlist_oven = [
-    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM25.00"},
+    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM12.00"},
 
-    {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM22.00"},
+    {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM20.00"},
 
-    {"image": calamari_img, "name": "Calamari Rings", "price": "RM30.00"},
+    {"image": calamari_img, "name": "Calamari Rings", "price": "RM14.00"},
 
-    {"image": rainbowcake_img, "name": "Rainbow cake (1 slice)", "price": "RM16.00"},
+    {"image": rainbowcake_img, "name": "Rainbow cake", "price": "RM16.00"},
 
-    {"image": redvelvet_img, "name": "Red Velvet (4-inch)", "price": "RM55.00"},
+    {"image": redvelvet_img, "name": "Red Velvet", "price": "RM16.00"},
 
-    {"image": blackforest_img, "name": "Black Forest (4-inch)", "price": "RM60.00"},
+    {"image": blackforest_img, "name": "Black Forest", "price": "RM18.00"},
 
-    {"image": pandanrollcake_img, "name": "Pandan Roll Cake", "price": "RM16.00"},
+    {"image": pandanrollcake_img, "name": "Pandan Roll Cake", "price": "RM27.00"},
 
-    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM25.00"},
+    {"image": mooncake_img, "name": "Mooncake", "price": "RM20.00"},
+
+    {"image": satay_img, "name": "Satay(10 sticks)", "price": "RM10.00" }
+
 ]
 
 
@@ -656,10 +732,97 @@ def show_intropage():
         pygame.time.Clock().tick(30)
 
 #menu-unlock food
-menupage = pygame.image.load("./picture/menupage.png")
-menupage = pygame.transform.scale(menupage, (900,800))
-font3 = pygame.font.Font('./picture/jugnle.ttf', 20)
-button_rect = pygame.Rect(350,250,50,15)
+def load_image(path,size):
+    try:
+        image = pygame.image.load(path)
+        return pygame.transform.scale(image,size)
+    except pygame.error as e:
+        return None
+    
+menupage1 = load_image('./picture/menupage.png',(900,800))
+menupage2 = load_image('./picture/menupage.png',(900,800))
+nextbutton = load_image('./picture/nextbutton.png',(50,50))
+
+def load_font(path,size):
+    try:
+        return pygame.font.Font(path,size)
+    except FileNotFoundError as e:
+        return pygame.font.Font(None,size)
+    
+font3 = load_font('./picture/jugnle.ttf', 20)
+
+class Button:
+    def __init__(self,text,x,y,width,height,action):
+        self.rect = pygame.Rect(x,y,width,height)
+        self.text = text
+        self.action = action
+        self.pressed = False
+        self.update_text(self.text)
+
+    def update_text(self,new_text):
+        self.text_surface = font3.render(new_text,True,black)
+        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
+
+    def draw(self,screen):
+        color =  dark_pink if self.pressed else pink
+        pygame.draw.rect(screen,color,self.rect)
+        display_text = "Unlocked" if self.pressed else self.text
+        self.update_text(display_text)
+        screen.blit(self.text_surface,self.text_rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos) and not self.pressed
+
+    def press(self):
+        self.pressed = True
+        self.action()
+        save_unlocked_food()
+
+def unlock_item(item_id):
+    pass
+
+buttons_page1 = [
+    Button("Tokbokki",550,225,125,40,lambda:unlock_item(1)),
+    Button("Fried Rice",780,225,125,40,lambda:unlock_item(2)),
+    Button("Oden",550,425,125,40,lambda:unlock_item(3)),
+    Button("Bibimbap",780,425,125,40,lambda:unlock_item(4)),
+    Button("Army Strew",550,625,125,40,lambda:unlock_item(5)),
+    Button("Fried Noodle",550,625,125,40,lambda:unlock_item(6)),
+]
+
+buttons_page2 =[
+    Button("Fried Vermiceilli Noodles",550,225,125,40,lambda:unlock_item(7)),
+]
+
+current_page = 1
+buttons = buttons_page1
+
+class ImageButton:
+    def __init__(self,image,x,y,action):
+        self.image = image
+        self.rect = self.image.get_rect(topleft=(x,y))
+        self.action = action
+
+    def draw(self,screen):
+        if self.image:
+            screen.blit(self.image,self.rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos)
+    
+    def press(self):
+        self.action()
+
+def change_page():
+    global current_page,buttons
+    if current_page == 1:
+        current_page = 2
+        buttons = buttons_page2
+    else:
+        current_page = 1
+        buttons = buttons_page1
+
+next_button = ImageButton(nextbutton,780,780,change_page)
 
 def save_unlocked_food():
     with open('./picture/unlocked_food.txt','w')as f:
@@ -677,56 +840,32 @@ def load_unlocked_food():
                         button.pressed = pressed == 'True'
     except FileNotFoundError:
         pass
-
-class Button:
-    def __init__(self,text,x,y,width,height,action):
-        self.rect = pygame.Rect(x,y,width,height)
-        self.text = text
-        self.action = action
-        self.pressed = False
-        self.text_surface = font3.render(self.text,True,black)
-        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
-
-    def draw(self,screen):
-        color =  dark_pink if self.pressed else pink
-        pygame.draw.rect(screen,color,self.rect)
-        text = "Unlocked" if self.pressed else self.text
-        self.text_surface = font3.render(text,True,black)
-        self.text_text = self.text_surface.get_rect(center=self.rect.center)
-        screen.blit(self.text_surface,self.text_rect)
-
-    def is_clicked(self,pos):
-        return self.rect.collidepoint(pos) and not self.pressed
-
-    def press(self):
-        self.pressed = True
-        self.action()
-        save_unlocked_food()
-
-def unlock_1():
-    pass
-
-def unlock_2():
-    pass
-
-buttons = [
-    Button("Unlock 1",150,200,125,40,unlock_1),
-    Button("Unlock 2",150,300,125,40,unlock_2),
-]
+    for button in buttons:
+        if button.text in ["Tokbokki","Oden","Fried Rice",]:
+            button.pressed = True
 
 def show_menupage():
+    global current_page,buttons
     running = True
     load_unlocked_food()
     while running:
-        screen.blit(menupage,(275,20))
+        if current_page == 1:
+            screen.blit(menupage1,(275,20))
+            buttons = buttons_page1
+        else:
+            screen.blit(menupage2,(275,20))
+            buttons = buttons_page2
 
         for button in buttons:
             button.draw(screen)
+        next_button.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if next_button.is_clicked(event.pos):
+                    current_page = 2 if current_page == 1 else 1
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
@@ -2323,7 +2462,7 @@ def update_slots(slot_index, food_item):
 def remind_no_empty_slots():
     global message_timer, full_slot_remind
     full_slot_remind = True
-    message_timer = 5
+    message_timer = 120
     print("Reminder triggered: Full slots")
 
         
@@ -2425,14 +2564,26 @@ def cooking_process():
         screen.blit( machinetype_surface3, machinetype_button_rect3.topleft)
     
     if full_slot_remind:
-        font_slot = pygame.font.SysFont("cambria", 20)
-        draw_text("Full slots now", font_slot,"red", screen, 100, 200)
+        font_slot = pygame.font.SysFont("cambria", 30, bold=True)
+        draw_text("Full   slots   now! ", font_slot,"red", screen, 680, 600)
         print(f"Message Timer: {message_timer}") 
         message_timer -= 1  
         if message_timer <= 0:
             full_slot_remind = False  
 
+# def exceed_time_collect():
+#     global full_slot_remind, message_timer, elapsed_time
 
+#     throw_start_time = time.time()
+#     elapsed_time = time.time() - throw_start_time
+#     waiting_duration = 10
+    
+#     cooking_bar_dustbin = CookingBar(651, 120, 160, 20, 100)
+#     cooking_bar_dustbin.update(elapsed_time, waiting_duration)
+
+#     if waiting_duration >= elapsed_time:
+
+        
 
 
 def main():
