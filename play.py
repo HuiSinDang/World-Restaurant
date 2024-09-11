@@ -208,7 +208,7 @@ custardbun_img = pygame.image.load("./picture/custardbun.png")
 custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
 
 dustbin_img = pygame.image.load("./picture/dustbin.png")
-dustbin_img = pygame.transform.scale(dustbin_img, (200, 200))
+dustbin_img = pygame.transform.scale(dustbin_img, (200, 170))
 
 
 
@@ -2686,7 +2686,7 @@ def main():
                 if event.key == pygame.K_p:
                     profile()
 
-        screen.blit(dustbin_img,(1010, 200))
+        screen.blit(dustbin_img,(1050, 140))
         cooking_process()
         money_bar()
         profilebutton.update()
