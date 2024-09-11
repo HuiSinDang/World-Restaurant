@@ -205,7 +205,7 @@ shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
 custardbun_img = pygame.image.load("./picture/custardbun.png") 
 custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
 
-dustbin_img = pygame.image.load("./picture/dustbin_img.png")
+dustbin_img = pygame.image.load("./picture/dustbin.png")
 dustbin_img = pygame.transform.scale(dustbin_img, (120, 120))
 
 
