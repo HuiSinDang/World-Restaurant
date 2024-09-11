@@ -46,6 +46,7 @@ font2 = pygame.font.Font('./picture/jugnle.ttf', 50)
 
 base_font = pygame.font.Font(None, 55)
 main_font = pygame.font.SysFont("cambria", 45)
+main_font1 = pygame.font.SysFont("cambria", 20)
 
 input_rect = pygame.Rect(550, 350, 250, 50)
 color_active = pygame.Color('antiquewhite4')
@@ -539,6 +540,43 @@ frame2 = Button(frame2_surface, 655, 350,"")
 frame3_surface = pygame.image.load("./picture/frame.png")
 frame3_surface = pygame.transform.scale(frame3_surface, (295, 295))
 frame3 = Button(frame3_surface, 955, 350,"")
+
+food_prices = {
+    "Tokbokki": 10,
+    "Fried Rice": 5,
+    "Oden": 18,
+    "Bibimbap": 8,
+    "Army Stew" :68,
+    "Fried Noodle" : 5,
+    "Fried Vermicelli Noodle": 6,
+    "Hokkien Mee": 6,
+    "Ramen": 8,
+    "Fried Udon": 8,
+    "Curry Mee": 5,
+    "Cantonese Kuey Tiaw": 6,
+    "Shredded Chicken Hor Fun": 7,
+    "Mala Xiang Guo": 10,
+    "Youtiao" : 4,
+    "Hanjiben": 2,
+    "Thai Steamed Fish": 50,
+    "Xiu Mai" : 8,
+    "Steamed Egg": 6,
+    "Lo Mai Gai": 9,
+    "Steamed Herbal Chicken": 20,
+    "Soup Dumpling": 10,
+    "Crystal Shrimp Dumpling" :12,
+    "Egg Custard Bun": 12,
+    "Corndog" :12,
+    "Kfry" : 20,
+    "Calamari Ring" :14,
+    "Rainbow Cake": 16,
+    "Red Velvet" : 16,
+    "Blackforest": 18,
+    "Pandan Roll Cake": 27,
+    "Cookie": 10,
+    "Mooncake": 20,
+    "Satay": 10
+}
 
 # Main loop(irene)
 show_popup = False
@@ -1166,9 +1204,26 @@ def order():
                         color = "red"
                     if f1 in waitingtable_copy1:
                         waitingtable_copy1.remove(f1)
-                    draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
+
+                    if len(f1) > int(10):
+                        font_to_use1 = main_font1
+                    else :
+                        font_to_use1 = main_font
+
+                    draw_text(f1, font_to_use1, color, screen, 360, y_offset)  # On top of button 1
                     y_offset += 50
                 ffood1.close()
+
+                fmoney1 = open("./picture/order1.txt","r")
+                ordered_items1 = [line.strip() for line in fmoney1.readlines() if line.strip()]
+
+                total_price1 = 0 
+                for item in ordered_items1:
+                    if item in food_prices:
+                        total_price1 += food_prices[item]
+
+                draw_text(total_price1, main_font, "black", screen, 360, 440)  # On top of button 1
+                fmoney1.close()
         else:
             ffood1 = open(path1, "x") 
             ffood1 = open(path1, "r") 
@@ -1279,9 +1334,27 @@ def order():
                         color = "red"
                     if f2 in waitingtable_copy2:
                         waitingtable_copy2.remove(f2)  # 成功匹配后移除该项
-                    draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
+
+                    if len(f2) > int(10):
+                        font_to_use2 = main_font1
+                    else :
+                        font_to_use2 = main_font
+
+                    draw_text(f2, font_to_use2, color, screen, 660, y_offset)  # On top of button 2
                     y_offset += 50
                 ffood2.close()
+
+                fmoney2 = open("./picture/order2.txt","r")
+                ordered_items2 = [line.strip() for line in fmoney2.readlines() if line.strip()]
+
+                total_price2 = 0 
+                for item in ordered_items2:
+                    if item in food_prices:
+                        total_price2 += food_prices[item]
+
+                draw_text(total_price2, main_font, "black", screen, 660, 440)  # On top of button 1
+                fmoney2.close()
+
         else:
             ffood2 = open(path2, "x") 
             ffood2 = open(path2, "r") 
@@ -1395,9 +1468,26 @@ def order():
                         color = "red"
                     if f3 in waitingtable_copy3:
                         waitingtable_copy3.remove(f3)  # 成功匹配后移除该项
-                    draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
+
+                    if len(f3) > int(10):
+                        font_to_use3 = main_font1
+                    else :
+                        font_to_use3 = main_font
+                    draw_text(f3, font_to_use3, color, screen, 960, y_offset)  # On top of button 3
                     y_offset += 50
                 ffood3.close()
+
+                fmoney3 = open("./picture/order3.txt","r")
+                ordered_items3 = [line.strip() for line in fmoney3.readlines() if line.strip()]
+
+                total_price3 = 0 
+                for item in ordered_items3:
+                    if item in food_prices:
+                        total_price3 += food_prices[item]
+
+                draw_text(total_price3, main_font, "black", screen, 960, 440)  # On top of button 1
+                fmoney3.close()
+
         else:
             ffood3 = open(path3, "x") 
             ffood3 = open(path3, "r") 
@@ -1527,7 +1617,7 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
                             
-                            profit = int(order_profits['order1'])
+                            profit = int(total_price1)
                             ftotal.write(f'{profit}\n')
                             ftotal.close
 
@@ -1573,7 +1663,7 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
                             
-                            profit = int(order_profits['order2'])
+                            profit = int(total_price2)
                             ftotal.write(f'{profit}\n')
                             ftotal.close
 
@@ -1619,7 +1709,7 @@ def order():
                             save_list_to_file(list1_filename, list1)
                             save_list_to_file(list2_filename, list2)
                             
-                            profit = int(order_profits['order3'])
+                            profit = int(total_price3)
                             ftotal.write(f'{profit}\n')
                             ftotal.close
 
