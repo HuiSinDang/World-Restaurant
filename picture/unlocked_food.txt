@@ -1,0 +1,6 @@
+Tokbokki:True
+Fried Rice:True
+Oden:True
+Bibimbap:True
+Army Strew:True
+Fried Noodle:True

@@ -656,10 +656,97 @@ def show_intropage():
         pygame.time.Clock().tick(30)
 
 #menu-unlock food
-menupage = pygame.image.load("./picture/menupage.png")
-menupage = pygame.transform.scale(menupage, (900,800))
-font3 = pygame.font.Font('./picture/jugnle.ttf', 20)
-button_rect = pygame.Rect(350,250,50,15)
+def load_image(path,size):
+    try:
+        image = pygame.image.load(path)
+        return pygame.transform.scale(image,size)
+    except pygame.error as e:
+        return None
+    
+menupage1 = load_image('./picture/menupage.png',(900,800))
+menupage2 = load_image('./picture/menupage.png',(900,800))
+nextbutton = load_image('./picture/nextbutton.png',(50,50))
+
+def load_font(path,size):
+    try:
+        return pygame.font.Font(path,size)
+    except FileNotFoundError as e:
+        return pygame.font.Font(None,size)
+    
+font3 = load_font('./picture/jugnle.ttf', 20)
+
+class Button:
+    def __init__(self,text,x,y,width,height,action):
+        self.rect = pygame.Rect(x,y,width,height)
+        self.text = text
+        self.action = action
+        self.pressed = False
+        self.update_text(self.text)
+
+    def update_text(self,new_text):
+        self.text_surface = font3.render(new_text,True,black)
+        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
+
+    def draw(self,screen):
+        color =  dark_pink if self.pressed else pink
+        pygame.draw.rect(screen,color,self.rect)
+        display_text = "Unlocked" if self.pressed else self.text
+        self.update_text(display_text)
+        screen.blit(self.text_surface,self.text_rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos) and not self.pressed
+
+    def press(self):
+        self.pressed = True
+        self.action()
+        save_unlocked_food()
+
+def unlock_item(item_id):
+    pass
+
+buttons_page1 = [
+    Button("Tokbokki",550,225,125,40,lambda:unlock_item(1)),
+    Button("Fried Rice",780,225,125,40,lambda:unlock_item(2)),
+    Button("Oden",550,425,125,40,lambda:unlock_item(3)),
+    Button("Bibimbap",780,425,125,40,lambda:unlock_item(4)),
+    Button("Army Strew",550,625,125,40,lambda:unlock_item(5)),
+    Button("Fried Noodle",550,625,125,40,lambda:unlock_item(6)),
+]
+
+buttons_page2 =[
+    Button("Fried Vermiceilli Noodles",550,225,125,40,lambda:unlock_item(7)),
+]
+
+current_page = 1
+buttons = buttons_page1
+
+class ImageButton:
+    def __init__(self,image,x,y,action):
+        self.image = image
+        self.rect = self.image.get_rect(topleft=(x,y))
+        self.action = action
+
+    def draw(self,screen):
+        if self.image:
+            screen.blit(self.image,self.rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos)
+    
+    def press(self):
+        self.action()
+
+def change_page():
+    global current_page,buttons
+    if current_page == 1:
+        current_page = 2
+        buttons = buttons_page2
+    else:
+        current_page = 1
+        buttons = buttons_page1
+
+next_button = ImageButton(nextbutton,780,780,change_page)
 
 def save_unlocked_food():
     with open('./picture/unlocked_food.txt','w')as f:
@@ -677,56 +764,32 @@ def load_unlocked_food():
                         button.pressed = pressed == 'True'
     except FileNotFoundError:
         pass
-
-class Button:
-    def __init__(self,text,x,y,width,height,action):
-        self.rect = pygame.Rect(x,y,width,height)
-        self.text = text
-        self.action = action
-        self.pressed = False
-        self.text_surface = font3.render(self.text,True,black)
-        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
-
-    def draw(self,screen):
-        color =  dark_pink if self.pressed else pink
-        pygame.draw.rect(screen,color,self.rect)
-        text = "Unlocked" if self.pressed else self.text
-        self.text_surface = font3.render(text,True,black)
-        self.text_text = self.text_surface.get_rect(center=self.rect.center)
-        screen.blit(self.text_surface,self.text_rect)
-
-    def is_clicked(self,pos):
-        return self.rect.collidepoint(pos) and not self.pressed
-
-    def press(self):
-        self.pressed = True
-        self.action()
-        save_unlocked_food()
-
-def unlock_1():
-    pass
-
-def unlock_2():
-    pass
-
-buttons = [
-    Button("Unlock 1",150,200,125,40,unlock_1),
-    Button("Unlock 2",150,300,125,40,unlock_2),
-]
+    for button in buttons:
+        if button.text in ["Tokbokki","Oden","Fried Rice",]:
+            button.pressed = True
 
 def show_menupage():
+    global current_page,buttons
     running = True
     load_unlocked_food()
     while running:
-        screen.blit(menupage,(275,20))
+        if current_page == 1:
+            screen.blit(menupage1,(275,20))
+            buttons = buttons_page1
+        else:
+            screen.blit(menupage2,(275,20))
+            buttons = buttons_page2
 
         for button in buttons:
             button.draw(screen)
+        next_button.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if next_button.is_clicked(event.pos):
+                    current_page = 2 if current_page == 1 else 1
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
