@@ -1,2 +1,6 @@
-Unlock 1:True
-Unlock 2:True
+Fried Vermiceilli Noodles:False
+Hokkien Mee:True
+Ramen:False
+Fried Udon:True
+Curry Mee:False
+Cantonese Kuey Tiaw:False

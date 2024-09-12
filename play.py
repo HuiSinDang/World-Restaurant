@@ -779,7 +779,9 @@ def load_image(path,size):
     
 menupage1 = load_image('./picture/menupage.png',(900,800))
 menupage2 = load_image('./picture/menupage.png',(900,800))
-nextbutton = load_image('./picture/nextbutton.png',(50,50))
+menupage3 = load_image('./picture/menupage.png',(900,800))
+nextbutton = load_image('./picture/nextbutton.png',(35,35))
+closebutton = load_image('./picture/closebutton.png',(40,40))
 
 def load_font(path,size):
     try:
@@ -790,12 +792,13 @@ def load_font(path,size):
 font3 = load_font('./picture/jugnle.ttf', 20)
 
 class Button:
-    def __init__(self,text,x,y,width,height,action):
+    def __init__(self,foodname,button_text,x,y,width,height,action):
         self.rect = pygame.Rect(x,y,width,height)
-        self.text = text
+        self.foodname = foodname
+        self.button_text = button_text
         self.action = action
         self.pressed = False
-        self.update_text(self.text)
+        self.update_text(self.button_text)
 
     def update_text(self,new_text):
         self.text_surface = font3.render(new_text,True,black)
@@ -804,7 +807,7 @@ class Button:
     def draw(self,screen):
         color =  dark_pink if self.pressed else pink
         pygame.draw.rect(screen,color,self.rect)
-        display_text = "Unlocked" if self.pressed else self.text
+        display_text = "Unlocked" if self.pressed else self.button_text
         self.update_text(display_text)
         screen.blit(self.text_surface,self.text_rect)
 
@@ -820,16 +823,30 @@ def unlock_item(item_id):
     pass
 
 buttons_page1 = [
-    Button("Tokbokki",550,225,125,40,lambda:unlock_item(1)),
-    Button("Fried Rice",780,225,125,40,lambda:unlock_item(2)),
-    Button("Oden",550,425,125,40,lambda:unlock_item(3)),
-    Button("Bibimbap",780,425,125,40,lambda:unlock_item(4)),
-    Button("Army Strew",550,625,125,40,lambda:unlock_item(5)),
-    Button("Fried Noodle",550,625,125,40,lambda:unlock_item(6)),
+    Button("Tokbokki","Unlock",550,225,125,40,lambda:unlock_item(1)),
+    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2)),
+    Button("Oden","Unlock",550,425,125,40,lambda:unlock_item(3)),
+    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4)),
+    Button("Army Strew","Unlock",550,625,125,40,lambda:unlock_item(5)),
+    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6)),
 ]
 
 buttons_page2 =[
-    Button("Fried Vermiceilli Noodles",550,225,125,40,lambda:unlock_item(7)),
+    Button("Fried Vermiceilli Noodles","Unlock",550,225,125,40,lambda:unlock_item(7)),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8)),
+    Button("Ramen","Unlock",550,425,125,40,lambda:unlock_item(9)),
+    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10)),
+    Button("Curry Mee","Unlock",550,625,125,40,lambda:unlock_item(11)),
+    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12)),
+]
+
+buttons_page3 =[
+    Button("Shredded Chicken Hor Fun","Unlock",550,225,125,40,lambda:unlock_item(13)),
+    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14)),
+    Button("Youtiao","Unlock",550,425,125,40,lambda:unlock_item(15)),
+    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16)),
+    Button("Thai Steamed Fish","Unlock",550,625,125,40,lambda:unlock_item(17)),
+    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18))
 ]
 
 current_page = 1
@@ -856,57 +873,79 @@ def change_page():
     if current_page == 1:
         current_page = 2
         buttons = buttons_page2
+    elif current_page == 2:
+        current_page = 3
+        buttons = buttons_page3
     else:
         current_page = 1
         buttons = buttons_page1
 
-next_button = ImageButton(nextbutton,780,780,change_page)
+def close_menu():
+    global running
+    running = False
+
+nextpbutton = ImageButton(nextbutton,925,625,change_page)
+closepbutton = ImageButton(closebutton,925,100,close_menu)
 
 def save_unlocked_food():
     with open('./picture/unlocked_food.txt','w')as f:
         for button in buttons:
-            f.write(f"{button.text}:{button.pressed}\n")
+            f.write(f"{button.foodname}:{button.pressed}\n")
 
 def load_unlocked_food():
     try:
         with open('./picture/unlocked_food.txt','r')as f:
             lines = f.readlines()
             for line in lines:
-                text,pressed = line.strip().split(':')
+                foodname,pressed = line.strip().split(':')
                 for button in buttons:
-                    if button.text == text:
+                    if button.foodname == foodname:
                         button.pressed = pressed == 'True'
     except FileNotFoundError:
         pass
     for button in buttons:
-        if button.text in ["Tokbokki","Oden","Fried Rice",]:
+        if button.foodname in ["Tokbokki","Oden","Fried Rice",]:
             button.pressed = True
 
 def show_menupage():
-    global current_page,buttons
+    global current_page,buttons,running
     running = True
     load_unlocked_food()
     while running:
         if current_page == 1:
             screen.blit(menupage1,(275,20))
             buttons = buttons_page1
-        else:
+        elif current_page == 2:
             screen.blit(menupage2,(275,20))
             buttons = buttons_page2
+        elif current_page == 3:
+            screen.blit(menupage3,(275,20))
+            buttons = buttons_page3
 
         for button in buttons:
             button.draw(screen)
-        next_button.draw(screen)
+        nextpbutton.draw(screen)
+        closepbutton.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if next_button.is_clicked(event.pos):
-                    current_page = 2 if current_page == 1 else 1
+                if nextpbutton.is_clicked(event.pos):
+                    nextpbutton.press()
+                if closepbutton.is_clicked(event.pos):
+                    closepbutton.press()
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
+        money_bar()
+        profilebutton.update()
+        orderbtn.update()
+        menu_button.update()
+        upgrade_btn.update()
+        setting_button.update()
+        orderbtn.update()
+        happyhour_bar(hhactive)
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
