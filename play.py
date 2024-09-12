@@ -793,25 +793,26 @@ def load_font(path,size):
 font3 = load_font('./picture/jugnle.ttf', 20)
 
 def save_unlocked_food():
-    global buttons
     with open('./picture/unlocked_food.txt','w')as f:
-        for button in buttons:
+        for button in buttons_page1 + buttons_page2 + buttons_page3:
             f.write(f"{button.foodname}:{button.pressed}\n")
 
 def load_unlocked_food():
+    unlocked_food = {"Tokbokki","Oden","Fried Rice"}
     try:
         with open('./picture/unlocked_food.txt','r')as f:
             lines = f.readlines()
             for line in lines:
                 foodname,pressed = line.strip().split(':')
-                for button in buttons:
-                    if button.foodname == foodname:
-                        button.pressed = pressed == 'True'
+                if pressed == 'True':
+                    unlocked_food.add(foodname)
     except FileNotFoundError:
         pass
-    for button in buttons:
-        if button.foodname in ["Tokbokki","Oden","Fried Rice",]:
+    for button in buttons_page1 + buttons_page2 + buttons_page3:
+        if button.foodname in unlocked_food:
             button.pressed = True
+        else:
+            button.pressed = False
 
 class Button:
     def __init__(self,foodname,button_text,x,y,width,height,action):
@@ -834,18 +835,13 @@ class Button:
         screen.blit(self.text_surface,self.text_rect)
 
     def is_clicked(self,pos):
-        clicked = self.rect.collidepoint(pos)
-        if clicked:
-            print(f"Button{self.rect}clicked at{pos}")
-        return clicked
+        return self.rect.collidepoint(pos)
 
     def press(self):
-        self.pressed = True
-        self.action()
-        save_unlocked_food()
-
-def unlock_item(item_id):
-    pass
+        if not self.pressed:
+            self.pressed = True
+            self.action()
+            save_unlocked_food()
 
 buttons_page1 = [
     Button("Tokbokki","Unlock",550,225,125,40,lambda:unlock_item(1)),
@@ -873,6 +869,45 @@ buttons_page3 =[
     Button("Thai Steamed Fish","Unlock",550,625,125,40,lambda:unlock_item(17)),
     Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18))
 ]
+
+
+button_mapping_page1 = {
+    1: buttons_page1[0],
+    2: buttons_page1[1],
+    3: buttons_page1[2],
+    4: buttons_page1[3],
+    5: buttons_page1[4],
+    6: buttons_page1[5],
+}
+
+button_mapping_page2 = {
+    7: buttons_page2[0],
+    8: buttons_page2[1],
+    9: buttons_page2[2],
+    10: buttons_page2[3],
+    11: buttons_page2[4],
+    12: buttons_page2[5],
+}
+
+button_mapping_page3 = {
+    13: buttons_page3[0],
+    14: buttons_page3[1],
+    15: buttons_page3[2],
+    16: buttons_page3[3],
+    17: buttons_page3[4],
+    18: buttons_page3[5],
+}
+
+def unlock_item(item_id):
+    button = None
+    if 1 <= item_id <= 6:
+        button = button_mapping_page1.get(item_id)
+    elif 7 <= item_id <= 12:
+        button = button_mapping_page2.get(item_id)
+    elif 13 <= item_id <= 18:
+        button = button_mapping_page3.get(item_id)
+    if button and not button.pressed:
+        button.press()
 
 current_page = 1
 buttons = buttons_page1
@@ -960,7 +995,6 @@ def show_menupage():
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
-        save_unlocked_food()
         money_bar()
         profilebutton.update()
         orderbtn.update()
@@ -2782,6 +2816,8 @@ def main():
         steamer_button_rect = steamer_button_select()
         oven_button_rect = oven_button_select()
 
+        load_unlocked_food()
+
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
@@ -2841,6 +2877,7 @@ def main():
 
         cooking_process()
         money_bar()
+        save_unlocked_food()
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()

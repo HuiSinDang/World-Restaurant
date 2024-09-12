@@ -1,6 +1,0 @@
-Fried Vermiceilli Noodles:False
-Hokkien Mee:False
-Ramen:False
-Fried Udon:False
-Curry Mee:False
-Cantonese Kuey Tiaw:False
