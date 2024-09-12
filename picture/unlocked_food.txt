@@ -1,6 +1,6 @@
 Fried Vermiceilli Noodles:False
-Hokkien Mee:True
+Hokkien Mee:False
 Ramen:False
-Fried Udon:True
+Fried Udon:False
 Curry Mee:False
 Cantonese Kuey Tiaw:False

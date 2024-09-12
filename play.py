@@ -781,6 +781,7 @@ menupage1 = load_image('./picture/menupage.png',(900,800))
 menupage2 = load_image('./picture/menupage.png',(900,800))
 menupage3 = load_image('./picture/menupage.png',(900,800))
 nextbutton = load_image('./picture/nextbutton.png',(35,35))
+previousbutton = load_image('./picture/previousbutton.png',(35,35))
 closebutton = load_image('./picture/closebutton.png',(40,40))
 
 def load_font(path,size):
@@ -790,6 +791,27 @@ def load_font(path,size):
         return pygame.font.Font(None,size)
     
 font3 = load_font('./picture/jugnle.ttf', 20)
+
+def save_unlocked_food():
+    global buttons
+    with open('./picture/unlocked_food.txt','w')as f:
+        for button in buttons:
+            f.write(f"{button.foodname}:{button.pressed}\n")
+
+def load_unlocked_food():
+    try:
+        with open('./picture/unlocked_food.txt','r')as f:
+            lines = f.readlines()
+            for line in lines:
+                foodname,pressed = line.strip().split(':')
+                for button in buttons:
+                    if button.foodname == foodname:
+                        button.pressed = pressed == 'True'
+    except FileNotFoundError:
+        pass
+    for button in buttons:
+        if button.foodname in ["Tokbokki","Oden","Fried Rice",]:
+            button.pressed = True
 
 class Button:
     def __init__(self,foodname,button_text,x,y,width,height,action):
@@ -812,7 +834,10 @@ class Button:
         screen.blit(self.text_surface,self.text_rect)
 
     def is_clicked(self,pos):
-        return self.rect.collidepoint(pos) and not self.pressed
+        clicked = self.rect.collidepoint(pos)
+        if clicked:
+            print(f"Button{self.rect}clicked at{pos}")
+        return clicked
 
     def press(self):
         self.pressed = True
@@ -868,44 +893,36 @@ class ImageButton:
     def press(self):
         self.action()
 
-def change_page():
+def change_page(forward=True):
     global current_page,buttons
-    if current_page == 1:
-        current_page = 2
-        buttons = buttons_page2
-    elif current_page == 2:
-        current_page = 3
-        buttons = buttons_page3
+    if forward:
+        if current_page == 1:
+            current_page = 2
+            buttons = buttons_page2
+        elif current_page == 2:
+            current_page = 3
+            buttons = buttons_page3
+        else:
+            current_page = 1
+            buttons = buttons_page1
     else:
-        current_page = 1
-        buttons = buttons_page1
+        if current_page == 3:
+            current_page = 2
+            buttons = buttons_page2
+        elif current_page == 2:
+            current_page = 1
+            buttons = buttons_page1
+        else:
+            current_page = 3
+            buttons = buttons_page3
 
 def close_menu():
     global running
     running = False
 
 nextpbutton = ImageButton(nextbutton,925,625,change_page)
+previouspbutton = ImageButton(previousbutton,500,625,lambda:change_page(forward=False))
 closepbutton = ImageButton(closebutton,925,100,close_menu)
-
-def save_unlocked_food():
-    with open('./picture/unlocked_food.txt','w')as f:
-        for button in buttons:
-            f.write(f"{button.foodname}:{button.pressed}\n")
-
-def load_unlocked_food():
-    try:
-        with open('./picture/unlocked_food.txt','r')as f:
-            lines = f.readlines()
-            for line in lines:
-                foodname,pressed = line.strip().split(':')
-                for button in buttons:
-                    if button.foodname == foodname:
-                        button.pressed = pressed == 'True'
-    except FileNotFoundError:
-        pass
-    for button in buttons:
-        if button.foodname in ["Tokbokki","Oden","Fried Rice",]:
-            button.pressed = True
 
 def show_menupage():
     global current_page,buttons,running
@@ -924,7 +941,10 @@ def show_menupage():
 
         for button in buttons:
             button.draw(screen)
-        nextpbutton.draw(screen)
+        if current_page > 1:
+            previouspbutton.draw(screen)
+        if current_page < 3:
+            nextpbutton.draw(screen)
         closepbutton.draw(screen)
 
         for event in pygame.event.get():
@@ -933,11 +953,14 @@ def show_menupage():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if nextpbutton.is_clicked(event.pos):
                     nextpbutton.press()
-                if closepbutton.is_clicked(event.pos):
+                elif previouspbutton.is_clicked(event.pos):
+                        previouspbutton.press()
+                elif closepbutton.is_clicked(event.pos):
                     closepbutton.press()
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
+        save_unlocked_food()
         money_bar()
         profilebutton.update()
         orderbtn.update()
