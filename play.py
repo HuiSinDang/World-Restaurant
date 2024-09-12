@@ -208,9 +208,6 @@ shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
 custardbun_img = pygame.image.load("./picture/custardbun.png") 
 custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
 
-dustbin_img = pygame.image.load("./picture/dustbin.png")
-dustbin_img = pygame.transform.scale(dustbin_img, (200, 170))
-
 
 
 food_lists =[
@@ -997,6 +994,7 @@ def profile():
         pan_default_button.update()
         steamer_button.update()
         oven_button.update()
+        waiting_table()
         screen.blit(surface,screen_rect)
 
         draw_text("Profile", font, "black", screen, 650, 200)
@@ -1111,6 +1109,7 @@ def order():
         pan_default_button.update()
         steamer_button.update()
         oven_button.update()
+        waiting_table()
         screen.blit(surface,screen_rect1)
 
         button.update()
@@ -1632,8 +1631,6 @@ def order():
                         last_clicked_order = None
                         add_order('order1')
 
-                        
-
                     elif last_clicked_order == "order2":
                         def load_list_from_file(filename):
                             file =  open(filename, 'r') 
@@ -1677,7 +1674,6 @@ def order():
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
                         add_order('order2')
-
 
                     elif last_clicked_order == "order3":
                         
@@ -1723,8 +1719,6 @@ def order():
                         check_and_update_lists(list1_filename, list2_filename)
                         last_clicked_order = None
                         add_order('order3')
-
-
                     
                     else :
                         draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
@@ -1739,6 +1733,7 @@ def draw_popup():
     steamer_button.update()
     oven_button.update()
     profilebutton.update()
+    orderbtn.update()
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
@@ -1861,6 +1856,7 @@ def upgrade_process():
     steamer_button.update()
     oven_button.update()
     profilebutton.update()
+    orderbtn.update()
     upgrade_btn.update()
     menu_button.update()
     setting_button.update()
@@ -1945,6 +1941,7 @@ def upgrade_process():
 
         handle_upgrades()
         profilebutton.update()
+        orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
@@ -2013,6 +2010,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
         steamer_button.update()
         oven_button.update()
         profilebutton.update()
+        orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
         setting_button.update() 
@@ -2096,6 +2094,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
 
         money_bar()
         profilebutton.update()
+        orderbtn.update()
         menu_button.update()
         upgrade_btn.update()
         setting_button.update()
@@ -2119,6 +2118,7 @@ def selectfood_page3(): # after player click steamer
         steamer_button.update()
         oven_button.update()
         profilebutton.update()
+        orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()  
@@ -2225,6 +2225,7 @@ def selectfood_page4(): # after player click oven
         steamer_button.update()
         oven_button.update()
         profilebutton.update()
+        orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
         setting_button.update()
@@ -2776,7 +2777,6 @@ def main():
                 if event.key == pygame.K_p:
                     profile()
 
-        screen.blit(dustbin_img,(1220, 140))
         cooking_process()
         money_bar()
         profilebutton.update()
