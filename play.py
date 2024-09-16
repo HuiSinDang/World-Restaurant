@@ -605,6 +605,8 @@ oven_call = False
 money_amount = 100
 max_display_money = 1000000
 money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
+moneybox = pygame.image.load('./picture/moneybox.png')
+moneybox = pygame.transform.scale(moneybox,(295,85))
 
 def show_money():
     if os.path.exists(money_file_path):
@@ -612,9 +614,9 @@ def show_money():
             with open("./picture/money.txt","r")as file:
                 return int(file.read())
         except (ValueError,IOError):
-            return 100
+            return 10000
     else:
-        return 100
+        return 10000
     
 def save_money():
     with open("./picture/money.txt","w") as file:
@@ -629,6 +631,8 @@ def show_message(message,position=(900,200)):
     pygame.time.delay(1500)
 
 def money_bar():
+    money_bar_rect = pygame.Rect(1100, 10, 200, 100)
+    screen.blit(moneybox,money_bar_rect.topleft)
     money_text = font2.render(f"{money_amount}",True,black)
     text_rect = money_text.get_rect(center=(1250,55))
     screen.blit(money_text,text_rect)
@@ -648,6 +652,7 @@ def subtract_money(amount):
     else:
         show_message("Not enough money!")
         return False
+
     
 money_amount = show_money()
 
@@ -891,6 +896,7 @@ class Button:
             if subtract_money(self.cost):
                 self.pressed = True
                 self.action()
+                save_money()
                 save_unlocked_food()
                 return True
             else:
