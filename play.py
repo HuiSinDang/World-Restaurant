@@ -620,6 +620,14 @@ def save_money():
     with open("./picture/money.txt","w") as file:
         file.write(str(money_amount))
 
+def show_message(message,position=(900,200)):
+    message_font = pygame.font.Font('./picture/jugnle.ttf', 35)
+    message_text = message_font.render(message,True,(255,0,0))
+    text_rect = message_text.get_rect(center=(750,375))
+    screen.blit(message_text,text_rect)
+    pygame.display.update()
+    pygame.time.delay(1500)
+
 def money_bar():
     money_text = font2.render(f"{money_amount}",True,black)
     text_rect = money_text.get_rect(center=(1250,55))
@@ -635,10 +643,10 @@ def subtract_money(amount):
     global money_amount
     if money_amount >= amount:
         money_amount -= amount
-        money_amount = max(money_amount,0)
         save_money()
         return True
     else:
+        show_message("Not enough money!")
         return False
     
 money_amount = show_money()
@@ -823,7 +831,7 @@ def load_unlocked_food():
             button.pressed = False
 
 class Button:
-    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50)):
+    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50),cost=20):
         self.rect = pygame.Rect(x,y,width,height)
         self.foodname = foodname
         self.button_text = button_text
@@ -833,7 +841,7 @@ class Button:
         self.label_lines = []
         self.image = None
         self.image_rect = None
-
+        self.cost = cost
         self.update_text(self.button_text)
         if self.label_text:
             self.update_label()
@@ -855,7 +863,7 @@ class Button:
             self.image = pygame.transform.scale(self.image,size)
             self.image_rect = self.image.get_rect(center=(self.rect.centerx,self.rect.top -70))
         except pygame.error as e:
-            print(f"Error loading image{e}")
+            pass
 
     def draw(self,screen):
         if self.image:
@@ -880,60 +888,64 @@ class Button:
 
     def press(self):
         if not self.pressed:
-            self.pressed = True
-            self.action()
-            save_unlocked_food()
+            if subtract_money(self.cost):
+                self.pressed = True
+                self.action()
+                save_unlocked_food()
+                return True
+            else:
+                return False
 
 buttons_page1 = [
-    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png'),
-    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png'),
-    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png'),
-    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png'),
-    Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png'),
-    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png'),
+    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20),
+    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
+    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
+    Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png',cost=20),
+    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png',cost=20),
 ]
 
 buttons_page2 =[
-    Button("Fried Vermiceilli Noodles","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Vermicelli Noodles\nRM 20",image_path='./picture/oden.png'),
-    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png'),
-    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png'),
-    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png'),
-    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png'),
-    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png'),
+    Button("Fried Vermiceilli Noodles","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Vermicelli Noodles\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
+    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
+    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png',cost=20),
+    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
+    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png',cost=20),
 ]
 
 buttons_page3 =[
-    Button("Shredded Chicken Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Shredded Chicken Hor Fun\nRM 20",image_path='./picture/horfun.png'),
-    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png'),
-    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png'),
-    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png'),
-    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png'),
-    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png'),
+    Button("Shredded Chicken Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Shredded Chicken Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
+    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
+    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
+    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
+    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png',cost=20),
+    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png',cost=20),
 ]
 
 buttons_page4 =[
-    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png'),
-    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png'),
-    Button("Steamed Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Steamed Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png'),
-    Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 20",image_path='./picture/dumpling.png'),
-    Button("Crystal Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Crystal Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png'),
-    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png'),
+    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=20),
+    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=20),
+    Button("Steamed Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Steamed Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
+    Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 20",image_path='./picture/dumpling.png',cost=20),
+    Button("Crystal Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Crystal Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
+    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=20),
 ]
 
 buttons_page5 =[
-    Button("Corndog","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 20",image_path='./picture/corndog.png'),
-    Button("Kfry","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png'),
-    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png'),
-    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png'),
-    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png'),
-    Button("Blackforest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Blackforest\nRM 20",image_path='./picture/blackforest.png'),
+    Button("Corndog","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 20",image_path='./picture/corndog.png',cost=20),
+    Button("Kfry","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png',cost=20),
+    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=20),
+    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=20),
+    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=20),
+    Button("Blackforest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Blackforest\nRM 20",image_path='./picture/blackforest.png',cost=20),
 ]
 
 buttons_page6 =[
-    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png'),
-    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png'),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png'),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png'),
+    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=20),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png',cost=20),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
 ]
 
 
@@ -1008,6 +1020,10 @@ def unlock_item(item_id):
 
 current_page = 1
 buttons = buttons_page1
+
+def display_message(screen,message,position,color=(255,0,0)):
+    text_surface=font3.render(message,True,color)
+    screen.blit(text_surface,position)
 
 class ImageButton:
     def __init__(self,image,x,y,action):
