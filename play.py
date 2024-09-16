@@ -158,7 +158,7 @@ pandanrollcake_img = pygame.image.load("./picture/pandanrollcake.png")
 pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
 
 friednoodle_img = pygame.image.load("./picture/friednoodle.png")
-friednoodle_img = pygame.transform.scale(friednoodle_img, (100, 127))
+friednoodle_img = pygame.transform.scale(friednoodle_img, (125, 115))
 
 bihun_img = pygame.image.load("./picture/bihun.png") 
 bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
