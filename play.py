@@ -1124,7 +1124,6 @@ def show_menupage():
         orderbtn.update()
         menu_button.update()
         upgrade_btn.update()
-        setting_button.update()
         orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.flip()
@@ -1280,7 +1279,6 @@ def profile():
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
-        setting_button.update()
         orderbtn.update()
         money_bar()
         happyhour_bar(hhactive)
@@ -1336,7 +1334,6 @@ def order():
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
-        setting_button.update()
         orderbtn.update()
         money_bar()
         happyhour_bar(hhactive)
@@ -1956,7 +1953,6 @@ def draw_popup():
     orderbtn.update()
     upgrade_btn.update()
     menu_button.update()
-    setting_button.update()
     pygame.draw.rect(screen, (255, 201, 254), popup_rect)
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     
@@ -2079,7 +2075,6 @@ def upgrade_process():
     orderbtn.update()
     upgrade_btn.update()
     menu_button.update()
-    setting_button.update()
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
     
@@ -2164,7 +2159,6 @@ def upgrade_process():
         orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
-        setting_button.update()
         money_bar()
         pygame.display.update()
         clock.tick(60)
@@ -2218,17 +2212,11 @@ ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surf
 
 
 def selectfood_page2(): # after player click STOVE POT button rect
-    global stovepot_food_index, current_page, waiting_duration, current_time
-    global stovepot_running, steamer_running, oven_running  
-    global steamer_start_time, oven_start_time
-    global steamer_exceed_time, oven_exceed_time
-    global steamer_waiting_start_time, oven_waiting_start_time
-    global sound_muted, hhactive
+    global stovepot_food_index, current_page
      
     print(f"Initial stovepot_food_index: {stovepot_food_index}")
 
     waiting_duration = 10
-    current_time = time.time()
     food_selected = False  # 用来track food select
 
     while True:
@@ -2386,7 +2374,6 @@ def selectfood_page3(): # after player click steamer
     global steamer_food_index, current_page
 
     waiting_duration = 10
-    current_time = time.time()
     food_selected = False
 
     print(f"Initial steamer_food_index: {steamer_food_index}")
@@ -2529,7 +2516,6 @@ def selectfood_page3(): # after player click steamer
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
-        setting_button.update()
         close_button.update()
         orderbtn.update()
         happyhour_bar(hhactive)
@@ -2541,7 +2527,6 @@ def selectfood_page4(): # after player click oven
     global current_page, oven_food_index
 
     waiting_duration = 10
-    current_time = time.time()
     food_selected = False
 
 
