@@ -890,15 +890,15 @@ buttons_page1 = [
     Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png'),
     Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png'),
     Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png'),
-    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/fried-noodle.png'),
+    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png'),
 ]
 
 buttons_page2 =[
     Button("Fried Vermiceilli Noodles","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Vermicelli Noodles\nRM 20",image_path='./picture/oden.png'),
-    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkien-mee.png'),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png'),
     Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png'),
-    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/friedudon.png'),
-    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/curry-mee.png'),
+    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png'),
+    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png'),
     Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png'),
 ]
 
