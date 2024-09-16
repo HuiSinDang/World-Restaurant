@@ -152,7 +152,7 @@ redvelvet_img = pygame.image.load("./picture/redvelvet.png")
 redvelvet_img = pygame.transform.scale(redvelvet_img, (120, 110))
 
 blackforest_img = pygame.image.load("./picture/blackforest.png")
-blackforest_img = pygame.transform.scale(blackforest_img, (150, 110))
+blackforest_img = pygame.transform.scale(blackforest_img, (135, 110))
 
 pandanrollcake_img = pygame.image.load("./picture/pandanrollcake.png")
 pandanrollcake_img = pygame.transform.scale(pandanrollcake_img, (126, 127))
@@ -161,7 +161,7 @@ friednoodle_img = pygame.image.load("./picture/friednoodle.png")
 friednoodle_img = pygame.transform.scale(friednoodle_img, (125, 115))
 
 bihun_img = pygame.image.load("./picture/bihun.png") 
-bihun_img = pygame.transform.scale(friednoodle_img, (120, 120))
+bihun_img = pygame.transform.scale(bihun_img, (120, 120))
 
 hokkienmee_img = pygame.image.load("./picture/hokkienmee.png") 
 hokkienmee_img = pygame.transform.scale(hokkienmee_img, (120, 120))
@@ -1942,6 +1942,10 @@ def order():
                         pygame.display.flip()
                         pygame.time.wait(1000)
 
+                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                    mute_sound()
+        
+
         pygame.display.flip()
         clock.tick(30)
 
@@ -2153,6 +2157,9 @@ def upgrade_process():
                    
                 if noC_button.checkForInput(pygame.mouse.get_pos()):
                     show_popup2C = False 
+
+                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                    mute_sound()
 
         handle_upgrades()
         profilebutton.update()
