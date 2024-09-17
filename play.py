@@ -1336,11 +1336,10 @@ def update_button_image3(order_button3, all_available):
 
 
 # Main order function
+# Main order function
 def order():
     global show_complete_button1, show_complete_button2, show_complete_button3
-    show_complete_button1 = False
-    show_complete_button2 = False
-    show_complete_button3 = False
+    global person_x, person_y, person_speed, moving, returning, flipped
     last_clicked_order = None
     
     while True:
@@ -1350,15 +1349,15 @@ def order():
         steamer_button.update()
         oven_button.update()
         waiting_table()
-        screen.blit(surface,screen_rect1)
-
-        button.update()
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
         orderbtn.update()
         money_bar()
         happyhour_bar(hhactive)
+        screen.blit(surface,screen_rect1)
+        button.update()
+
 
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
 
@@ -1798,6 +1797,7 @@ def order():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
+
                 if order1button.checkForInput(mouse_pos):
                     if all_in_waitingtable1 == True:
                         last_clicked_order = "order1"
@@ -1823,150 +1823,354 @@ def order():
                         pygame.time.wait(1000)
 
                 if completebutton.checkForInput(pygame.mouse.get_pos()):
-
-                    if last_clicked_order == "order1":
-                        def load_list_from_file(filename):
-                            file =  open(filename, 'r') 
-                            return [line.strip() for line in file.readlines()]
-                        
-                        def save_list_to_file(filename, data_list):
-                            file = open(filename, 'w') 
-                            for item in data_list:
-                                file.write(f"{item}\n")
-
-                        def check_and_update_lists(list1_filename, list2_filename):
-                            pygame.display.flip()
-                            list1 = load_list_from_file(list1_filename)
-                            list2 = load_list_from_file(list2_filename)
-
-                            for item in list1:
-                                list2.remove(item)
-
-                            list1.clear()  
-
-                            fstaff1 = open("./picture/staff.txt", "r") 
-                            staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
-                            del staff1[0]
-                            fstaff1 = open("./picture/staff.txt", "w")
-                            for i in staff1 :
-                                fstaff1.write(f'{i}\n')
-                            fstaff1.close()
-
-                            save_list_to_file(list1_filename, list1)
-                            save_list_to_file(list2_filename, list2)
-                            
-                            profit = int(total_price1)
-                            ftotal.write(f'{profit}\n')
-                            ftotal.close
-
-                            draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
-                            pygame.display.flip()
-                            pygame.time.wait(1000)
-
-                        list1_filename = './picture/order1.txt'
-                        list2_filename = './picture/waitingtable.txt'
-
-                        check_and_update_lists(list1_filename, list2_filename)
-                        last_clicked_order = None
-                        add_order('order1')
-
-                    elif last_clicked_order == "order2":
-                        def load_list_from_file(filename):
-                            file =  open(filename, 'r') 
-                            return [line.strip() for line in file.readlines()]
-
-                        def save_list_to_file(filename, data_list):
-                            file = open(filename, 'w') 
-                            for item in data_list:
-                                file.write(f"{item}\n")
-
-                        def check_and_update_lists(list1_filename, list2_filename):
-                            list1 = load_list_from_file(list1_filename)
-                            list2 = load_list_from_file(list2_filename)
-
-                            for item in list1:
-                                list2.remove(item)
-
-                            list1.clear()  
-                            fstaff2 = open("./picture/staff.txt", "r") 
-                            staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
-                            del staff2[1]
-                            fstaff2 = open("./picture/staff.txt", "w")
-                            for i in staff2 :
-                                fstaff2.write(f'{i}\n')
-                            fstaff2.close()
-
-                            save_list_to_file(list1_filename, list1)
-                            save_list_to_file(list2_filename, list2)
-                            
-                            profit = int(total_price2)
-                            ftotal.write(f'{profit}\n')
-                            ftotal.close
-
-                            draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
-                            pygame.display.flip()
-                            pygame.time.wait(1000)
-
-                        list1_filename = './picture/order2.txt'
-                        list2_filename = './picture/waitingtable.txt'
-
-                        check_and_update_lists(list1_filename, list2_filename)
-                        last_clicked_order = None
-                        add_order('order2')
-
-                    elif last_clicked_order == "order3":
-                        
-                        def load_list_from_file(filename):
-                            file =  open(filename, 'r') 
-                            return [line.strip() for line in file.readlines()]
-
-                        def save_list_to_file(filename, data_list):
-                            file = open(filename, 'w') 
-                            for item in data_list:
-                                file.write(f"{item}\n")
-
-                        def check_and_update_lists(list1_filename, list2_filename):
-                            list1 = load_list_from_file(list1_filename)
-                            list2 = load_list_from_file(list2_filename)
-
-                            for item in list1:
-                                list2.remove(item)
-
-                            list1.clear()  
-                            fstaff3 = open("./picture/staff.txt", "r") 
-                            staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
-                            del staff3[2]
-                            fstaff3 = open("./picture/staff.txt", "w")
-                            for i in staff3 :
-                                fstaff3.write(f'{i}\n')
-                            fstaff3.close()
-
-                            save_list_to_file(list1_filename, list1)
-                            save_list_to_file(list2_filename, list2)
-                            
-                            profit = int(total_price3)
-                            ftotal.write(f'{profit}\n')
-                            ftotal.close
-
-                            draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
-                            pygame.display.flip()
-                            pygame.time.wait(1000)
-
-                        list1_filename = './picture/order3.txt'
-                        list2_filename = './picture/waitingtable.txt'
-
-                        check_and_update_lists(list1_filename, list2_filename)
-                        last_clicked_order = None
-                        add_order('order3')
                     
-                    else :
-                        draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
-                        pygame.display.flip()
-                        pygame.time.wait(1000)
+                    ffoodrak = open("./picture/foodrak.txt", "r")
+                    foodrak = [line.strip() for line in ffoodrak.readlines()]
+                    ffoodrak.close()
 
-                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
-                    mute_sound()
-        
+                    if len(foodrak) < 3:
+                        if last_clicked_order == "order1":
+                            def load_list_from_file(filename):
+                                file =  open(filename, 'r') 
+                                return [line.strip() for line in file.readlines()]
+                            
+                            def save_list_to_file(filename, data_list):
+                                file = open(filename, 'w') 
+                                for item in data_list:
+                                    file.write(f"{item}\n")
+
+                            def check_and_update_lists(list1_filename, list2_filename):
+                                pygame.display.flip()
+                                list1 = load_list_from_file(list1_filename)
+                                list2 = load_list_from_file(list2_filename)
+
+                                for item in list1:
+                                    list2.remove(item)
+
+                                list1.clear()  
+
+                                fstaff1 = open("./picture/staff.txt", "r") 
+                                staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
+                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak.write(f'{staff1[0]}\n')
+                                del staff1[0]
+                                fstaff1 = open("./picture/staff.txt", "w")
+                                for i in staff1 :
+                                    fstaff1.write(f'{i}\n')
+                                fstaff1.close()
+
+                                save_list_to_file(list1_filename, list1)
+                                save_list_to_file(list2_filename, list2)
+                                
+                                profit = int(total_price1)
+                                ftotal.write(f'{profit}\n')
+                                ftotal.close
+
+                                draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
+
+                            list1_filename = './picture/order1.txt'
+                            list2_filename = './picture/waitingtable.txt'
+
+                            check_and_update_lists(list1_filename, list2_filename)
+                            last_clicked_order = None
+
+                        elif last_clicked_order == "order2":
+                            def load_list_from_file(filename):
+                                file =  open(filename, 'r') 
+                                return [line.strip() for line in file.readlines()]
+
+                            def save_list_to_file(filename, data_list):
+                                file = open(filename, 'w') 
+                                for item in data_list:
+                                    file.write(f"{item}\n")
+
+                            def check_and_update_lists(list1_filename, list2_filename):
+                                list1 = load_list_from_file(list1_filename)
+                                list2 = load_list_from_file(list2_filename)
+
+                                for item in list1:
+                                    list2.remove(item)
+
+                                list1.clear()  
+                                fstaff2 = open("./picture/staff.txt", "r") 
+                                staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
+                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak.write(f'{staff2[1]}\n')
+                                del staff2[1]
+                                fstaff2 = open("./picture/staff.txt", "w")
+                                for i in staff2 :
+                                    fstaff2.write(f'{i}\n')
+                                fstaff2.close()
+
+                                save_list_to_file(list1_filename, list1)
+                                save_list_to_file(list2_filename, list2)
+                                
+                                profit = int(total_price2)
+                                ftotal.write(f'{profit}\n')
+                                ftotal.close
+
+                                draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
+
+                            list1_filename = './picture/order2.txt'
+                            list2_filename = './picture/waitingtable.txt'
+
+                            check_and_update_lists(list1_filename, list2_filename)
+                            last_clicked_order = None
+
+                        elif last_clicked_order == "order3":
+                            def load_list_from_file(filename):
+                                file =  open(filename, 'r') 
+                                return [line.strip() for line in file.readlines()]
+
+                            def save_list_to_file(filename, data_list):
+                                file = open(filename, 'w') 
+                                for item in data_list:
+                                    file.write(f"{item}\n")
+
+                            def check_and_update_lists(list1_filename, list2_filename):
+                                list1 = load_list_from_file(list1_filename)
+                                list2 = load_list_from_file(list2_filename)
+
+                                for item in list1:
+                                    list2.remove(item)
+
+                                list1.clear()  
+                                fstaff3 = open("./picture/staff.txt", "r") 
+                                staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
+                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak.write(f'{staff3[2]}\n')
+                                del staff3[2]
+                                fstaff3 = open("./picture/staff.txt", "w")
+                                for i in staff3 :
+                                    fstaff3.write(f'{i}\n')
+                                fstaff3.close()
+
+                                save_list_to_file(list1_filename, list1)
+                                save_list_to_file(list2_filename, list2)
+                                
+                                profit = int(total_price3)
+                                ftotal.write(f'{profit}\n')
+                                ftotal.close
+
+                                draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
+
+                            list1_filename = './picture/order3.txt'
+                            list2_filename = './picture/waitingtable.txt'
+
+                            check_and_update_lists(list1_filename, list2_filename)
+                            last_clicked_order = None
+                    
+                        
+                        else :
+                            draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
+                            pygame.display.flip()
+                            pygame.time.wait(1000)
+                    
+                    elif len(foodrak) == 3:
+
+                        for i in range(min(3, len(foodrak))):
+                            if foodrak[i] == "":
+
+                                if last_clicked_order == "order1":
+                                    def load_list_from_file(filename):
+                                        file =  open(filename, 'r') 
+                                        return [line.strip() for line in file.readlines()]
+                                    
+                                    def save_list_to_file(filename, data_list):
+                                        file = open(filename, 'w') 
+                                        for item in data_list:
+                                            file.write(f"{item}\n")
+
+                                    def check_and_update_lists(list1_filename, list2_filename):
+                                        pygame.display.flip()
+                                        list1 = load_list_from_file(list1_filename)
+                                        list2 = load_list_from_file(list2_filename)
+
+                                        for item in list1:
+                                            list2.remove(item)
+
+                                        list1.clear()  
+
+                                        fstaff1 = open("./picture/staff.txt", "r") 
+                                        staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
+
+                                        # 读取文件内容，保留空行
+                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
+                                            # print("Foodrak before update:", foodrak)  # Debugging line
+
+                                        # 检查前三个元素是否有空位，并填入数据
+                                        for i in range(min(3, len(foodrak))):
+                                            if foodrak[i] == "":  # 找到空行
+                                                foodrak[i] = staff1[0]  # 用 staff1[0] 填充空位
+                                                print("Foodrak after update:", foodrak)  # Debugging line
+
+                                                # 写入更新后的内容到文件
+                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                for item in foodrak:
+                                                        ffoodrak.write(f"{item}\n")  # 确保数据按行写入
+
+                                        del staff1[0]
+                                        fstaff1 = open("./picture/staff.txt", "w")
+                                        for i in staff1 :
+                                            fstaff1.write(f'{i}\n')
+                                        fstaff1.close()
+
+                                        save_list_to_file(list1_filename, list1)
+                                        save_list_to_file(list2_filename, list2)
+                                        
+                                        profit = int(total_price1)
+                                        ftotal.write(f'{profit}\n')
+                                        ftotal.close
+
+                                        draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                        pygame.display.flip()
+                                        pygame.time.wait(1000)
+
+                                    list1_filename = './picture/order1.txt'
+                                    list2_filename = './picture/waitingtable.txt'
+
+                                    check_and_update_lists(list1_filename, list2_filename)
+                                    last_clicked_order = None
+
+                                elif last_clicked_order == "order2":
+                                    def load_list_from_file(filename):
+                                        file =  open(filename, 'r') 
+                                        return [line.strip() for line in file.readlines()]
+
+                                    def save_list_to_file(filename, data_list):
+                                        file = open(filename, 'w') 
+                                        for item in data_list:
+                                            file.write(f"{item}\n")
+
+                                    def check_and_update_lists(list1_filename, list2_filename):
+                                        list1 = load_list_from_file(list1_filename)
+                                        list2 = load_list_from_file(list2_filename)
+
+                                        for item in list1:
+                                            list2.remove(item)
+
+                                        list1.clear()  
+                                        fstaff2 = open("./picture/staff.txt", "r") 
+                                        staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
+
+                                        # 读取文件内容，保留空行
+                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
+                                            # print("Foodrak before update:", foodrak)  # Debugging line
+
+                                        # 检查前三个元素是否有空位，并填入数据
+                                        for i in range(min(3, len(foodrak))):
+                                            if foodrak[i] == "":  # 找到空行
+                                                foodrak[i] = staff2[1]  # 用 staff1[0] 填充空位
+                                                # print("Foodrak after update:", foodrak)  # Debugging line
+
+                                                # 写入更新后的内容到文件
+                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                for item in foodrak:
+                                                        ffoodrak.write(f"{item}\n")  # 确保数据按行写入
+
+                                        del staff2[1]
+                                        fstaff2 = open("./picture/staff.txt", "w")
+                                        for i in staff2 :
+                                            fstaff2.write(f'{i}\n')
+                                        fstaff2.close()
+
+                                        save_list_to_file(list1_filename, list1)
+                                        save_list_to_file(list2_filename, list2)
+                                        
+                                        profit = int(total_price2)
+                                        ftotal.write(f'{profit}\n')
+                                        ftotal.close
+
+                                        draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                        pygame.display.flip()
+                                        pygame.time.wait(1000)
+
+                                    list1_filename = './picture/order2.txt'
+                                    list2_filename = './picture/waitingtable.txt'
+
+                                    check_and_update_lists(list1_filename, list2_filename)
+                                    last_clicked_order = None
+
+                                elif last_clicked_order == "order3":
+                                    def load_list_from_file(filename):
+                                        file =  open(filename, 'r') 
+                                        return [line.strip() for line in file.readlines()]
+
+                                    def save_list_to_file(filename, data_list):
+                                        file = open(filename, 'w') 
+                                        for item in data_list:
+                                            file.write(f"{item}\n")
+
+                                    def check_and_update_lists(list1_filename, list2_filename):
+                                        list1 = load_list_from_file(list1_filename)
+                                        list2 = load_list_from_file(list2_filename)
+
+                                        for item in list1:
+                                            list2.remove(item)
+
+                                        list1.clear()  
+                                        fstaff3 = open("./picture/staff.txt", "r") 
+                                        staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
+
+                                        # 读取文件内容，保留空行
+                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
+                                            # print("Foodrak before update:", foodrak)  # Debugging line
+
+                                        # 检查前三个元素是否有空位，并填入数据
+                                        for i in range(min(3, len(foodrak))):
+                                            if foodrak[i] == "":  # 找到空行
+                                                foodrak[i] = staff3[2]  # 用 staff1[0] 填充空位
+                                                print("Foodrak after update:", foodrak)  # Debugging line
+
+                                                # 写入更新后的内容到文件
+                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                for item in foodrak:
+                                                        ffoodrak.write(f"{item}\n")  # 确保数据按行写入
+
+                                        del staff3[2]
+                                        fstaff3 = open("./picture/staff.txt", "w")
+                                        for i in staff3 :
+                                            fstaff3.write(f'{i}\n')
+                                        fstaff3.close()
+
+                                        save_list_to_file(list1_filename, list1)
+                                        save_list_to_file(list2_filename, list2)
+                                        
+                                        profit = int(total_price3)
+                                        ftotal.write(f'{profit}\n')
+                                        ftotal.close
+
+                                        draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
+                                        pygame.display.flip()
+                                        pygame.time.wait(1000)
+
+                                    list1_filename = './picture/order3.txt'
+                                    list2_filename = './picture/waitingtable.txt'
+
+                                    check_and_update_lists(list1_filename, list2_filename)
+                                    last_clicked_order = None                        
+                                
+                                else :
+                                    draw_text("Please select an order", main_font, "red", screen, 650, 510)  # On top of button 1
+                                    pygame.display.flip()
+                                    pygame.time.wait(1000)
+
+                                break
+                            
+                            else:
+                        
+                                draw_text("Waiting table is fulled", main_font, "red", screen, 650, 510)  # On top of button 1
+                                pygame.display.flip()
+                                pygame.time.wait(1000)
 
         pygame.display.flip()
         clock.tick(30)
