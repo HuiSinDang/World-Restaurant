@@ -1352,6 +1352,9 @@ def order():
     global person_x, person_y, person_speed, moving, returning, flipped
     last_clicked_order = None
     
+    screen.blit(dustbin_img, (1250,160))
+    waiting_table()
+
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))  # Draw the background
