@@ -3568,6 +3568,24 @@ def main():
 
         load_unlocked_food()
 
+        ffoodlist = open("./picture/foodrak.txt","r")
+        foodlist = [line.rstrip('\n') for line in ffoodlist.readlines()]  # 只去掉换行符，保留空行
+
+        for index, item in enumerate(foodlist):
+            if item == "":
+                continue
+
+            if index == 0:
+                x,y = 250, 375
+            elif index == 1:
+                x, y= 550, 375
+            elif index == 2:
+                x,y = 850, 375
+            
+            image = pygame.image.load("./picture/bag.png")
+            image = pygame.transform.scale(image, (250, 100))
+
+            screen.blit(image, (x,y))
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
