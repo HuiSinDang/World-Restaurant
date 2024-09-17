@@ -149,7 +149,7 @@ rainbowcake_img = pygame.image.load("./picture/rainbowcake.png")
 rainbowcake_img = pygame.transform.scale(rainbowcake_img, (120, 115))
 
 redvelvet_img = pygame.image.load("./picture/redvelvet.png")
-redvelvet_img = pygame.transform.scale(redvelvet_img, (100, 100))
+redvelvet_img = pygame.transform.scale(redvelvet_img, (80, 80))
 
 blackforest_img = pygame.image.load("./picture/blackforest.png")
 blackforest_img = pygame.transform.scale(blackforest_img, (125, 100))
