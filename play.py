@@ -1140,12 +1140,21 @@ def show_menupage():
                 for button in buttons:
                     if button.is_clicked(event.pos):
                         button.press()
+        
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft)
+
+
         money_bar()
+        screen.blit(dustbin_img, (1250,160))
         profilebutton.update()
         orderbtn.update()
         menu_button.update()
         upgrade_btn.update()
         orderbtn.update()
+        waiting_table()
         happyhour_bar(hhactive)
         pygame.display.flip()
         pygame.time.Clock().tick(30)
