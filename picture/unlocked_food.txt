@@ -1,9 +1,9 @@
 Tokbokki:True
 Fried Rice:True
 Oden:True
-Bibimbap:False
-Army Strew:False
-Fried Noodle:False
+Bibimbap:True
+Army Strew:True
+Fried Noodle:True
 Fried Vermiceilli Noodles:False
 Hokkien Mee:False
 Ramen:False

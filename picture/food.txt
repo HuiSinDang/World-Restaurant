@@ -2,14 +2,13 @@ Tokbokki
 Fried Rice
 Oden
 Bibimbap
-Army Stew
+Korean Army Stew
 Fried Noodle
 Fried Vermicelli Noodle
 Hokkien Mee
 Ramen
 Fried Udon
 Curry Mee
-Ramen
 Cantonese Kuey Tiaw
 Shredded Chicken Hor Fun
 Mala Xiang Guo
@@ -20,17 +19,16 @@ Xiu Mai
 Steamed Egg
 Lo Mai Gai
 Steamed Herbal Chicken
-Soup Dumpling
+Dumpling
 Crystal Shrimp Dumpling
 Egg Custard Bun
-Corndog
-Kfry
+Jumbo Corndog
+Korean Fried Chicken
 Calamari Ring
 Rainbow Cake
 Red Velvet
-Blackforest
+Black Forest
 Pandan Roll Cake
-Cookie
 Mooncake
-Satay
+Satay(10 sticks)
 

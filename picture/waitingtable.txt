@@ -1,10 +1,8 @@
-Fried Rice
 Bibimbap
 Fried Noodle
 Hokkien Mee
 Fried Udon
 Curry Mee
-Ramen
 Cantonese Kuey Tiaw
 Youtiao
 Hanjiben
@@ -13,7 +11,6 @@ Xiu Mai
 Steamed egg
 Lo Mai Gai
 Steamed Herbal Chicken
-Soup Dumpling
 Egg Custard Bun
 Corndog
 Calamari Ring
@@ -32,7 +29,6 @@ Fried Udon
 Curry Mee
 Ramen
 Cantonese Kuey Tiaw
-Shredded Chicken Hor Fun
 Mala Xiang Guo
 Youtiao
 Hanjiben
