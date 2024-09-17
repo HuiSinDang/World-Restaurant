@@ -2426,7 +2426,7 @@ def upgrade_process():
     menu_button.update()
 
     screen.blit(dustbin_img, (1250,160))
-    waiting_table()
+
     
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
@@ -2516,7 +2516,7 @@ def upgrade_process():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
 
-        
+        waiting_table()
         handle_upgrades()
         profilebutton.update()
         orderbtn.update()
