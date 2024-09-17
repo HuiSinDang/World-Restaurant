@@ -1335,8 +1335,7 @@ def order():
     global person_x, person_y, person_speed, moving, returning, flipped
     last_clicked_order = None
     
-    screen.blit(dustbin_img, (1250,160))
-    waiting_table()
+
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -2187,6 +2186,13 @@ def order():
                                 pygame.display.flip()
                                 pygame.time.wait(1000)
 
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft)  
+        
+        screen.blit(dustbin_img, (1250,160))
+        waiting_table()
         pygame.display.flip()
         clock.tick(30)
 
@@ -2402,6 +2408,14 @@ def upgrade_process():
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
 
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft)  
+        
+        screen.blit(dustbin_img, (1250,160))
+        waiting_table()
+        
         handle_upgrades()
         profilebutton.update()
         orderbtn.update()
