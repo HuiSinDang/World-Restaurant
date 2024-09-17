@@ -346,6 +346,103 @@ class CookingBar: # draw cooking bar
         # Decrease hp based on elapsed time and duration
         self.hp = max(0, self.max_hp * (1 - elapsed_time / duration))
     
+# 定义外卖员类
+class Deliveryman(pygame.sprite.Sprite):
+    def __init__(self, target_x, deliveryman_type, speed=5, image_size=(250, 250)):
+        super().__init__()
+
+        self.deliveryman_type = deliveryman_type
+
+        # 加载不同的外卖员图片
+        if deliveryman_type == 1:
+            image_path = "./picture/dm1.png"
+        elif deliveryman_type == 2:
+            image_path = "./picture/dm2.png"
+        elif deliveryman_type == 3:
+            image_path = "./picture/dm3.png"
+        else:
+            print(f"Unknown deliveryman type: {deliveryman_type}")
+            return
+
+        print(f"Loading image: {image_path}")  # Debug print
+        self.image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(self.image, image_size)
+
+        self.original_image = self.image
+        self.rect = self.image.get_rect()
+        self.rect.x = screen_width
+        self.rect.y = 400
+        self.speed = speed
+        self.target_x = target_x
+        self.direction = -1
+        self.wait_time = 0
+        self.finished = False
+        self.reflected = False
+
+    def update(self):
+        if self.direction == -1 and self.rect.x > self.target_x:
+            self.rect.x -= self.speed
+        elif self.rect.x <= self.target_x and self.wait_time == 0:
+            self.wait_time = pygame.time.get_ticks()
+            if not self.reflected:
+                print("Flipping image")  # Debug print
+                self.image = pygame.transform.flip(self.image, True, False)
+                self.reflected = True
+        elif pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
+            self.direction = 1
+        elif self.direction == 1 and self.rect.x < screen_width:
+            self.rect.x += self.speed
+        elif self.rect.x >= screen_width:
+            if self.reflected:
+                print("Reverting image flip")  # Debug print
+                self.image = pygame.transform.flip(self.image, True, False)
+                self.reflected = False
+            self.finished = True
+    
+def read_file_and_get_list(filename):
+    try:
+        with open(filename, 'r') as f:
+            content = f.read().strip()
+            print(f"File content: '{content}'")  # Debug print
+
+        if not content:
+            print("File is empty")  # Debug print
+            return []
+
+        content_list = [line for line in content.split('\n') if line.strip()]
+        content = ','.join(content_list)
+        result = list(map(int, content.split(',')))
+        print(f"Parsed positions: {result}")  # Debug print
+        return result
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return []
+def update_file_after_removal(filename, completed_type):
+    try:
+        positions = read_file_and_get_list(filename)
+        print(f"Positions before removal: {positions}")  # Debug print
+        if completed_type in positions:
+            positions.remove(completed_type)
+            print(f"Positions after removal: {positions}")  # Debug print
+            with open(filename, 'w') as f:
+                f.write(','.join(map(str, positions)))
+    except Exception as e:
+        print(f"Error updating file: {e}")
+def update_deliverymen(existing_positions, deliverymen_group, filename):
+    new_positions = read_file_and_get_list(filename)
+    print(f"Existing positions: {existing_positions}")  # Debug print
+    print(f"New positions: {new_positions}")  # Debug print
+
+    if len(new_positions) > len(existing_positions):
+        new_elements = new_positions[len(existing_positions):]
+        print(f"Newly added elements: {new_elements}")  # Debug print
+        for i, deliveryman_type in enumerate(new_elements):
+            target_x = 250 + (len(existing_positions) + i) * 300
+            deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+            deliverymen_group.add(deliveryman)
+        existing_positions.extend(new_elements)
+    
+    return existing_positions
 
 
 # SELECT button
@@ -3566,6 +3663,19 @@ def main():
     machine_type = None
     food_item = None
 
+    filename = "./picture/foodrak.txt"
+    positions = read_file_and_get_list(filename)
+
+    # 创建快递员组
+    deliverymen = pygame.sprite.Group()
+    # 记录已存在的外卖员类型
+    existing_positions = list(positions)
+
+    # 初始化快递员组
+    for i, deliveryman_type in enumerate(positions):
+        target_x = 250 + i * 300  # 假设每个快递员目标点 250, 550, 850
+        deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+        deliverymen.add(deliveryman)
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -3601,6 +3711,23 @@ def main():
             image = pygame.transform.scale(image, (250, 100))
 
             screen.blit(image, (x,y))
+
+        new_positions = read_file_and_get_list(filename)
+
+        # 只处理新增的外卖员类型
+        if new_positions != existing_positions:
+            positions = update_deliverymen(existing_positions, deliverymen, filename)
+            existing_positions = new_positions  # 更新现有的 positions 列表
+
+        deliverymen.update()
+        deliverymen.draw(screen)  # 正确绘制所有外卖员
+        
+        # 删除已完成的外卖员
+        for deliveryman in deliverymen:
+            if deliveryman.finished:
+                deliverymen.remove(deliveryman)  # 从组中移除
+                update_file_after_removal(filename, deliveryman.deliveryman_type)  # 从文件中移除
+
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
