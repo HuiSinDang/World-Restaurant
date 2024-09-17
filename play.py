@@ -651,7 +651,6 @@ def subtract_money(amount):
     else:
         show_message("Not enough money!")
         return False
-
     
 money_amount = show_money()
 
