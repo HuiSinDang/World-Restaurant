@@ -1146,15 +1146,14 @@ def show_menupage():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)
 
-
-        money_bar()
         screen.blit(dustbin_img, (1250,160))
+        waiting_table()
+        money_bar()
         profilebutton.update()
         orderbtn.update()
         menu_button.update()
         upgrade_btn.update()
         orderbtn.update()
-        waiting_table()
         happyhour_bar(hhactive)
         pygame.display.flip()
         pygame.time.Clock().tick(30)
