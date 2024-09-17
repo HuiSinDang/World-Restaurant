@@ -225,7 +225,7 @@ soundoff_btn_rect = soundoff_btn.get_rect(topleft=(18, 595))
 food_lists =[
     {"image": tokbokki_img, "name": "Tokbokki", "price": "RM10.00"},
 
-    {"image": friedrice_img, "name": "Fried rice", "price": "RM5.00"},
+    {"image": friedrice_img, "name": "Fried Rice", "price": "RM5.00"},
 
     {"image": oden_img, "name": "Oden", "price": "RM18.00"},
 
@@ -233,9 +233,9 @@ food_lists =[
 
     {"image": armystew_img, "name": "Korean Army Stew", "price": "RM68.00" },
 
-    {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
+    {"image": friednoodle_img, "name": "Fried Noodle", "price": "RM5.00"},
 
-    {"image": bihun_img, "name": "Fried Vermicelli Noodles", "price": "RM18.00"},
+    {"image": bihun_img, "name": "Fried Vermicelli Noodle", "price": "RM18.00"},
 
     {"image": hokkienmee_img, "name": "Hokkien Mee", "price": "RM6.00"},
 
@@ -253,7 +253,7 @@ food_lists =[
 
     {"image": youtiao_img, "name": "Youtiao", "price": "RM4.00"},
 
-    {"image": hanjiben_img, "name": "HanJiBen", "price": "RM2.00"},
+    {"image": hanjiben_img, "name": "Hanjiben", "price": "RM2.00"},
 
 ]
 
@@ -262,7 +262,7 @@ foodlist_steamer = [
 
     {"image": dimsum_img, "name": "Xiu Mai", "price": "RM8.00" },
 
-    {"image": steamegg_img, "name": "Steamed egg", "price": "RM6.00"},
+    {"image": steamegg_img, "name": "Steamed Egg", "price": "RM6.00"},
 
     {"image": lomaigai_img, "name": "Lo Mai Gai", "price": "RM9.00"},
 
@@ -281,9 +281,9 @@ foodlist_oven = [
 
     {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM20.00"},
 
-    {"image": calamari_img, "name": "Calamari Rings", "price": "RM14.00"},
+    {"image": calamari_img, "name": "Calamari Ring", "price": "RM14.00"},
 
-    {"image": rainbowcake_img, "name": "Rainbow cake", "price": "RM16.00"},
+    {"image": rainbowcake_img, "name": "Rainbow Cake", "price": "RM16.00"},
 
     {"image": redvelvet_img, "name": "Red Velvet", "price": "RM16.00"},
 
@@ -553,7 +553,7 @@ food_prices = {
     "Fried Rice": 5,
     "Oden": 18,
     "Bibimbap": 8,
-    "Army Stew" :68,
+    "Korean Army Stew" :68,
     "Fried Noodle" : 5,
     "Fried Vermicelli Noodle": 6,
     "Hokkien Mee": 6,
@@ -570,19 +570,18 @@ food_prices = {
     "Steamed Egg": 6,
     "Lo Mai Gai": 9,
     "Steamed Herbal Chicken": 20,
-    "Soup Dumpling": 10,
+    "Dumpling": 10,
     "Crystal Shrimp Dumpling" :12,
     "Egg Custard Bun": 12,
-    "Corndog" :12,
-    "Kfry" : 20,
+    "Jumbo Corndog" :12,
+    "Korean Fried Chicken" : 20,
     "Calamari Ring" :14,
     "Rainbow Cake": 16,
     "Red Velvet" : 16,
-    "Blackforest": 18,
+    "Black Forest": 18,
     "Pandan Roll Cake": 27,
-    "Cookie": 10,
     "Mooncake": 20,
-    "Satay": 10
+    "Satay(10 sticks)": 10
 }
 
 # Main loop(irene)
@@ -1375,7 +1374,7 @@ def order():
         if check_file1:
             ffood1 = open(path1, "r") 
             order1 = [line.strip() for line in ffood1.readlines() if line.strip()]
-            fwaitingtable1 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable1 = open("./picture/food-complete-name.txt", "r") 
             waitingtable1 = [line.strip() for line in fwaitingtable1.readlines() if line.strip()]
             y_offset = 275
 
@@ -1468,7 +1467,7 @@ def order():
             ffood1 = open(path1, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
-            fwaitingtable1 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable1 = open("./picture/food-complete-name.txt", "r") 
             waitingtable1 = [line.strip() for line in fwaitingtable1.readlines() if line.strip()]
             people1 = random.randint(1, 3)
             staff1.insert(0, people1)
@@ -1504,7 +1503,7 @@ def order():
         if check_file2:
             ffood2 = open(path2, "r") 
             order2 = [line.strip() for line in ffood2.readlines() if line.strip()]
-            fwaitingtable2 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable2 = open("./picture/food-complete-name.txt", "r") 
             waitingtable2 = [line.strip() for line in fwaitingtable2.readlines() if line.strip()]
             y_offset = 275
 
@@ -1599,7 +1598,7 @@ def order():
             ffood2 = open(path2, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
-            fwaitingtable2 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable2 = open("./picture/food-complete-name.txt", "r") 
             waitingtable2 = [line.strip() for line in fwaitingtable2.readlines() if line.strip()]
             people2 = random.randint(1, 3)
             staff2.insert(1, people2)
@@ -1638,7 +1637,7 @@ def order():
         if check_file3:
             ffood3 = open(path3, "r") 
             order3 = [line.strip() for line in ffood3.readlines() if line.strip()]
-            fwaitingtable3 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable3 = open("./picture/food-complete-name.txt", "r") 
             waitingtable3 = [line.strip() for line in fwaitingtable3.readlines() if line.strip()]
             y_offset = 275
 
@@ -1732,7 +1731,7 @@ def order():
             ffood3 = open(path3, "a")     
             y_offset = 275
             nofood = random.randint(1, 3)
-            fwaitingtable3 = open("./picture/waitingtable.txt", "r") 
+            fwaitingtable3 = open("./picture/food-complete-name.txt", "r") 
             waitingtable3 = [line.strip() for line in fwaitingtable3.readlines() if line.strip()]
             people3 = random.randint(1, 3)
             staff3.insert(2, people3)
@@ -1871,7 +1870,7 @@ def order():
                                 pygame.time.wait(1000)
 
                             list1_filename = './picture/order1.txt'
-                            list2_filename = './picture/waitingtable.txt'
+                            list2_filename = './picture/food-complete-name.txt'
 
                             check_and_update_lists(list1_filename, list2_filename)
                             last_clicked_order = None
@@ -1916,7 +1915,7 @@ def order():
                                 pygame.time.wait(1000)
 
                             list1_filename = './picture/order2.txt'
-                            list2_filename = './picture/waitingtable.txt'
+                            list2_filename = './picture/food-complete-name.txt'
 
                             check_and_update_lists(list1_filename, list2_filename)
                             last_clicked_order = None
@@ -1961,7 +1960,7 @@ def order():
                                 pygame.time.wait(1000)
 
                             list1_filename = './picture/order3.txt'
-                            list2_filename = './picture/waitingtable.txt'
+                            list2_filename = './picture/food-complete-name.txt'
 
                             check_and_update_lists(list1_filename, list2_filename)
                             last_clicked_order = None
@@ -2034,7 +2033,7 @@ def order():
                                         pygame.time.wait(1000)
 
                                     list1_filename = './picture/order1.txt'
-                                    list2_filename = './picture/waitingtable.txt'
+                                    list2_filename = './picture/food-complete-name.txt'
 
                                     check_and_update_lists(list1_filename, list2_filename)
                                     last_clicked_order = None
@@ -2094,7 +2093,7 @@ def order():
                                         pygame.time.wait(1000)
 
                                     list1_filename = './picture/order2.txt'
-                                    list2_filename = './picture/waitingtable.txt'
+                                    list2_filename = './picture/food-complete-name.txt'
 
                                     check_and_update_lists(list1_filename, list2_filename)
                                     last_clicked_order = None
@@ -2154,7 +2153,7 @@ def order():
                                         pygame.time.wait(1000)
 
                                     list1_filename = './picture/order3.txt'
-                                    list2_filename = './picture/waitingtable.txt'
+                                    list2_filename = './picture/food-complete-name.txt'
 
                                     check_and_update_lists(list1_filename, list2_filename)
                                     last_clicked_order = None                        
