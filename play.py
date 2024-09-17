@@ -1099,6 +1099,10 @@ def show_menupage():
     global current_page,buttons,running
     running = True
     load_unlocked_food()
+
+    screen.blit(dustbin_img, (1250,160))
+    waiting_table()
+    
     while running:
         if current_page == 1:
             screen.blit(menupage,(275,20))
@@ -1146,8 +1150,7 @@ def show_menupage():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)
 
-        screen.blit(dustbin_img, (1250,160))
-        waiting_table()
+
         money_bar()
         profilebutton.update()
         orderbtn.update()
