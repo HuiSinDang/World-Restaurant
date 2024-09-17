@@ -613,9 +613,9 @@ def show_money():
             with open("./picture/money.txt","r")as file:
                 return int(file.read())
         except (ValueError,IOError):
-            return 10000
+            return 100
     else:
-        return 10000
+        return 100
     
 def save_money():
     with open("./picture/money.txt","w") as file:
@@ -651,24 +651,18 @@ def subtract_money(amount):
     else:
         show_message("Not enough money!")
         return False
-
     
 money_amount = show_money()
 
 #happy hour
 order_completed = 0
-# order_profits = {
-#     'order1': 25,
-#     'order2': 43,
-#     'order3': 52
-# }
 hhactive = False
 hhtime = 30
 hh_start_time = None
 hh_file_path = os.path.join(os.getcwd(),"./picture/happyhour.txt")
 
 def show_order_completed():
-    if os.path.exists(money_file_path):
+    if os.path.exists(hh_file_path):
         try:
             with open("./picture/happyhour.txt","r")as file:
                 return int(file.read())
@@ -681,17 +675,11 @@ def save_order():
     with open("./picture/happyhour.txt","w") as file:
         file.write(str(order_completed))
 
-def add_order(order_type):
+def add_order():
     global order_completed
-    base_profit = order_profits.get(order_type,0)
-    final_profit = hhprofit(base_profit)
     order_completed += 1
     save_order()
     update_happy_hour_status()
-    if hhactive:
-        add_money(final_profit *2)
-    else:
-        add_money(final_profit)
 
 def update_happy_hour_status():
     global hhactive,order_completed,hh_start_time
@@ -712,11 +700,6 @@ def happyhour_bar(happyhour):
         hhtext = font2.render(f"Happy Hour {remaining_order} /5", True, black)
     text_rect = hhtext.get_rect(center=(650,60))
     screen.blit(hhtext,text_rect)
-
-def hhprofit(base_profit):
-    if hhactive:
-        return base_profit *2
-    return base_profit
 
 #intro
 closebutton = pygame.image.load('./picture/closebutton.png')
@@ -1876,9 +1859,13 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price1)
-                                add_money(total_price1)
+                                if hhactive:
+                                    add_money(total_price1 * 2)
+                                else:
+                                    add_money(total_price1)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
+                                add_order()
 
                                 draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                                 pygame.display.flip()
@@ -1922,9 +1909,13 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price2)
-                                add_money(total_price2)
+                                if hhactive:
+                                    add_money(total_price2 * 2)
+                                else:
+                                    add_money(total_price2)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
+                                add_order()
 
                                 draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                                 pygame.display.flip()
@@ -1968,9 +1959,13 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price3)
-                                add_money(total_price3)
+                                if hhactive:
+                                    add_money(total_price3 * 2)
+                                else:
+                                    add_money(total_price3)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
+                                add_order()
 
                                 draw_text("Order Completed!!!", main_font, "green", screen, 650, 510)  # On top of button 1
                                 pygame.display.flip()
@@ -2043,6 +2038,7 @@ def order():
                                         
                                         profit = int(total_price1)
                                         add_money(total_price1)
+                                        add_order
                                         ftotal.write(f'{profit}\n')
                                         ftotal.close
 
