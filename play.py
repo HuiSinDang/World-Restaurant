@@ -657,11 +657,11 @@ money_amount = show_money()
 
 #happy hour
 order_completed = 0
-order_profits = {
-    'order1': 25,
-    'order2': 43,
-    'order3': 52
-}
+# order_profits = {
+#     'order1': 25,
+#     'order2': 43,
+#     'order3': 52
+# }
 hhactive = False
 hhtime = 30
 hh_start_time = None
@@ -1862,6 +1862,7 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price1)
+                                add_money(total_price1)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
 
@@ -1907,6 +1908,7 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price2)
+                                add_money(total_price2)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
 
@@ -1952,6 +1954,7 @@ def order():
                                 save_list_to_file(list2_filename, list2)
                                 
                                 profit = int(total_price3)
+                                add_money(total_price3)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
 
@@ -2025,6 +2028,7 @@ def order():
                                         save_list_to_file(list2_filename, list2)
                                         
                                         profit = int(total_price1)
+                                        add_money(total_price1)
                                         ftotal.write(f'{profit}\n')
                                         ftotal.close
 
@@ -2085,6 +2089,7 @@ def order():
                                         save_list_to_file(list2_filename, list2)
                                         
                                         profit = int(total_price2)
+                                        add_money(total_price2)
                                         ftotal.write(f'{profit}\n')
                                         ftotal.close
 
@@ -2145,6 +2150,7 @@ def order():
                                         save_list_to_file(list2_filename, list2)
                                         
                                         profit = int(total_price3)
+                                        add_money(total_price3)
                                         ftotal.write(f'{profit}\n')
                                         ftotal.close
 
