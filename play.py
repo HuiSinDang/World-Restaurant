@@ -364,7 +364,6 @@ class Deliveryman(pygame.sprite.Sprite):
             print(f"Unknown deliveryman type: {deliveryman_type}")
             return
 
-        print(f"Loading image: {image_path}")  # Debug print
         self.image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(self.image, image_size)
 
@@ -385,7 +384,6 @@ class Deliveryman(pygame.sprite.Sprite):
         elif self.rect.x <= self.target_x and self.wait_time == 0:
             self.wait_time = pygame.time.get_ticks()
             if not self.reflected:
-                print("Flipping image")  # Debug print
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.reflected = True
         elif pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
@@ -394,48 +392,36 @@ class Deliveryman(pygame.sprite.Sprite):
             self.rect.x += self.speed
         elif self.rect.x >= screen_width:
             if self.reflected:
-                print("Reverting image flip")  # Debug print
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.reflected = False
             self.finished = True
     
 def read_file_and_get_list(filename):
-    try:
-        with open(filename, 'r') as f:
-            content = f.read().strip()
-            print(f"File content: '{content}'")  # Debug print
+    with open(filename, 'r') as f:
+        content = f.read().strip()
 
-        if not content:
-            print("File is empty")  # Debug print
-            return []
-
-        content_list = [line for line in content.split('\n') if line.strip()]
-        content = ','.join(content_list)
-        result = list(map(int, content.split(',')))
-        print(f"Parsed positions: {result}")  # Debug print
-        return result
-    except Exception as e:
-        print(f"Error reading file: {e}")
+    if not content:
         return []
+
+    content_list = [line for line in content.split('\n') if line.strip()]
+    content = ','.join(content_list)
+    result = list(map(int, content.split(',')))
+    return result
+
 def update_file_after_removal(filename, completed_type):
     try:
         positions = read_file_and_get_list(filename)
-        print(f"Positions before removal: {positions}")  # Debug print
         if completed_type in positions:
             positions.remove(completed_type)
-            print(f"Positions after removal: {positions}")  # Debug print
             with open(filename, 'w') as f:
                 f.write(','.join(map(str, positions)))
     except Exception as e:
         print(f"Error updating file: {e}")
 def update_deliverymen(existing_positions, deliverymen_group, filename):
     new_positions = read_file_and_get_list(filename)
-    print(f"Existing positions: {existing_positions}")  # Debug print
-    print(f"New positions: {new_positions}")  # Debug print
 
     if len(new_positions) > len(existing_positions):
         new_elements = new_positions[len(existing_positions):]
-        print(f"Newly added elements: {new_elements}")  # Debug print
         for i, deliveryman_type in enumerate(new_elements):
             target_x = 250 + (len(existing_positions) + i) * 300
             deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
@@ -3626,7 +3612,7 @@ def mute_sound():
     global sound_muted
 
     if sound_muted:
-        mixer.music.set_volume(0.2) 
+        mixer.music.set_volume(1) 
         print("Sound is now ON")
         screen.blit(soundon_btn, soundon_btn_rect.topleft)
         
