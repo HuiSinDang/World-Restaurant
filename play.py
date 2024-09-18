@@ -233,7 +233,7 @@ food_lists =[
 
     {"image": armystew_img, "name": "Korean Army Stew", "price": "RM68.00" },
 
-    {"image": friednoodle_img, "name": "Fried Noodle", "price": "RM5.00"},
+    {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
 
     {"image": bihun_img, "name": "Fried Vermicelli Noodle", "price": "RM18.00"},
 
@@ -245,9 +245,9 @@ food_lists =[
 
     {"image": currymee_img, "name": "Curry Mee", "price": "RM5.00"},
 
-    {"image": kueyteow_img, "name": "Cantonese Kuey Tiaw", "price": "RM6.00"},
+    {"image": kueyteow_img, "name": "Cantonese Kuey Teow", "price": "RM6.00"},
 
-    {"image": horfun_img, "name": "Shredded Chicken Hor Fun", "price": "RM7.00"},
+    {"image": horfun_img, "name": "Kai See Hor Fun", "price": "RM7.00"},
 
     {"image": mala_img, "name": "Mala Xiang Guo", "price": "RM10.00"},
 
@@ -266,22 +266,22 @@ foodlist_steamer = [
 
     {"image": lomaigai_img, "name": "Lo Mai Gai", "price": "RM9.00"},
 
-    {"image": herbalchicken_img, "name": "Steamed Herbal Chicken", "price": "RM20.00"},
+    {"image": herbalchicken_img, "name": "Herbal Chicken", "price": "RM20.00"},
 
-    {"image": dumpling_img, "name": "Dumpling", "price": "RM10.00"},
+    {"image": dumpling_img, "name": "Soup Dumpling", "price": "RM10.00"},
 
-    {"image": shrimpdumpling_img, "name": "Crystal Shrimp Dumpling", "price": "RM12.00"},
+    {"image": shrimpdumpling_img, "name": "Shrimp Dumpling", "price": "RM12.00"},
 
     {"image": custardbun_img, "name": "Egg Custard Bun", "price": "RM8.00"},
 
 ]
 
 foodlist_oven = [
-    {"image": corndog_img, "name": "Jumbo Corndog", "price": "RM12.00"},
+    {"image": corndog_img, "name": "Corndog", "price": "RM12.00"},
 
     {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM20.00"},
 
-    {"image": calamari_img, "name": "Calamari Ring", "price": "RM14.00"},
+    {"image": calamari_img, "name": "Calamari Rings", "price": "RM14.00"},
 
     {"image": rainbowcake_img, "name": "Rainbow Cake", "price": "RM16.00"},
 
@@ -324,6 +324,22 @@ class Button():
             click_sfx.play()
             return True
         return False
+    
+class ImageButton:
+    def __init__(self,image,x,y,action):
+        self.image = image
+        self.rect = self.image.get_rect(topleft=(x,y))
+        self.action = action
+
+    def draw(self,screen):
+        if self.image:
+            screen.blit(self.image,self.rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos)
+    
+    def press(self):
+        self.action()
 
 
 class CookingBar: # draw cooking bar
@@ -642,14 +658,14 @@ food_prices = {
     "Oden": 18,
     "Bibimbap": 8,
     "Korean Army Stew" :68,
-    "Fried Noodle" : 5,
-    "Fried Vermicelli Noodle": 6,
+    "Fried Noodles" : 5,
+    "Fried Bihuns": 6,
     "Hokkien Mee": 6,
     "Ramen": 8,
     "Fried Udon": 8,
     "Curry Mee": 5,
-    "Cantonese Kuey Tiaw": 6,
-    "Shredded Chicken Hor Fun": 7,
+    "Cantonese Kuey Teow": 6,
+    "Kai See Hor Fun": 7,
     "Mala Xiang Guo": 10,
     "Youtiao" : 4,
     "Hanjiben": 2,
@@ -657,13 +673,13 @@ food_prices = {
     "Xiu Mai" : 8,
     "Steamed Egg": 6,
     "Lo Mai Gai": 9,
-    "Steamed Herbal Chicken": 20,
-    "Dumpling": 10,
-    "Crystal Shrimp Dumpling" :12,
+    "Herbal Chicken": 20,
+    "Soup Dumpling": 10,
+    "Shrimp Dumpling" :12,
     "Egg Custard Bun": 12,
-    "Jumbo Corndog" :12,
+    "Corndog" :12,
     "Korean Fried Chicken" : 20,
-    "Calamari Ring" :14,
+    "Calamari Rings" :14,
     "Rainbow Cake": 16,
     "Red Velvet" : 16,
     "Black Forest": 18,
@@ -977,21 +993,21 @@ buttons_page1 = [
     Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
     Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
     Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
-    Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png',cost=20),
-    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png',cost=20),
+    Button("Korean Army Stew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Korean Army Stew\nRM 20",image_path='./picture/armystew.png',cost=20),
+    Button("Fried Noodles","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodles\nRM 20",image_path='./picture/friednoodle.png',cost=20),
 ]
 
 buttons_page2 =[
-    Button("Fried Vermiceilli Noodles","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Vermicelli Noodles\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 20",image_path='./picture/oden.png',cost=20),
     Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
     Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
     Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png',cost=20),
     Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
-    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png',cost=20),
+    Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 20",image_path='./picture/kueyteow.png',cost=20),
 ]
 
 buttons_page3 =[
-    Button("Shredded Chicken Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Shredded Chicken Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
+    Button("Kai See Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
     Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
     Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
     Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
@@ -1002,19 +1018,19 @@ buttons_page3 =[
 buttons_page4 =[
     Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=20),
     Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=20),
-    Button("Steamed Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Steamed Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
+    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
     Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 20",image_path='./picture/dumpling.png',cost=20),
-    Button("Crystal Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Crystal Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
+    Button("Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
     Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=20),
 ]
 
 buttons_page5 =[
     Button("Corndog","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 20",image_path='./picture/corndog.png',cost=20),
-    Button("Kfry","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png',cost=20),
+    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png',cost=20),
     Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=20),
     Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=20),
     Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=20),
-    Button("Blackforest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Blackforest\nRM 20",image_path='./picture/blackforest.png',cost=20),
+    Button("Black Forest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Black Forest\nRM 20",image_path='./picture/blackforest.png',cost=20),
 ]
 
 buttons_page6 =[
@@ -1101,21 +1117,7 @@ def display_message(screen,message,position,color=(255,0,0)):
     text_surface=font3.render(message,True,color)
     screen.blit(text_surface,position)
 
-class ImageButton:
-    def __init__(self,image,x,y,action):
-        self.image = image
-        self.rect = self.image.get_rect(topleft=(x,y))
-        self.action = action
 
-    def draw(self,screen):
-        if self.image:
-            screen.blit(self.image,self.rect)
-
-    def is_clicked(self,pos):
-        return self.rect.collidepoint(pos)
-    
-    def press(self):
-        self.action()
 
 def change_page(forward=True):
     global current_page,buttons
