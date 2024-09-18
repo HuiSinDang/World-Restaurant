@@ -4,13 +4,13 @@ Oden:True
 Bibimbap:False
 Army Strew:False
 Fried Noodle:False
-Fried Vermiceilli Noodles:False
+Fried Bihun:False
 Hokkien Mee:False
 Ramen:False
 Fried Udon:False
 Curry Mee:False
 Cantonese Kuey Tiaw:False
-Shredded Chicken Hor Fun:False
+Kai See Hor Fun:False
 Mala Xiang Guo:False
 Youtiao:False
 Hanjiben:False
@@ -18,9 +18,9 @@ Thai Steamed Fish:False
 Xiu Mai:False
 Steamed Egg:False
 Lo Mai Gai:False
-Steamed Herbal Chicken:False
+Herbal Chicken:False
 Soup Dumpling:False
-Crystal Shrimp Dumpling:False
+Shrimp Dumpling:False
 Egg Custard Bun:False
 Corndog:False
 Kfry:False
