@@ -1315,7 +1315,7 @@ def pinky_closebutton(): #hs
     running = False
 
 button = load_image('./picture/close_windowBtn.png',(60,60))
-button = ImageButton(button, 10, 130, pinky_closebutton)
+button = ImageButton(button, 1065, 130, pinky_closebutton)
 
 def profile():
     global running
