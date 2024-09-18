@@ -1,33 +1,22 @@
 Tokbokki
-Fried Rice
 Bibimbap
 Korean Army Stew
-Fried Noodle
 Hokkien Mee
 Curry Mee
 Shredded Chicken Hor Fun
-Youtiao
-Thai Steamed Fish
 Xiu Mai
 Dumpling
 Egg Custard Bun
-Jumbo Corndog
-Rainbow Cake
 Red Velvet
-Black Forest
 Pandan Roll Cake
 Mooncake
-Satay(10 sticks)
 Tokbokki
 Fried Rice
 Oden
 Bibimbap
 Korean Army Stew
-Fried Noodle
 Fried Vermicelli Noodle
 Hokkien Mee
-Ramen
-Fried Udon
 Curry Mee
 Shredded Chicken Hor Fun
 Youtiao
@@ -45,7 +34,6 @@ Red Velvet
 Black Forest
 Pandan Roll Cake
 Mooncake
-Satay(10 sticks)
 Tokbokki
 Fried Rice
 Oden
@@ -55,7 +43,6 @@ Fried Noodle
 Fried Vermicelli Noodle
 Hokkien Mee
 Ramen
-Fried Udon
 Curry Mee
 Shredded Chicken Hor Fun
 Youtiao
@@ -77,3 +64,7 @@ Black Forest
 Pandan Roll Cake
 Mooncake
 Satay(10 sticks)
+Tokbokki
+Tokbokki
+Ramen
+Tokbokki

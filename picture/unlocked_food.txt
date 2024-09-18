@@ -1,0 +1,34 @@
+Tokbokki:True
+Fried Rice:True
+Oden:True
+Bibimbap:False
+Korean Army Stew:False
+Fried Noodles:False
+Fried Bihuns:False
+Hokkien Mee:False
+Ramen:True
+Fried Udon:True
+Curry Mee:False
+Cantonese Kuey Teow:False
+Kai See Hor Fun:False
+Mala Xiang Guo:False
+Youtiao:False
+Hanjiben:False
+Thai Steamed Fish:True
+Xiu Mai:True
+Steamed Egg:False
+Lo Mai Gai:False
+Herbal Chicken:False
+Soup Dumpling:False
+Shrimp Dumpling:False
+Egg Custard Bun:False
+Corndog:False
+Korean Fried Chicken:False
+Calamari Rings:False
+Rainbow Cake:False
+Red Velvet:False
+Black Forest:False
+Pandan Roll Cake:False
+Cookies:False
+Mooncake:False
+Satay:False

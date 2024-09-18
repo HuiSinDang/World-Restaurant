@@ -2842,7 +2842,7 @@ def selectfood_page3(): # after player click steamer
             else:
                 rect_color = color_pic
 
-            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+            pygame.draw.rect(screen, rect_color, pygame.Rect(440, y_position, 720, 130))
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
@@ -3006,7 +3006,7 @@ def selectfood_page4(): # after player click oven
                 rect_color = color_pic
 
 
-            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+            pygame.draw.rect(screen, rect_color, pygame.Rect(440, y_position, 720, 130))
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
@@ -3867,6 +3867,12 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
+
+        if message_timer > 0:
+            show_message(current_machine_message)
+            message_timer -= 1
+        else:
+            current_machine_message = ""
 
         if sound_muted:
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
