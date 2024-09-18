@@ -346,52 +346,52 @@ class CookingBar: # draw cooking bar
         # Decrease hp based on elapsed time and duration
         self.hp = max(0, self.max_hp * (1 - elapsed_time / duration))
     
-# 定义外卖员类
 class Deliveryman(pygame.sprite.Sprite):
     def __init__(self, target_x, deliveryman_type, speed=5, image_size=(250, 250)):
         super().__init__()
-
-        self.deliveryman_type = deliveryman_type
+        self.deliveryman_type = deliveryman_type  # 保存 deliveryman_type 为实例属性
 
         # 加载不同的外卖员图片
         if deliveryman_type == 1:
-            image_path = "./picture/dm1.png"
+            self.image = pygame.image.load("./picture/dm1.png")
         elif deliveryman_type == 2:
-            image_path = "./picture/dm2.png"
+            self.image = pygame.image.load("./picture/dm2.png")
         elif deliveryman_type == 3:
-            image_path = "./picture/dm3.png"
-        else:
-            print(f"Unknown deliveryman type: {deliveryman_type}")
-            return
-
-        self.image = pygame.image.load(image_path)
+            self.image = pygame.image.load("./picture/dm3.png")
+        
         self.image = pygame.transform.scale(self.image, image_size)
-
-        self.original_image = self.image
+        self.original_image = self.image  # 保存原始图像，用于翻转回来
         self.rect = self.image.get_rect()
-        self.rect.x = screen_width
+        self.rect.x = screen_width  # 从右边进入屏幕
         self.rect.y = 400
         self.speed = speed
         self.target_x = target_x
-        self.direction = -1
-        self.wait_time = 0
-        self.finished = False
-        self.reflected = False
+        self.direction = -1  # 初始向左移动
+        self.wait_time = 0  # 停留时间计时器
+        self.finished = False  # 是否走完的标志
+        self.reflected = False  # 是否已经反转过图像
 
     def update(self):
+        # 外卖员向左移动到目标位置
         if self.direction == -1 and self.rect.x > self.target_x:
             self.rect.x -= self.speed
+        # 到达目标位置后停留3秒，并翻转图片
         elif self.rect.x <= self.target_x and self.wait_time == 0:
-            self.wait_time = pygame.time.get_ticks()
+            self.wait_time = pygame.time.get_ticks()  # 开始计时
             if not self.reflected:
-                self.image = pygame.transform.flip(self.image, True, False)
-                self.reflected = True
+                self.image = pygame.transform.flip(self.image, True, False)  # 水平翻转
+                self.reflected = True  # 标记为已经反转
+        # 停留3秒后，开始回走
         elif pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
-            self.direction = 1
+            self.direction = 1  # 转身，开始向右回走
+            # 在开始回走的时候删除文件中的数据
+            update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type)
+        # 回走到屏幕右侧时再次反转图片
         elif self.direction == 1 and self.rect.x < screen_width:
             self.rect.x += self.speed
+        # 当外卖员完全走出屏幕时，设置为已完成并恢复图片
         elif self.rect.x >= screen_width:
-            if self.reflected:
+            if self.reflected:  # 走出屏幕后恢复图像方向
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.reflected = False
             self.finished = True
@@ -408,26 +408,31 @@ def read_file_and_get_list(filename):
     result = list(map(int, content.split(',')))
     return result
 
+    
+# 更新文件，删除已完成的外卖员类型
 def update_file_after_removal(filename, completed_type):
-    try:
-        positions = read_file_and_get_list(filename)
-        if completed_type in positions:
-            positions.remove(completed_type)
-            with open(filename, 'w') as f:
-                f.write(','.join(map(str, positions)))
-    except Exception as e:
-        print(f"Error updating file: {e}")
+    positions = read_file_and_get_list(filename)
+    if completed_type in positions:
+        positions.remove(completed_type)  # 从列表中移除已完成的外卖员类型
+    with open(filename, 'w') as f:
+        f.write(','.join(map(str, positions)))
+
+# 动态检查文件更新并生成新的外卖员
 def update_deliverymen(existing_positions, deliverymen_group, filename):
     new_positions = read_file_and_get_list(filename)
 
+    # 只处理新增的外卖员类型
     if len(new_positions) > len(existing_positions):
         new_elements = new_positions[len(existing_positions):]
+
+        # 创建新的外卖员实例
         for i, deliveryman_type in enumerate(new_elements):
-            target_x = 250 + (len(existing_positions) + i) * 300
+            target_x = 250 + (len(existing_positions) + i) * 300  # 每个外卖员的目标点依次增加
             deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
             deliverymen_group.add(deliveryman)
+
         existing_positions.extend(new_elements)
-    
+
     return existing_positions
 
 
@@ -801,8 +806,8 @@ noticeboard_rect = noticeboard.get_rect(center=(700,400))
 closebutton_rect = closebutton.get_rect(topright=(900,100))
 nextbutton_rect = nextbutton.get_rect(bottomright=(900,700))
 notice_font = pygame.font.Font('./picture/jugnle.ttf',20)
-noticetext1 = "Welcome to the restaurant!\nLet us introduce the game for you ...\n\nProfile\nIt show your profile...of course.\nand also you can change your name there.\n\nMenu\nYou have to unlock your recipe there!\n\nOrder\nYou have to check your order there.\nAfter done preparing the food,\nremember to click the complete button!"
-noticetext2 = "Shop\nYou can unlock your machine there.\nBy unlocking your machine,\ndifferent food can be prepared there.\n\nSound\nYou can adjust your music sound there.\n\nHappy hour\nBy completed every 5 order,\nyou can earn double profit for 30second!\n\nWish your business is\nbooming,thriving and thriving!"
+noticetext1 = "Welcome to the restaurant!\nLet us introduce the game for you ...\n\nProfile\nIt show your profile...of course.\nand also you can change your name there.\n\nMenu\nYou can prepare your food there!\n\nOrder\nYou have to check your order there.\nAfter done preparing the food,\nremember to click the complete button!"
+noticetext2 = "Shop\nYou can unlock your machine there.\nBy unlocking your machine,\ndifferent food will be unlock also.\n\nSound\nYou can adjust your music sound there.\n\nHappy hour\nBy completed every 5 order,\nyou can earn double profit for 30second!\n\nWish your business is\nbooming,thriving and thriving!"
 
 
 
@@ -883,12 +888,6 @@ def save_unlocked_food():
         for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
             f.write(f"{button.foodname}:{button.pressed}\n")
 
-unlocked_machines ={
-    "Stove:True"
-    "Steamer:False"
-    "Oven:False"
-}
-
 def load_unlocked_food():
     unlocked_food = {"Tokbokki","Oden","Fried Rice"}
     try:
@@ -907,7 +906,7 @@ def load_unlocked_food():
             button.pressed = False
 
 class Button:
-    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50),cost=20,required_machine=None):
+    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50),cost=20):
         self.rect = pygame.Rect(x,y,width,height)
         self.foodname = foodname
         self.button_text = button_text
@@ -918,7 +917,6 @@ class Button:
         self.image = None
         self.image_rect = None
         self.cost = cost
-        self.required_machine = required_machine
         self.update_text(self.button_text)
         if self.label_text:
             self.update_label()
@@ -964,69 +962,66 @@ class Button:
         return self.rect.collidepoint(pos)
 
     def press(self):
-        if self.required_machine and not unlocked_machine.get(self.required_machine,False):
-            display_message(screen,f"{self.required_machine}is not unlocked!",(500,50))
-            return False
         if not self.pressed:
             if subtract_money(self.cost):
                 self.pressed = True
                 self.action()
-                save_money()            
+                save_money()
                 save_unlocked_food()
                 return True
             else:
                 return False
 
 buttons_page1 = [
-    Button("Tokbokki","Unlock",575,250,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20,required_machine="Stove"),
-    Button("Fried Rice","Unlock",780,250,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20,required_machine="Stove"),
-    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20,required_machine="Stove"),
-    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20,required_machine="Stove"),
-    Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png',cost=20,required_machine="Stove"),
-    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png',cost=20,required_machine="Stove"),
+    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20),
+    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
+    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
+    Button("Army Strew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Army strew\nRM 20",image_path='./picture/armystew.png',cost=20),
+    Button("Fried Noodle","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodle\nRM 20",image_path='./picture/friednoodle.png',cost=20),
 ]
 
 buttons_page2 =[
-    Button("Fried Bihun","Unlock",575,250,125,40,lambda:unlock_item(7),label_text="Fried Bihun\nRM 20",image_path='./picture/oden.png',cost=20,required_machine="Stove"),
-    Button("Hokkien Mee","Unlock",780,250,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20,required_machine="Stove"),
-    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20,required_machine="Stove"),
-    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png',cost=20,required_machine="Stove"),
-    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20,required_machine="Stove"),
-    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png',cost=20,required_machine="Stove"),
+    Button("Fried Vermiceilli Noodles","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Vermicelli Noodles\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
+    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
+    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png',cost=20),
+    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
+    Button("Cantonese Kuey Tiaw","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Tiaw\nRM 20",image_path='./picture/kueyteow.png',cost=20),
 ]
 
 buttons_page3 =[
-    Button("Kai See Hor Fun","Unlock",575,250,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20,required_machine="Stove"),
-    Button("Mala Xiang Guo","Unlock",780,250,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20,required_machine="Stove"),
-    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20,required_machine="Stove"),
-    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20,required_machine="Stove"),
-    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 40",image_path='./picture/steamfish.png',cost=40,required_machine="Steamer"),
-    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 40",image_path='./picture/oden.png',cost=40,required_machine="Steamer"),
+    Button("Shredded Chicken Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Shredded Chicken Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
+    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
+    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
+    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
+    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png',cost=20),
+    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png',cost=20),
 ]
 
 buttons_page4 =[
-    Button("Steamed Egg","Unlock",575,250,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 40",image_path='./picture/steamegg.png',cost=40,required_machine="Steamer"),
-    Button("Lo Mai Gai","Unlock",780,250,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 40",image_path='./picture/lomaigai.png',cost=40,required_machine="Steamer"),
-    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 40",image_path='./picture/herbalchicken.png',cost=40,required_machine="Steamer"),
-    Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 40",image_path='./picture/dumpling.png',cost=40,required_machine="Steamer"),
-    Button("Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumpling\nRM 40",image_path='./picture/shrimpdumpling.png',cost=40,required_machine="Steamer"),
-    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 40",image_path='./picture/custardbun.png',cost=40,required_machine="Steamer"),
+    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=20),
+    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=20),
+    Button("Steamed Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Steamed Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
+    Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 20",image_path='./picture/dumpling.png',cost=20),
+    Button("Crystal Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Crystal Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
+    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=20),
 ]
 
 buttons_page5 =[
-    Button("Corndog","Unlock",575,250,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 60",image_path='./picture/corndog.png',cost=60,required_machine="Oven"),
-    Button("Kfry","Unlock",780,250,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 60",image_path='./picture/kfry.png',cost=60,required_machine="Oven"),
-    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 60",image_path='./picture/calamari.png',cost=60,required_machine="Oven"),
-    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 60",image_path='./picture/rainbowcake.png',cost=60,required_machine="Oven"),
-    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 60",image_path='./picture/redvelvet.png',cost=60,required_machine="Oven"),
-    Button("Blackforest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Blackforest\nRM 60",image_path='./picture/blackforest.png',cost=60,required_machine="Oven"),
+    Button("Corndog","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 20",image_path='./picture/corndog.png',cost=20),
+    Button("Kfry","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png',cost=20),
+    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=20),
+    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=20),
+    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=20),
+    Button("Blackforest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Blackforest\nRM 20",image_path='./picture/blackforest.png',cost=20),
 ]
 
 buttons_page6 =[
-    Button("Pandan Roll Cake","Unlock",575,250,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 60",image_path='./picture/pandanrollcake.png',cost=60,required_machine="Oven"),
-    Button("Cookies","Unlock",780,250,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 60",image_path='./picture/oden.png',cost=60,required_machine="Oven"),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 60",image_path='./picture/mooncake.png',cost=60,required_machine="Oven"),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 60",image_path='./picture/satay.png',cost=60,required_machine="Oven"),
+    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=20),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png',cost=20),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
 ]
 
 
@@ -2235,7 +2230,6 @@ def order():
                                         for i in range(min(3, len(foodrak))):
                                             if foodrak[i] == "":  # 找到空行
                                                 foodrak[i] = staff3[2]  # 用 staff1[0] 填充空位
-                                                print("Foodrak after update:", foodrak)  # Debugging line
 
                                                 # 写入更新后的内容到文件
                                                 ffoodrak =  open("./picture/foodrak.txt", "w")
@@ -2410,6 +2404,7 @@ def handle_upgrades():
     if not_enough_money:
         less_money()
 
+
 def upgrade_process():
     pan_default_button.update()
     steamer_button.update()
@@ -2421,7 +2416,7 @@ def upgrade_process():
     menu_button.update()
 
     screen.blit(dustbin_img, (1250,160))
-
+    waiting_table()
     
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
@@ -2511,7 +2506,7 @@ def upgrade_process():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
 
-        waiting_table()
+        
         handle_upgrades()
         profilebutton.update()
         orderbtn.update()
@@ -3415,7 +3410,6 @@ def throw_food_into_dustbin():
             throwing = False
             print("Food thrown into the dustbin!")
             waste_food_index = None  # Reset waste food index
-            subtract_money(50)
             
 
         pygame.time.delay(20)
@@ -3682,12 +3676,11 @@ def main():
 
     # 创建快递员组
     deliverymen = pygame.sprite.Group()
-    # 记录已存在的外卖员类型
     existing_positions = list(positions)
 
     # 初始化快递员组
     for i, deliveryman_type in enumerate(positions):
-        target_x = 250 + i * 300  # 假设每个快递员目标点 250, 550, 850
+        target_x = 250 + i * 300  # 假设每个快递员目标点依次增加
         deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
         deliverymen.add(deliveryman)
 
@@ -3726,6 +3719,7 @@ def main():
 
             screen.blit(image, (x,y))
 
+                # 游戏主循环中的主要处理逻辑
         new_positions = read_file_and_get_list(filename)
 
         # 只处理新增的外卖员类型
@@ -3734,14 +3728,14 @@ def main():
             existing_positions = new_positions  # 更新现有的 positions 列表
 
         deliverymen.update()
-        deliverymen.draw(screen)  # 正确绘制所有外卖员
-        
-        # 删除已完成的外卖员
+
+        # 在目标位置停下时，删除外卖员数据
         for deliveryman in deliverymen:
             if deliveryman.finished:
-                deliverymen.remove(deliveryman)  # 从组中移除
-                update_file_after_removal(filename, deliveryman.deliveryman_type)  # 从文件中移除
-
+                deliverymen.remove(deliveryman)
+                # 数据已在 update() 方法中删除，无需重复
+        
+        deliverymen.draw(screen)
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
