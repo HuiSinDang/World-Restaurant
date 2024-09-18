@@ -1,3 +1,17 @@
+<<<<<<< HEAD
 Bibimbap
 Steamed Herbal Chicken
 Black Forest
+=======
+Hokkien Mee
+Crystal Shrimp Dumpling
+Pandan Roll Cake
+Ramen
+Rainbow Cake
+Xiu Mai
+Youtiao
+Jumbo Corndog
+Lo Mai Gai
+Korean Fried Chicken
+Curry Mee
+>>>>>>> d173d67e96dccf632dbf08cc9ed9fb601cdd3dc7
