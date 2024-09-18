@@ -1310,15 +1310,20 @@ def rename():
         pygame.display.flip()
         clock.tick(60)
 
+def pinky_closebutton(): #hs
+    global running
+    running = False
+
+button = load_image('./picture/close_windowBtn.png',(60,60))
+button = ImageButton(button, 10, 130, pinky_closebutton)
 
 def profile():
+    global running
+    running = True
+
     while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-        screen.blit(bg_img, (0, 0))
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
         waiting_table()
+        screen.blit(dustbin_img,(1250, 160))
         screen.blit(surface,screen_rect)
 
         draw_text("Profile", font, "black", screen, 650, 200)
@@ -1364,8 +1369,9 @@ def profile():
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if button.checkForInput(pygame.mouse.get_pos()):
-                    main()
+                if button.is_clicked(event.pos):
+                    click_sfx.play()
+                    button.press()
                 if resetbutton.checkForInput(pygame.mouse.get_pos()):
                     rename()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
@@ -1377,9 +1383,13 @@ def profile():
                     main()
                 if event.key == pygame.K_r:
                     rename()
-                
 
-        button.update()
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft) 
+
+        button.draw(screen)
         resetbutton.update()
         profilebutton.update()
         upgrade_btn.update()
@@ -1387,7 +1397,6 @@ def profile():
         orderbtn.update()
         money_bar()
         happyhour_bar(hhactive)
-
         pygame.display.flip()
 
 def draw_text(text, font, color, surface, x, y):
@@ -1419,31 +1428,17 @@ def update_button_image3(order_button3, all_available):
 
 
 # Main order function
-# Main order function
 def order():
     global show_complete_button1, show_complete_button2, show_complete_button3
     global person_x, person_y, person_speed, moving, returning, flipped
+    global running
+    running = True
     last_clicked_order = None
     
-
-
-    while True:
-        bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-        screen.blit(bg_img, (0, 0))  # Draw the background
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
+    while running:
         waiting_table()
-        profilebutton.update()
-        upgrade_btn.update()
-        menu_button.update()
-        orderbtn.update()
-        money_bar()
-        happyhour_bar(hhactive)
         screen.blit(surface,screen_rect1)
-        button.update()
-
-
+        
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
 
         f = open("./picture/food.txt", "r")
@@ -1869,8 +1864,9 @@ def order():
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if button.checkForInput(pygame.mouse.get_pos()):
-                    main()
+                if button.is_clicked(event.pos):
+                    click_sfx.play()
+                    button.press()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
             if event.type == pygame.KEYDOWN:
@@ -1882,6 +1878,8 @@ def order():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
+                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                    mute_sound()
 
                 if order1button.checkForInput(mouse_pos):
                     if all_in_waitingtable1 == True:
@@ -2280,19 +2278,19 @@ def order():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
+        money_bar()
+        profilebutton.update()
+        orderbtn.update()
+        menu_button.update()
+        upgrade_btn.update()
+        orderbtn.update()
+        button.draw(screen)
+        happyhour_bar(hhactive)
         screen.blit(dustbin_img, (1250,160))
-        waiting_table()
         pygame.display.flip()
-        clock.tick(30)
+        pygame.time.Clock().tick(30)
 
 def draw_popup():
-    pan_default_button.update()
-    steamer_button.update()
-    oven_button.update()
-    profilebutton.update()
-    orderbtn.update()
-    upgrade_btn.update()
-    menu_button.update()
     pygame.draw.rect(screen, (255, 201, 254), popup_rect)
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     
@@ -2315,7 +2313,11 @@ def draw_popup():
     draw_text("Machine Features - B: Cooking process lowered to 40s", upgrade_font, "black", screen, 714, 380)
     draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
 
-    close_button.update()
+    close_button.draw(screen)
+    profilebutton.update()
+    orderbtn.update()
+    upgrade_btn.update()
+    menu_button.update()
 
 
 def draw_popup2B():
@@ -2406,33 +2408,52 @@ def handle_upgrades():
     if not_enough_money:
         less_money()
 
+def pink_closebutton(): #irene
+    global running
+    running = False
+
+close_button = load_image('./picture/close_windowBtn.png',(60,60))
+close_button = ImageButton(close_button, 1165, 103, pink_closebutton)
+
+def save_unlocked_machines(): #把已经unlock的machine写进file里
+    f = open("./picture/unlocked_machines.txt", "w")  # Open the file in write mode
+    for machine in unlocked_machine:
+        f.write(machine + "\n")  # Write each unlocked machine to the file
+    f.close()
+
+def load_unlocked_machines(): #读file
+    global unlocked_machine
+    unlocked_machine = set() 
+    try:
+        f = open("./picture/unlocked_machines.txt", "r")  #读的file
+        for line in f:
+            unlocked_machine.add(line.strip())  #将machine的名字加进去
+        f.close()  # 读完file后就会关掉
+    except FileNotFoundError:
+        pass
 
 def upgrade_process():
-    pan_default_button.update()
-    steamer_button.update()
-    oven_button.update()
-
-    profilebutton.update()
-    orderbtn.update()
-    upgrade_btn.update()
-    menu_button.update()
+    global running
+    global show_popup, show_popup2B, show_popup2C, not_enough_money
+    global selected_upgradeB,selected_upgradeC, message_timer
+    global money_amount, unlocked_machine,current_upgrade, already_upgrade
 
     screen.blit(dustbin_img, (1250,160))
-    waiting_table()
-    
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
-    global show_popup, show_popup2B, show_popup2C, not_enough_money, selected_upgradeB,selected_upgradeC, message_timer, money_amount, unlocked_machine,current_upgrade, already_upgrade
     
-    show_popup= True
-    while True:
+    show_popup = True
+    running = True
+
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                    main()
+                if close_button.is_clicked(event.pos):
+                    click_sfx.play()
+                    close_button.press()
 
                 if upgrade_btn.checkForInput(pygame.mouse.get_pos()): 
                     draw_popup()
@@ -2461,6 +2482,7 @@ def upgrade_process():
                         current_upgrade = "STEAMER"
                         message_timer = 60
                         show_popup2B = False
+                        save_unlocked_machines() # Save the unlocked machines to file
                     else:
                         not_enough_money = True
                         message_timer = 60
@@ -2489,6 +2511,7 @@ def upgrade_process():
                         current_upgrade = "OVEN"
                         message_timer = 60
                         show_popup2C = False
+                        save_unlocked_machines() # Save the unlocked machines to file
                     else:
                         not_enough_money = True
                         message_timer = 60
@@ -2501,6 +2524,8 @@ def upgrade_process():
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
+        
+        load_unlocked_machines() 
 
         if sound_muted:
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
@@ -2508,25 +2533,17 @@ def upgrade_process():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
 
-        
+        waiting_table()
         handle_upgrades()
+        money_bar()
         profilebutton.update()
         orderbtn.update()
         upgrade_btn.update()
         menu_button.update()
-        money_bar()
+        happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
 
-        happyhour_bar(hhactive)
-
-
-def remind_unlock_popout():
-    global message_timer, remind_unlock,current_upgrade
-    draw_text(f"You haven't unlocked the {current_upgrade}!", food_selection_font, "red", screen, 800, 640)
-    message_timer -= 1  
-    if message_timer == 0:
-        remind_unlock = False
 
 machinetype_surface = pygame.Surface ((160, 60))
 machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
@@ -2565,26 +2582,38 @@ machinetype_button_rect3 = pygame.Rect(960, 310, 180, 40)
 ChooseMachine_text3 = font_button_machine.render(" OVEN ", True, "white")
 ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface3.get_width()/2, machinetype_surface3.get_height()/2))
 
+def detect_unlock_food():
+    f = open("./picture/unlocked_food.txt", "r")
+    content = f.read()
+
+    unlocked_items = {}
+
+    lines = content.splitlines()
+    for line in lines:
+        if ":True" in line:
+            food_name = line.split(":True")[0].strip().lower()
+            unlocked_items[food_name] = True
+        elif ":False" in line:
+            food_name = line.split(":False")[0].strip().lower()
+            unlocked_items[food_name] = False
+    
+    return unlocked_items
+
 
 def selectfood_page2(): # after player click STOVE POT button rect
-    global stovepot_food_index, current_page
-     
-    print(f"Initial stovepot_food_index: {stovepot_food_index}")
+    global stovepot_food_index, current_page, running
 
     waiting_duration = 10
     food_selected = False  # 用来track food select
 
-    while True:
-        screen.blit(background, (0, 0))
+    unlocked_items = detect_unlock_food()
+    color_locked = (128, 128, 128)
+    color_unlocked = (186, 255, 184) 
+    hover_color = (18, 255, 50)
+    running = True
 
+    while running:
         waiting_table()
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
-        profilebutton.update()
-        orderbtn.update()
-        upgrade_btn.update()
-        menu_button.update()
 
         if steamer_running:
             steamer_elapsed = time.time() - steamer_start_time
@@ -2640,25 +2669,34 @@ def selectfood_page2(): # after player click STOVE POT button rect
        
         for i in range(len(items_on_page)):
             food_item = items_on_page[i]
+            food_name_normalized = food_item["name"].strip().lower()    # Normalizing the item name
             y_position = 216 + i * 144
-            pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
+
+            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+            if not unlocked_items.get(food_name_normalized, True):
+                rect_color = color_locked
+            else:
+                rect_color = color_pic
+
+            pygame.draw.rect(screen, rect_color, pygame.Rect(440, y_position, 720, 130))
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Define the rect for the select button
-            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-            selectbutton_surface = pygame.Surface((130, 40))
+            # Only display the select button if the food is unlocked
+            if unlocked_items.get(food_name_normalized, False):
+                selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                selectbutton_surface = pygame.Surface((130, 40))
+                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
 
-            select_button_color = (186, 255, 184)
-            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
-                select_button_color = (18, 255, 50)
-            
-            selectbutton_surface.fill(select_button_color)
-        
-            # Render the "SELECT" button text
-            selectbutton_surface.blit(SELECT_text, text_rect)
-            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
+                select_button_color = color_unlocked
+                if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    select_button_color = hover_color
+
+                # Draw the "Select" button
+                selectbutton_surface.fill(select_button_color)
+                selectbutton_surface.blit(SELECT_text, text_rect)
+                screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
 
         total_pages = (len(food_lists) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
@@ -2679,19 +2717,18 @@ def selectfood_page2(): # after player click STOVE POT button rect
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                    print("Stovepot close button clicked")
-                    # If no food has been selected for the second round, return to the main screen and reset machine state
+                if close_button.is_clicked(event.pos):
+                    click_sfx.play()
                     if not food_selected:
-                        stovepot_food_index = -1  # Reset the food index
-                        return  # Go back to the main screen
+                        stovepot_food_index = -1  #
+                        close_button.press()  
 
                     if not (stovepot_running or steamer_running or oven_running):
-                        return  
+                        close_button.press()  
 
                     else:
                         return_cooking_view()  # Keep cooking view active if cooking is still ongoing
-                        return
+                        close_button.press()
                     
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
                     current_page += 1
@@ -2704,12 +2741,15 @@ def selectfood_page2(): # after player click STOVE POT button rect
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                     if selectprepare_button_rect.collidepoint(event.pos):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
-                        stovepot_food_index = selected_food_index  # Update the global index
-                        food_selected = True
-                        return stovepot_process(selected_food_index)
+                        if rect_color != color_locked:
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            print(f"Food selected index: {selected_food_index}")
+                            stovepot_food_index = selected_food_index  # Update the global index
+                            food_selected = True
+                            return stovepot_process(selected_food_index)
+                        else:
+                            continue
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
@@ -2720,7 +2760,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
         orderbtn.update()
         menu_button.update()
         upgrade_btn.update()
-        close_button.update()
+        close_button.draw(screen)
         orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.update()
@@ -2728,24 +2768,20 @@ def selectfood_page2(): # after player click STOVE POT button rect
 
 
 def selectfood_page3(): # after player click steamer
-    global steamer_food_index, current_page
+    global steamer_food_index, current_page, running
 
     waiting_duration = 10
     food_selected = False
 
-    print(f"Initial steamer_food_index: {steamer_food_index}")
-    while True:
-        screen.blit(background, (0, 0))  
+    unlocked_items = detect_unlock_food()
+    color_locked = (128, 128, 128)
+    color_unlocked = (186, 255, 184) 
+    hover_color = (18, 255, 50)
+    running = True
 
+    while running:
         waiting_table()
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
-        profilebutton.update()
-        orderbtn.update()
-        upgrade_btn.update()
-        menu_button.update()
-        
+       
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2797,25 +2833,34 @@ def selectfood_page3(): # after player click steamer
 
         for i in range(len(items_on_page)):
             food_item = items_on_page[i]
+            food_name_normalized = food_item["name"].strip().lower() 
             y_position = 216 + i * 144
+
+            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+            if not unlocked_items.get(food_name_normalized, True):
+                rect_color = color_locked
+            else:
+                rect_color = color_pic
+
             pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Define the rect for the select button
-            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-            selectbutton_surface = pygame.Surface((130, 40))
+           # Only display the select button if the food is unlocked
+            if unlocked_items.get(food_name_normalized, False):
+                selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                selectbutton_surface = pygame.Surface((130, 40))
+                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
 
-            select_button_color =(255, 204, 159)
-            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
-                select_button_color = (255, 129, 31)
-            
-            selectbutton_surface.fill(select_button_color)
+                select_button_color = color_unlocked
+                if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    select_button_color = hover_color
 
-            # Render the "SELECT" button text
-            selectbutton_surface.blit(SELECT_text, text_rect)
-            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
+                # Draw the "Select" button
+                selectbutton_surface.fill(select_button_color)
+                selectbutton_surface.blit(SELECT_text, text_rect)
+                screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
 
         total_pages = (len(foodlist_steamer) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
@@ -2836,16 +2881,16 @@ def selectfood_page3(): # after player click steamer
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                    print("Steamer close button clicked")
+                if close_button.is_clicked(event.pos):
+                    click_sfx.play()
                     if not food_selected:
                         steamer_food_index = -1  # Reset the food index
-                        return  # Go back to the main screen
+                        close_button.press()  # Go back to the main screen
                     if not (stovepot_running or steamer_running or oven_running):
-                        return   #return main screen
+                        close_button.press()   #return main screen
                     else:
                         return_cooking_view() # 确保他还在煮
-                        return
+                        close_button.press()
                     
 
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
@@ -2859,12 +2904,15 @@ def selectfood_page3(): # after player click steamer
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                     if selectprepare_button_rect.collidepoint(event.pos):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
-                        steamer_food_index = selected_food_index  # Update the global index
-                        food_selected = True
-                        return steamer_process(selected_food_index)
+                        if rect_color != color_locked:
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            print(f"Food selected index: {selected_food_index}")
+                            steamer_food_index = selected_food_index  # Update the global index
+                            food_selected = True
+                            return steamer_process(selected_food_index)
+                        else:
+                            return
                 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
@@ -2875,7 +2923,7 @@ def selectfood_page3(): # after player click steamer
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
-        close_button.update()
+        close_button.draw(screen)
         orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.update()
@@ -2883,25 +2931,20 @@ def selectfood_page3(): # after player click steamer
 
 
 def selectfood_page4(): # after player click oven
-    global current_page, oven_food_index
+    global current_page, oven_food_index, running
 
     waiting_duration = 10
     food_selected = False
 
+    unlocked_items = detect_unlock_food()
+    color_locked = (128, 128, 128)
+    color_unlocked = (186, 255, 184) 
+    hover_color = (18, 255, 50)
+    running = True
 
-    print(f"Initial oven_food_index: {oven_food_index}")
-    while True:
-        screen.blit(background, (0, 0)) 
-
+    while running:
         waiting_table()
-        pan_default_button.update()
-        steamer_button.update()
-        oven_button.update()
-        profilebutton.update()
-        orderbtn.update()
-        upgrade_btn.update()
-        menu_button.update()
-
+        
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2953,25 +2996,35 @@ def selectfood_page4(): # after player click oven
 
         for i in range(len(items_on_page)):
             food_item = items_on_page[i]
+            food_name_normalized = food_item["name"].strip().lower()
             y_position = 216 + i * 144
+
+            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+            if not unlocked_items.get(food_name_normalized, True):
+                rect_color = color_locked
+            else:
+                rect_color = color_pic
+
+
             pygame.draw.rect(screen, color_pic, pygame.Rect(440, y_position, 720, 130))
             screen.blit(food_item["image"], (460, y_position + 4))
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Define the rect for the select button
-            selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-            selectbutton_surface = pygame.Surface((130, 40))
+            # Only display the select button if the food is unlocked
+            if unlocked_items.get(food_name_normalized, False):
+                selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                selectbutton_surface = pygame.Surface((130, 40))
+                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
 
-            select_button_color = (255, 255, 199)
-            if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
-                select_button_color = (255, 255, 41)
-            
-            selectbutton_surface.fill(select_button_color)
-        
-            # Render the "SELECT" button text
-            selectbutton_surface.blit(SELECT_text, text_rect)
-            screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
+                select_button_color = color_unlocked
+                if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    select_button_color = hover_color
+
+                # Draw the "Select" button
+                selectbutton_surface.fill(select_button_color)
+                selectbutton_surface.blit(SELECT_text, text_rect)
+                screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
 
         total_pages = (len(foodlist_oven) + max_items_per_page - 1) // max_items_per_page
         if current_page < total_pages:
@@ -2992,16 +3045,16 @@ def selectfood_page4(): # after player click oven
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                    print("Oven close button clicked")
+                if close_button.is_clicked(event.pos):
+                    click_sfx.play()
                     if not food_selected:
                         oven_food_index = -1  # Reset the food index
-                        return  # Go back to the main screen
+                        close_button.press() # Go back to the main screen
                     if not (stovepot_running or steamer_running or oven_running):
-                        return  
+                        close_button.press()  
                     else:
                         return_cooking_view() # 确保他还在煮
-                        return 
+                        close_button.press() 
 
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
                     current_page += 1
@@ -3014,12 +3067,16 @@ def selectfood_page4(): # after player click oven
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                     if selectprepare_button_rect.collidepoint(event.pos):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
-                        oven_food_index = selected_food_index  # Update the global index
-                        food_selected = True
-                        return oven_process(selected_food_index)
+                        if rect_color != color_locked:
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            print(f"Food selected index: {selected_food_index}")
+                            oven_food_index = selected_food_index  # Update the global index
+                            food_selected = True
+                            return oven_process(selected_food_index)
+                        else:
+                            continue
+
                     
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
@@ -3029,7 +3086,7 @@ def selectfood_page4(): # after player click oven
         profilebutton.update()
         menu_button.update()
         upgrade_btn.update()
-        close_button.update()
+        close_button.draw(screen)
         orderbtn.update()
         happyhour_bar(hhactive)
         pygame.display.update()
@@ -3114,7 +3171,6 @@ cooking_bar_oven = CookingBar(965, 119, 160, 20, 100)
 def stovepot_process(selected_food_index):
     global stovepot_start_time, stovepot_running, stovepot_duration, stovepot_food_index
 
-    # Validate the selected food index
     if selected_food_index < 0 or selected_food_index >= len(food_lists):
         print(f"Invalid food index: {selected_food_index}")
         return       # Exit if the index is invalid
@@ -3124,17 +3180,12 @@ def stovepot_process(selected_food_index):
     stovepot_duration = 10 
     stovepot_food_index = selected_food_index
 
-    # Debug statement 
-    print(f"Stovepot started with food index: {stovepot_food_index}, start time: {stovepot_start_time}")
-
-    # make sure not block the game loop
     return
       
 
 def steamer_process(selected_food_index):
     global steamer_start_time, steamer_running, steamer_duration, steamer_food_index
 
-    # Validate the selected food index
     if selected_food_index < 0 or selected_food_index >= len(foodlist_steamer):
         print(f"Invalid food index: {selected_food_index}")
         return         # Exit if the index is invalid
@@ -3144,27 +3195,20 @@ def steamer_process(selected_food_index):
     steamer_duration = 15  
     steamer_food_index = selected_food_index
 
-    # Debug statement 
-    print(f"Steamer started with food index: {steamer_food_index}, start time: {steamer_start_time}")
-
     return
 
 
 def oven_process(selected_food_index):
     global oven_start_time, oven_running, oven_duration, oven_food_index
 
-    # Validate the selected food index
     if selected_food_index < 0 or selected_food_index >= len(foodlist_oven):
         print(f"Invalid food index: {selected_food_index}")
-        return            # Exit if the index is invalid
+        return            
 
     oven_running = True
     oven_start_time = time.time()
     oven_duration = 20 
     oven_food_index = selected_food_index
-
-    # Debug statement to confirm the process
-    print(f"Oven started with food index: {oven_food_index}, start time: {oven_start_time}")
 
     return
        
@@ -3234,7 +3278,7 @@ def waiting_table():
 
 
     # 6个格子在1 row (代表table width被分割六份）
-    slot_width = table_rect.width // 6         # Divide the table into 6 equal slots
+    slot_width = table_rect.width // 6         
     slot_height = table_rect.height            # The height of each slot is the full height of the table
 
 
@@ -3611,34 +3655,65 @@ def draw_machine_waiting_button(machine_type):
     screen.blit(surface, button_rects[machine_type].topleft)
 
 
-
 sound_muted = False
-
 def mute_sound():
     global sound_muted
 
     if sound_muted:
         mixer.music.set_volume(1) 
-        print("Sound is now ON")
         screen.blit(soundon_btn, soundon_btn_rect.topleft)
         
     else:
         mixer.music.set_volume(0)  
-        print("Sound is now OFF")
         screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
        
-    # Toggle the sound state
     sound_muted = not sound_muted
     click_sfx.play()  
-
     pygame.display.update()
 
 
+def machine_already_unlocked(machine_name):
+    global message_timer, machine_complete_unlocked
 
+    unlock_font = pygame.font.Font(None, 36)
+    draw_text(f"You haven't unlocked the {machine_name} yet !", unlock_font, "red", screen, 710, 610 )
+    message_timer -= 1
+    if message_timer == 0:
+        machine_complete_unlocked = False
 
+def handle_unlocking_machine():
+    global message_timer, machine_complete_unlocked, machine_name
 
+    screen.blit(dustbin_img, (1250, 160))
+    machine_complete_unlocked = True
+
+    if machine_complete_unlocked:
+        machine_already_unlocked(machine_name)
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                mute_sound()
+
+    if sound_muted:
+        screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
+    else:
+        screen.blit(soundon_btn, soundon_btn_rect.topleft)
+    
+    waiting_table()
+    money_bar()    
+    menu_button.update()
+    profilebutton.update()
+    upgrade_btn.update()
+    menu_button.update()
+    orderbtn.update()
+    happyhour_bar(hhactive)
+    pygame.display.flip()
+    clock.tick(30)
         
-
 
 def main():
     global stovepot_running, steamer_running, oven_running, sound_muted
@@ -3646,7 +3721,7 @@ def main():
     global stovepot_food_index, steamer_food_index, oven_food_index
     global  machine_type, food_item, message_timer, full_slot_remind
     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time, current_machine_view
-
+    global machine_complete_unlocked, unlocked_machine, machine_name
 
     stovepot_running = False
     steamer_running = False
@@ -3672,6 +3747,8 @@ def main():
     slot_index = None
     machine_type = None
     food_item = None
+
+    machine_name = None
 
     filename = "./picture/foodrak.txt"
     positions = read_file_and_get_list(filename)
@@ -3761,22 +3838,27 @@ def main():
 
 
                 if steamer_button_rect.collidepoint(event.pos) and not steamer_running:
-                    click_sfx.play()
-                    selectfood_page3()  # Select food from the page
-                    if steamer_food_index >= 0:
-                        steamer_process(steamer_food_index)
+                    if "STEAMER" in unlocked_machine:
+                        click_sfx.play()
+                        selectfood_page3()  # Select food from the page
+                        if steamer_food_index >= 0:
+                            steamer_process(steamer_food_index)
+                    else:
+                        machine_name = "STEAMER"
+                        message_timer = 120
+                        handle_unlocking_machine()
 
 
                 if oven_button_rect.collidepoint(event.pos) and not oven_running:
-                    click_sfx.play()
-                    selectfood_page4()  # Select food from the page
-                    if oven_food_index >= 0:
-                        oven_process(oven_food_index)
-
-                        
-                if close_button.checkForInput(pygame.mouse.get_pos()):
-                    print("Close button clicked")
-                    return_cooking_view()
+                    if "OVEN" in unlocked_machine:
+                        click_sfx.play()
+                        selectfood_page4()  # Select food from the page
+                        if oven_food_index >= 0:
+                            oven_process(oven_food_index)
+                    else:
+                        machine_name = "OVEN"
+                        message_timer = 120
+                        handle_unlocking_machine()
 
                 # Check button input and mute/unmute sound
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
@@ -3791,11 +3873,12 @@ def main():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
 
-        screen.blit(dustbin_img,(1250, 160))
+        screen.blit(dustbin_img, (1250, 160))
         cooking_process()
         exceed_time_collect()
         money_bar()
         save_unlocked_food()
+        save_unlocked_machines()
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
@@ -3803,7 +3886,6 @@ def main():
         orderbtn.update()
         waiting_table()
         update_slots(slot_index, food_item)
-
         pygame.display.flip()
         clock.tick(60)
 
@@ -3816,7 +3898,7 @@ def return_cooking_view():
     bg_img = pygame.image.load("./picture/lobby.jpg").convert()
     screen.blit(bg_img, (0, 0))
 
-    
+
     # Draw cooking bars for running processes
     if stovepot_running:
         cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
@@ -3824,28 +3906,23 @@ def return_cooking_view():
         pastefood_stovepot(stovepot_food_index)
         draw_machine_type_button("stovepot")
         
-
-
     if steamer_running:
         cooking_bar_steamer.update(time.time() - steamer_start_time, steamer_duration)
         cooking_bar_steamer.draw(screen)
         pastefood_steamer(steamer_food_index)
         draw_machine_type_button("steamer")
         
-
     if oven_running:
         cooking_bar_oven.update(time.time() - oven_start_time, oven_duration)
         cooking_bar_oven.draw(screen)
         pastefood_oven(oven_food_index)
         draw_machine_type_button("oven")
 
-    
-    # Update UI buttons and elements
+
     pan_default_button.update()
     steamer_button.update()
     oven_button.update()
-    close_button.update()  # Ensure close button is updated on the main screen
-
+    close_button.update() 
     pygame.display.update()
 
 
