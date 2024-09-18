@@ -30,7 +30,6 @@ Ramen
 Fried Udon
 Curry Mee
 Shredded Chicken Hor Fun
-Mala Xiang Guo
 Youtiao
 Thai Steamed Fish
 Xiu Mai
@@ -40,7 +39,6 @@ Dumpling
 Crystal Shrimp Dumpling
 Egg Custard Bun
 Jumbo Corndog
-Korean Fried Chicken
 Calamari Ring
 Rainbow Cake
 Red Velvet
@@ -60,7 +58,6 @@ Ramen
 Fried Udon
 Curry Mee
 Shredded Chicken Hor Fun
-Mala Xiang Guo
 Youtiao
 Hanjiben
 Thai Steamed Fish
