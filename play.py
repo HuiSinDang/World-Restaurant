@@ -2424,7 +2424,6 @@ def handle_upgrades():
     if not_enough_money:
         less_money()
 
-
 def upgrade_process():
     pan_default_button.update()
     steamer_button.update()
