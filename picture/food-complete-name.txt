@@ -1,42 +1,30 @@
-Tokbokki
 Bibimbap
 Korean Army Stew
 Hokkien Mee
 Curry Mee
 Shredded Chicken Hor Fun
 Xiu Mai
-Dumpling
-Egg Custard Bun
 Red Velvet
 Pandan Roll Cake
-Mooncake
 Tokbokki
-Fried Rice
-Oden
 Bibimbap
 Korean Army Stew
 Fried Vermicelli Noodle
 Hokkien Mee
 Curry Mee
 Shredded Chicken Hor Fun
-Youtiao
 Thai Steamed Fish
 Xiu Mai
-Steamed Egg
-Lo Mai Gai
-Dumpling
 Crystal Shrimp Dumpling
 Egg Custard Bun
 Jumbo Corndog
 Calamari Ring
-Rainbow Cake
 Red Velvet
 Black Forest
 Pandan Roll Cake
 Mooncake
 Tokbokki
 Fried Rice
-Oden
 Bibimbap
 Korean Army Stew
 Fried Noodle
@@ -50,7 +38,6 @@ Hanjiben
 Thai Steamed Fish
 Xiu Mai
 Steamed Egg
-Lo Mai Gai
 Steamed Herbal Chicken
 Dumpling
 Crystal Shrimp Dumpling
@@ -71,3 +58,9 @@ Tokbokki
 Tokbokki
 Tokbokki
 Thai Steamed Fish
+Tokbokki
+Thai Steamed Fish
+Oden
+Thai Steamed Fish
+Ramen
+Xiu Mai

@@ -398,7 +398,7 @@ class Deliveryman(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)  # 水平翻转
                 self.reflected = True  # 标记为已经反转
         # 停留3秒后，开始回走
-        elif pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
+        elif pygame.time.get_ticks() - self.wait_time > 1000 and self.direction == -1:
             self.direction = 1  # 转身，开始向右回走
             # 在开始回走的时候删除文件中的数据
             update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type)
@@ -3656,7 +3656,7 @@ def main():
         screen.blit(dustbin_img, (1250, 160))
         money_bar()
         happyhour_bar(hhactive)
-        waiting_table()
+        # waiting_table()
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
@@ -3699,7 +3699,9 @@ def main():
             positions = update_deliverymen(existing_positions, deliverymen, filename)
             existing_positions = new_positions  # 更新现有的 positions 列表
 
+        
         deliverymen.update()
+        
 
         # 在目标位置停下时，删除外卖员数据
         for deliveryman in deliverymen:
@@ -3708,6 +3710,7 @@ def main():
                 # 数据已在 update() 方法中删除，无需重复
         
         deliverymen.draw(screen)
+        waiting_table()
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
