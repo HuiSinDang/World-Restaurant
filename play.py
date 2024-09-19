@@ -1036,7 +1036,7 @@ buttons_page5 =[
 buttons_page6 =[
     Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=20),
     Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png',cost=20),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png',cost=20),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncake\nRM 20",image_path='./picture/mooncake.png',cost=20),
     Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
 ]
 
@@ -1423,6 +1423,7 @@ def order():
     
     while running:
         screen.blit(surface,screen_rect1)
+        button.draw(screen)
         
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
 
@@ -2260,7 +2261,7 @@ def order():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
         
-        button.draw(screen)
+        
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
@@ -2576,7 +2577,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
     running = True
 
     while running:
-
+        
         if steamer_running:
             steamer_elapsed = time.time() - steamer_start_time
             cooking_bar_steamer.update(steamer_elapsed, steamer_duration)
@@ -2618,6 +2619,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+        close_button.draw(screen)
 
         draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
 
@@ -2706,7 +2708,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
-        close_button.draw(screen)
+        # close_button.draw(screen)
         pygame.display.update()
         clock.tick(60)
 
@@ -2724,6 +2726,7 @@ def selectfood_page3(): # after player click steamer
     running = True
 
     while running:
+        
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2763,6 +2766,7 @@ def selectfood_page3(): # after player click steamer
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+        close_button.draw(screen)
 
         draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
 
@@ -2850,7 +2854,6 @@ def selectfood_page3(): # after player click steamer
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
                 
-        close_button.draw(screen)
         pygame.display.update()
         clock.tick(60)
 
@@ -2868,6 +2871,7 @@ def selectfood_page4(): # after player click oven
     running = True
 
     while running:
+
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2907,6 +2911,7 @@ def selectfood_page4(): # after player click oven
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
+        close_button.draw(screen)
 
         draw_text("Food selection: ", food_selection_font, "black", screen, 550, 155)
 
@@ -2995,7 +3000,7 @@ def selectfood_page4(): # after player click oven
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
 
-        close_button.draw(screen)
+        
         pygame.display.update()
         clock.tick(60)
 
@@ -3624,14 +3629,14 @@ def display_food_images(foodcom):
         "Oden": "./picture/oden.png",
         "Bibimbap": "./picture/bibimbap.png",
         "Korean Army Stew": "./picture/armystew.png",
-        "Fried Noodle": "./picture/friednoodle.png",
-        "Fried Vermicelli Noodle": "./picture/bihun.png",
+        "Fried Noodles": "./picture/friednoodle.png",
+        "Fried Bihuns": "./picture/bihun.png",
         "Hokkien Mee": "./picture/hokkienmee.png",
         "Ramen": "./picture/ramen.png",
-        "Fried Udon": "./picture/udon.png",
+        "Fried Udons": "./picture/udon.png",
         "Curry Mee": "./picture/currymee.png",
-        "Cantonese Kuey Tiaw": "./picture/kueyteow.png",
-        "Shredded Chicken Hor Fun": "./picture/horfun.png",
+        "Cantonese Kuey Teow": "./picture/kueyteow.png",
+        "Kai See Hor Fun": "./picture/horfun.png",
         "Mala Xiang Guo": "./picture/mala.png",
         "Youtiao": "./picture/youtiao.png",
         "Hanjiben": "./picture/hanjiben.png",
@@ -3639,19 +3644,19 @@ def display_food_images(foodcom):
         "Xiu Mai": "./picture/dimsum.png",
         "Steamed Egg": "./picture/steamegg.png",
         "Lo Mai Gai": "./picture/lomaigai.png",
-        "Steamed Herbal Chicken": "./picture/herbalchicken.png",
-        "Dumpling": "./picture/dumpling.png",
-        "Crystal Shrimp Dumpling": "./picture/shrimpdumpling.png",
+        "Herbal Chicken": "./picture/herbalchicken.png",
+        "Soup Dumplings": "./picture/dumpling.png",
+        "Shrimp Dumplings": "./picture/shrimpdumpling.png",
         "Egg Custard Bun": "./picture/custardbun.png",
-        "Jumbo Corndog": "./picture/corndog.png",
+        "Corndogs": "./picture/corndog.png",
         "Korean Fried Chicken": "./picture/kfry.png",
-        "Calamari Ring": "./picture/calamari.png",
+        "Calamari Rings": "./picture/calamari.png",
         "Rainbow Cake": "./picture/rainbowcake.png",
         "Red Velvet": "./picture/redvelvet.png",
         "Black Forest": "./picture/blackforest.png",
         "Pandan Roll Cake": "./picture/pandanrollcake.png",
         "Mooncake": "./picture/mooncake.png",
-        "Satay(10 sticks)": "./picture/satay.png"
+        "Satay": "./picture/satay.png"
     }
 
 

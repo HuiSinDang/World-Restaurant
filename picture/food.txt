@@ -3,14 +3,14 @@ Fried Rice
 Oden
 Bibimbap
 Korean Army Stew
-Fried Noodle
-Fried Vermicelli Noodle
+Fried Noodles
+Fried Bihuns
 Hokkien Mee
 Ramen
-Fried Udon
+Fried Udons
 Curry Mee
-Cantonese Kuey Tiaw
-Shredded Chicken Hor Fun
+Cantonese Kuey Teow
+Kai See Hor Fun
 Mala Xiang Guo
 Youtiao
 Hanjiben
@@ -18,17 +18,17 @@ Thai Steamed Fish
 Xiu Mai
 Steamed Egg
 Lo Mai Gai
-Steamed Herbal Chicken
-Dumpling
-Crystal Shrimp Dumpling
+Herbal Chicken
+Soup Dumplings
+Shrimp Dumplings
 Egg Custard Bun
-Jumbo Corndog
+Corndogs
 Korean Fried Chicken
-Calamari Ring
+Calamari Rings
 Rainbow Cake
 Red Velvet
 Black Forest
 Pandan Roll Cake
 Mooncake
-Satay(10 sticks)
+Satay
 

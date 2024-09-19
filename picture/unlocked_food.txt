@@ -1,22 +1,22 @@
 Tokbokki:True
 Fried Rice:True
 Oden:True
-Bibimbap:False
+Bibimbap:True
 Korean Army Stew:False
 Fried Noodles:False
-Fried Bihuns:False
+Fried Bihuns:True
 Hokkien Mee:False
 Ramen:True
 Fried Udons:False
-Curry Mee:False
+Curry Mee:True
 Cantonese Kuey Teow:False
-Kai See Hor Fun:False
-Mala Xiang Guo:False
+Kai See Hor Fun:True
+Mala Xiang Guo:True
 Youtiao:True
 Hanjiben:False
 Thai Steamed Fish:True
 Xiu Mai:True
-Steamed Egg:False
+Steamed Egg:True
 Lo Mai Gai:False
 Herbal Chicken:True
 Soup Dumplings:False
@@ -25,8 +25,8 @@ Egg Custard Bun:False
 Corndogs:False
 Korean Fried Chicken:False
 Calamari Rings:False
-Rainbow Cake:False
-Red Velvet:False
+Rainbow Cake:True
+Red Velvet:True
 Black Forest:False
 Pandan Roll Cake:False
 Cookies:False
