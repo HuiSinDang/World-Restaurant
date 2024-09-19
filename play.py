@@ -235,13 +235,13 @@ food_lists =[
 
     {"image": friednoodle_img, "name": "Fried Noodles", "price": "RM5.00"},
 
-    {"image": bihun_img, "name": "Fried Vermicelli Noodle", "price": "RM18.00"},
+    {"image": bihun_img, "name": "Fried Bihuns", "price": "RM18.00"},
 
     {"image": hokkienmee_img, "name": "Hokkien Mee", "price": "RM6.00"},
 
     {"image": ramen_img, "name": "Ramen", "price": "RM8.00"},
     
-    {"image": udon_img, "name": "Fried Udon", "price": "RM8.00"},
+    {"image": udon_img, "name": "Fried Udons", "price": "RM8.00"},
 
     {"image": currymee_img, "name": "Curry Mee", "price": "RM5.00"},
 
@@ -268,16 +268,16 @@ foodlist_steamer = [
 
     {"image": herbalchicken_img, "name": "Herbal Chicken", "price": "RM20.00"},
 
-    {"image": dumpling_img, "name": "Soup Dumpling", "price": "RM10.00"},
+    {"image": dumpling_img, "name": "Soup Dumplings", "price": "RM10.00"},
 
-    {"image": shrimpdumpling_img, "name": "Shrimp Dumpling", "price": "RM12.00"},
+    {"image": shrimpdumpling_img, "name": "Shrimp Dumplings", "price": "RM12.00"},
 
     {"image": custardbun_img, "name": "Egg Custard Bun", "price": "RM8.00"},
 
 ]
 
 foodlist_oven = [
-    {"image": corndog_img, "name": "Corndog", "price": "RM12.00"},
+    {"image": corndog_img, "name": "Corndogs", "price": "RM12.00"},
 
     {"image": kfry_img, "name": "Korean Fried Chicken", "price": "RM20.00"},
 
@@ -293,7 +293,7 @@ foodlist_oven = [
 
     {"image": mooncake_img, "name": "Mooncake", "price": "RM20.00"},
 
-    {"image": satay_img, "name": "Satay(10 sticks)", "price": "RM10.00" }
+    {"image": satay_img, "name": "Satay", "price": "RM10.00" }
 
 ]
 
@@ -662,7 +662,7 @@ food_prices = {
     "Fried Bihuns": 6,
     "Hokkien Mee": 6,
     "Ramen": 8,
-    "Fried Udon": 8,
+    "Fried Udons": 8,
     "Curry Mee": 5,
     "Cantonese Kuey Teow": 6,
     "Kai See Hor Fun": 7,
@@ -674,10 +674,10 @@ food_prices = {
     "Steamed Egg": 6,
     "Lo Mai Gai": 9,
     "Herbal Chicken": 20,
-    "Soup Dumpling": 10,
-    "Shrimp Dumpling" :12,
+    "Soup Dumplings": 10,
+    "Shrimp Dumplings" :12,
     "Egg Custard Bun": 12,
-    "Corndog" :12,
+    "Corndogs" :12,
     "Korean Fried Chicken" : 20,
     "Calamari Rings" :14,
     "Rainbow Cake": 16,
@@ -685,7 +685,7 @@ food_prices = {
     "Black Forest": 18,
     "Pandan Roll Cake": 27,
     "Mooncake": 20,
-    "Satay(10 sticks)": 10
+    "Satay": 10
 }
 
 # Main loop(irene)
@@ -1001,7 +1001,7 @@ buttons_page2 =[
     Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 20",image_path='./picture/oden.png',cost=20),
     Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
     Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
-    Button("Fried Udon","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udon\nRM 20",image_path='./picture/udon.png',cost=20),
+    Button("Fried Udons","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udons\nRM 20",image_path='./picture/udon.png',cost=20),
     Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
     Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 20",image_path='./picture/kueyteow.png',cost=20),
 ]
@@ -1019,14 +1019,14 @@ buttons_page4 =[
     Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=20),
     Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=20),
     Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
-    Button("Soup Dumpling","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumpling\nRM 20",image_path='./picture/dumpling.png',cost=20),
-    Button("Shrimp Dumpling","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumpling\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
+    Button("Soup Dumplings","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumplings\nRM 20",image_path='./picture/dumpling.png',cost=20),
+    Button("Shrimp Dumplings","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumplings\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
     Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=20),
 ]
 
 buttons_page5 =[
-    Button("Corndog","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndog\nRM 20",image_path='./picture/corndog.png',cost=20),
-    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Kfry\nRM 20",image_path='./picture/kfry.png',cost=20),
+    Button("Corndogs","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndogs\nRM 20",image_path='./picture/corndog.png',cost=20),
+    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Korean Fried Chicken\nRM 20",image_path='./picture/kfry.png',cost=20),
     Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=20),
     Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=20),
     Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=20),
@@ -1160,7 +1160,7 @@ def change_page(forward=True):
             current_page = 6
             buttons = buttons_page6
 
-def close_menu():
+def close_menu():  #yv
     global running
     running = False
 
@@ -1172,9 +1172,6 @@ def show_menupage():
     global current_page,buttons,running
     running = True
     load_unlocked_food()
-
-    screen.blit(dustbin_img, (1250,160))
-    waiting_table()
     
     while running:
         if current_page == 1:
@@ -1223,14 +1220,6 @@ def show_menupage():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)
 
-
-        money_bar()
-        profilebutton.update()
-        orderbtn.update()
-        menu_button.update()
-        upgrade_btn.update()
-        orderbtn.update()
-        happyhour_bar(hhactive)
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
@@ -1321,9 +1310,7 @@ def profile():
     global running
     running = True
 
-    while True:
-        waiting_table()
-        screen.blit(dustbin_img,(1250, 160))
+    while running:
         screen.blit(surface,screen_rect)
 
         draw_text("Profile", font, "black", screen, 650, 200)
@@ -1391,13 +1378,8 @@ def profile():
 
         button.draw(screen)
         resetbutton.update()
-        profilebutton.update()
-        upgrade_btn.update()
-        menu_button.update()
-        orderbtn.update()
-        money_bar()
-        happyhour_bar(hhactive)
         pygame.display.flip()
+        clock.tick(30)
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
@@ -1436,7 +1418,6 @@ def order():
     last_clicked_order = None
     
     while running:
-        waiting_table()
         screen.blit(surface,screen_rect1)
         
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
@@ -2278,15 +2259,8 @@ def order():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
-        money_bar()
-        profilebutton.update()
-        orderbtn.update()
-        menu_button.update()
-        upgrade_btn.update()
-        orderbtn.update()
+        
         button.draw(screen)
-        happyhour_bar(hhactive)
-        screen.blit(dustbin_img, (1250,160))
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
@@ -2296,7 +2270,7 @@ def draw_popup():
     
     screen.blit(coin1_img,(852, 322))
     screen.blit(coin1_img,(1023, 322))
-    pan_unlock_button.update()
+    pan_unlock_button.update()  # 带框的机器图片，不能删
     steamer_unlock_button.update()
     oven_unlock_button.update()
     inputmoney_rect = pygame.Rect(740,150, 200, 33)
@@ -2314,10 +2288,6 @@ def draw_popup():
     draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
 
     close_button.draw(screen)
-    profilebutton.update()
-    orderbtn.update()
-    upgrade_btn.update()
-    menu_button.update()
 
 
 def draw_popup2B():
@@ -2426,7 +2396,8 @@ def load_unlocked_machines(): #读file
     unlocked_machine = set() 
     try:
         f = open("./picture/unlocked_machines.txt", "r")  #读的file
-        for line in f:
+        lines = f.readlines()
+        for line in lines:
             unlocked_machine.add(line.strip())  #将machine的名字加进去
         f.close()  # 读完file后就会关掉
     except FileNotFoundError:
@@ -2438,7 +2409,7 @@ def upgrade_process():
     global selected_upgradeB,selected_upgradeC, message_timer
     global money_amount, unlocked_machine,current_upgrade, already_upgrade
 
-    screen.blit(dustbin_img, (1250,160))
+
     pygame.draw.rect(screen, (148, 5, 100), popup_rect, 5)  # Popup border
     
     show_popup = True
@@ -2525,24 +2496,16 @@ def upgrade_process():
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
         
-        load_unlocked_machines() 
-
         if sound_muted:
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
-
-        waiting_table()
         handle_upgrades()
-        money_bar()
-        profilebutton.update()
-        orderbtn.update()
-        upgrade_btn.update()
-        menu_button.update()
-        happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
+
+load_unlocked_machines()
 
 
 machinetype_surface = pygame.Surface ((160, 60))
@@ -2607,14 +2570,12 @@ def selectfood_page2(): # after player click STOVE POT button rect
     food_selected = False  # 用来track food select
 
     unlocked_items = detect_unlock_food()
-    color_locked = (128, 128, 128)
-    color_unlocked = (186, 255, 184) 
-    hover_color = (18, 255, 50)
+    color_locked = (128, 128, 128) #灰色
+    color_unlocked = (186, 255, 184) #浅青色
+    hover_color = (18, 255, 50) #深青色
     running = True
 
     while running:
-        waiting_table()
-
         if steamer_running:
             steamer_elapsed = time.time() - steamer_start_time
             cooking_bar_steamer.update(steamer_elapsed, steamer_duration)
@@ -2653,9 +2614,6 @@ def selectfood_page2(): # after player click STOVE POT button rect
 
         food_selection1_rect = pygame.Rect(400, 120, 800, 600)
         food_selection2_rect = pygame.Rect(425, 195, 752, 495)
-        stovepot_button_select()
-        steamer_button_select()
-        oven_button_select()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
@@ -2683,17 +2641,14 @@ def selectfood_page2(): # after player click STOVE POT button rect
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Only display the select button if the food is unlocked
-            if unlocked_items.get(food_name_normalized, False):
+            # Only show select button for unlocked food items
+            if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                selectbutton_surface = pygame.Surface((130, 40))
-                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
-
                 select_button_color = color_unlocked
                 if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                     select_button_color = hover_color
 
-                # Draw the "Select" button
+                # Draw select button
                 selectbutton_surface.fill(select_button_color)
                 selectbutton_surface.blit(SELECT_text, text_rect)
                 screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
@@ -2721,7 +2676,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
                     click_sfx.play()
                     if not food_selected:
                         stovepot_food_index = -1  #
-                        close_button.press()  
+                    close_button.press()  
 
                     if not (stovepot_running or steamer_running or oven_running):
                         close_button.press()  
@@ -2737,32 +2692,21 @@ def selectfood_page2(): # after player click STOVE POT button rect
                     current_page -= 1
 
                 # Check if the select button is clicked
-                for i in range(len(items_on_page)):
+                for i, food_item in enumerate(items_on_page):
+                    food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                     if selectprepare_button_rect.collidepoint(event.pos):
-                        if rect_color != color_locked:
-                            click_sfx.play()
-                            selected_food_index = start_index + i
-                            print(f"Food selected index: {selected_food_index}")
-                            stovepot_food_index = selected_food_index  # Update the global index
-                            food_selected = True
-                            return stovepot_process(selected_food_index)
-                        else:
-                            continue
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        stovepot_food_index = selected_food_index  # Update the global index
+                        food_selected = True
+                        return stovepot_process(selected_food_index)
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
-
-        money_bar()
-        screen.blit(dustbin_img, (1250, 160))
-        profilebutton.update()
-        orderbtn.update()
-        menu_button.update()
-        upgrade_btn.update()
         close_button.draw(screen)
-        orderbtn.update()
-        happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
 
@@ -2780,8 +2724,6 @@ def selectfood_page3(): # after player click steamer
     running = True
 
     while running:
-        waiting_table()
-       
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2818,9 +2760,6 @@ def selectfood_page3(): # after player click steamer
         
         food_selection1_rect = pygame.Rect(400, 120, 800, 600)
         food_selection2_rect = pygame.Rect(425, 195, 752, 495)
-        stovepot_button_select()
-        steamer_button_select()
-        oven_button_select()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
@@ -2847,17 +2786,14 @@ def selectfood_page3(): # after player click steamer
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-           # Only display the select button if the food is unlocked
-            if unlocked_items.get(food_name_normalized, False):
+           # Only show select button for unlocked food items
+            if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                selectbutton_surface = pygame.Surface((130, 40))
-                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
-
                 select_button_color = color_unlocked
                 if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                     select_button_color = hover_color
 
-                # Draw the "Select" button
+                # Draw select button
                 selectbutton_surface.fill(select_button_color)
                 selectbutton_surface.blit(SELECT_text, text_rect)
                 screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
@@ -2900,32 +2836,22 @@ def selectfood_page3(): # after player click steamer
                     current_page -= 1
 
                 # Check if the select button is clicked
-                for i in range(len(items_on_page)):
+                for i, food_item in enumerate(items_on_page):
+                    food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                    if selectprepare_button_rect.collidepoint(event.pos):
-                        if rect_color != color_locked:
-                            click_sfx.play()
-                            selected_food_index = start_index + i
-                            print(f"Food selected index: {selected_food_index}")
-                            steamer_food_index = selected_food_index  # Update the global index
-                            food_selected = True
-                            return steamer_process(selected_food_index)
-                        else:
-                            return
+                    if selectprepare_button_rect.collidepoint(event.pos) and unlocked_items.get(food_name_normalized, False):
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        steamer_food_index = selected_food_index
+                        food_selected = True
+                        return steamer_process(selected_food_index)
                 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
                 
- 
-        money_bar()
-        screen.blit(dustbin_img, (1250,  160))
-        profilebutton.update()
-        menu_button.update()
-        upgrade_btn.update()
         close_button.draw(screen)
-        orderbtn.update()
-        happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
 
@@ -2943,8 +2869,6 @@ def selectfood_page4(): # after player click oven
     running = True
 
     while running:
-        waiting_table()
-        
         if stovepot_running:
             cooking_bar_stovepot.update(time.time() - stovepot_start_time, stovepot_duration)
             cooking_bar_stovepot.draw(screen)
@@ -2981,9 +2905,6 @@ def selectfood_page4(): # after player click oven
        
         food_selection1_rect = pygame.Rect(400, 120, 800, 600)
         food_selection2_rect = pygame.Rect(425, 195, 752, 495)
-        stovepot_button_select()
-        steamer_button_select()
-        oven_button_select()
         pygame.draw.rect(screen, (255, 201, 254), food_selection1_rect)
         pygame.draw.rect(screen, (148, 5, 100), food_selection1_rect, 5)
         pygame.draw.rect(screen, (196, 192, 255), food_selection2_rect)
@@ -3011,17 +2932,14 @@ def selectfood_page4(): # after player click oven
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Only display the select button if the food is unlocked
-            if unlocked_items.get(food_name_normalized, False):
+            # Only show select button for unlocked food items
+            if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                selectbutton_surface = pygame.Surface((130, 40))
-                select_button_color = (186, 255, 184) #浅青色 #一进去就会看到的颜色
-
                 select_button_color = color_unlocked
                 if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                     select_button_color = hover_color
 
-                # Draw the "Select" button
+                # Draw select button
                 selectbutton_surface.fill(select_button_color)
                 selectbutton_surface.blit(SELECT_text, text_rect)
                 screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
@@ -3063,32 +2981,23 @@ def selectfood_page4(): # after player click oven
                     current_page -= 1
 
                 # Check if the select button is clicked
-                for i in range(len(items_on_page)):
+                for i, food_item in enumerate(items_on_page):
+                    food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
                     selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                     if selectprepare_button_rect.collidepoint(event.pos):
-                        if rect_color != color_locked:
-                            click_sfx.play()
-                            selected_food_index = start_index + i
-                            print(f"Food selected index: {selected_food_index}")
-                            oven_food_index = selected_food_index  # Update the global index
-                            food_selected = True
-                            return oven_process(selected_food_index)
-                        else:
-                            continue
+                        click_sfx.play()
+                        selected_food_index = start_index + i
+                        print(f"Food selected index: {selected_food_index}")
+                        oven_food_index = selected_food_index  # Update the global index
+                        food_selected = True
+                        return oven_process(selected_food_index)
 
                     
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
 
-        money_bar()
-        screen.blit(dustbin_img, (1250,  160))
-        profilebutton.update()
-        menu_button.update()
-        upgrade_btn.update()
         close_button.draw(screen)
-        orderbtn.update()
-        happyhour_bar(hhactive)
         pygame.display.update()
         clock.tick(60)
 
@@ -3428,20 +3337,7 @@ def throw_food_into_dustbin():
 
             rotated_rect = rotated_food_img.get_rect(center=waste_food_position)
 
-
             screen.blit(background, (0, 0))  
-
-
-            pan_default_button.update()
-            steamer_button.update()
-            oven_button.update()
-            profilebutton.update()
-            upgrade_btn.update()
-            menu_button.update()
-            happyhour_bar(hhactive)
-            money_bar()
-            orderbtn.update()
-            waiting_table()
 
             stovepot_button_rect = stovepot_button_select()
             steamer_button_rect = steamer_button_select()
@@ -3456,7 +3352,6 @@ def throw_food_into_dustbin():
             throwing = False
             print("Food thrown into the dustbin!")
             waste_food_index = None  # Reset waste food index
-            
 
         pygame.time.delay(20)
 
@@ -3703,14 +3598,6 @@ def handle_unlocking_machine():
     else:
         screen.blit(soundon_btn, soundon_btn_rect.topleft)
     
-    waiting_table()
-    money_bar()    
-    menu_button.update()
-    profilebutton.update()
-    upgrade_btn.update()
-    menu_button.update()
-    orderbtn.update()
-    happyhour_bar(hhactive)
     pygame.display.flip()
     clock.tick(30)
         
@@ -3766,8 +3653,14 @@ def main():
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
         screen.blit(bg_img, (0, 0))
-
-
+        screen.blit(dustbin_img, (1250, 160))
+        money_bar()
+        happyhour_bar(hhactive)
+        waiting_table()
+        profilebutton.update()
+        upgrade_btn.update()
+        menu_button.update()
+        orderbtn.update()
         pan_default_button.update()
         steamer_button.update()
         oven_button.update()
@@ -3838,8 +3731,8 @@ def main():
 
 
                 if steamer_button_rect.collidepoint(event.pos) and not steamer_running:
+                    click_sfx.play()
                     if "STEAMER" in unlocked_machine:
-                        click_sfx.play()
                         selectfood_page3()  # Select food from the page
                         if steamer_food_index >= 0:
                             steamer_process(steamer_food_index)
@@ -3850,8 +3743,8 @@ def main():
 
 
                 if oven_button_rect.collidepoint(event.pos) and not oven_running:
+                    click_sfx.play()
                     if "OVEN" in unlocked_machine:
-                        click_sfx.play()
                         selectfood_page4()  # Select food from the page
                         if oven_food_index >= 0:
                             oven_process(oven_food_index)
@@ -3874,23 +3767,17 @@ def main():
         else:
             current_machine_message = ""
 
+
         if sound_muted:
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
 
-        screen.blit(dustbin_img, (1250, 160))
+        
         cooking_process()
         exceed_time_collect()
-        money_bar()
         save_unlocked_food()
         save_unlocked_machines()
-        profilebutton.update()
-        upgrade_btn.update()
-        menu_button.update()
-        happyhour_bar(hhactive)
-        orderbtn.update()
-        waiting_table()
         update_slots(slot_index, food_item)
         pygame.display.flip()
         clock.tick(60)
@@ -3899,11 +3786,6 @@ def main():
 def return_cooking_view():
     global stovepot_running, steamer_running, oven_running
     global current_machine_view
-
-    # Load and display the background image for the main screen
-    bg_img = pygame.image.load("./picture/lobby.jpg").convert()
-    screen.blit(bg_img, (0, 0))
-
 
     # Draw cooking bars for running processes
     if stovepot_running:
@@ -3925,10 +3807,10 @@ def return_cooking_view():
         draw_machine_type_button("oven")
 
 
-    pan_default_button.update()
-    steamer_button.update()
-    oven_button.update()
-    close_button.update() 
+    # pan_default_button.update()
+    # steamer_button.update()
+    # oven_button.update()
+    close_button.draw(screen) 
     pygame.display.update()
 
 

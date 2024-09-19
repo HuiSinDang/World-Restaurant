@@ -7,7 +7,7 @@ Fried Noodles:False
 Fried Bihuns:False
 Hokkien Mee:False
 Ramen:True
-Fried Udon:True
+Fried Udons:False
 Curry Mee:False
 Cantonese Kuey Teow:False
 Kai See Hor Fun:False
@@ -19,10 +19,10 @@ Xiu Mai:True
 Steamed Egg:False
 Lo Mai Gai:False
 Herbal Chicken:False
-Soup Dumpling:False
-Shrimp Dumpling:False
+Soup Dumplings:False
+Shrimp Dumplings:False
 Egg Custard Bun:False
-Corndog:False
+Corndogs:False
 Korean Fried Chicken:False
 Calamari Rings:False
 Rainbow Cake:False
