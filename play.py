@@ -3333,6 +3333,16 @@ def throw_food_into_dustbin():
             rotated_rect = rotated_food_img.get_rect(center=waste_food_position)
 
             screen.blit(background, (0, 0))  
+            pan_default_button.update()
+            steamer_button.update()
+            oven_button.update()  
+            profilebutton.update()
+            upgrade_btn.update()
+            menu_button.update()
+            orderbtn.update()
+            happyhour_bar(hhactive)
+            money_bar()
+            waiting_table()
 
             stovepot_button_rect = stovepot_button_select()
             steamer_button_rect = steamer_button_select()
