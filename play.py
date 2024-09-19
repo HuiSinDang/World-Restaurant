@@ -3600,7 +3600,109 @@ def handle_unlocking_machine():
     
     pygame.display.flip()
     clock.tick(30)
+
+def read_food_list(filename):
+    with open(filename, "r") as file:
+        # 读取文件并按换行符分割食物名称
+        lines = file.read().splitlines()  
+        # 去掉每一行中的空格并确保每个名称是一个独立的元素
+        result = [item.strip() for item in lines if item.strip()]
+        return result
+
+def display_food_images(foodcom):
+
+    # 1. 先绘制等待桌格子
+    table_rect = pygame.Rect(195, 620, 1070, 140)
+    table_color = (188, 143, 143)
+    pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)
+
+    slot_width = table_rect.width // 6  # 每个格子的宽度
+    slot_height = table_rect.height     # 每个格子的高度是table的高度
+
+    # 绘制6个格子
+    for col in range(6):  # 6个列代表6个格子
+        slot_rect = pygame.Rect(
+            table_rect.x + col * slot_width,
+            table_rect.y,
+            slot_width, slot_height
+        )
+        pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # 灰色边框的格子
+        # 图片映射
         
+    food_image_mapping = {
+        'Tokbokki': "./picture/tokbokki.png",
+        "Fried Rice": "./picture/friedrice.png",
+        "Oden": "./picture/oden.png",
+        "Bibimbap": "./picture/bibimbap.png",
+        "Korean Army Stew": "./picture/armystew.png",
+        "Fried Noodle": "./picture/friednoodle.png",
+        "Fried Vermicelli Noodle": "./picture/bihun.png",
+        "Hokkien Mee": "./picture/hokkienmee.png",
+        "Ramen": "./picture/ramen.png",
+        "Fried Udon": "./picture/udon.png",
+        "Curry Mee": "./picture/currymee.png",
+        "Cantonese Kuey Tiaw": "./picture/kueyteow.png",
+        "Shredded Chicken Hor Fun": "./picture/horfun.png",
+        "Mala Xiang Guo": "./picture/mala.png",
+        "Youtiao": "./picture/youtiao.png",
+        "Hanjiben": "./picture/hanjiben.png",
+        "Thai Steamed Fish": "./picture/steamfish.png",
+        "Xiu Mai": "./picture/dimsum.png",
+        "Steamed Egg": "./picture/steamegg.png",
+        "Lo Mai Gai": "./picture/lomaigai.png",
+        "Steamed Herbal Chicken": "./picture/herbalchicken.png",
+        "Dumpling": "./picture/dumpling.png",
+        "Crystal Shrimp Dumpling": "./picture/shrimpdumpling.png",
+        "Egg Custard Bun": "./picture/custardbun.png",
+        "Jumbo Corndog": "./picture/corndog.png",
+        "Korean Fried Chicken": "./picture/kfry.png",
+        "Calamari Ring": "./picture/calamari.png",
+        "Rainbow Cake": "./picture/rainbowcake.png",
+        "Red Velvet": "./picture/redvelvet.png",
+        "Black Forest": "./picture/blackforest.png",
+        "Pandan Roll Cake": "./picture/pandanrollcake.png",
+        "Mooncake": "./picture/mooncake.png",
+        "Satay(10 sticks)": "./picture/satay.png"
+    }
+
+
+    image_width, image_height = 100, 100  # 图片的大小
+    table_rect = pygame.Rect(195, 620, 1070, 140)
+    slot_width = table_rect.width // 6  # 每个格子的宽度
+    slot_height = table_rect.height  # 每个格子的高度
+
+    # 遍历食物列表，并将图片绘制到格子中间
+    for index, item in enumerate(foodcom):
+        print(f"Checking food item: '{item}'")  # 添加此行来调试食物名称
+        if item == "":
+            continue
+
+        if index < 6:  # 确保不会超过6个格子
+            # 获取每个格子的左上角坐标
+            slot_x = table_rect.x + index * slot_width
+            slot_y = table_rect.y
+
+            # 计算图片在格子中居中的坐标
+            x = slot_x + (slot_width - image_width) // 2
+            y = slot_y + (slot_height - image_height) // 2
+
+            # 根据 foodcom 中的名字查找对应的图片
+            if item in food_image_mapping:
+                image_file = food_image_mapping[item]
+                print(f"Loaded and displayed image: {image_file} at ({x}, {y})")
+            else:
+                # 如果没有找到对应的图片，使用默认图片
+                image_file = "./picture/bag.png"  # 确保此图片存在
+                print(f"Loaded and displayed default image at ({x}, {y})")
+
+            # 加载并缩放图片
+            try:
+                image = pygame.image.load(image_file)
+                image = pygame.transform.scale(image, (image_width, image_height))
+                screen.blit(image, (x, y))
+            except pygame.error as e:
+                print(f"Error loading image {image_file}: {e}")
+
 
 def main():
     global stovepot_running, steamer_running, oven_running, sound_muted
@@ -3702,6 +3804,16 @@ def main():
         
         deliverymen.update()
         
+        # 假设 filename 是你的食物列表文件
+        food_filename = "./picture/food-complete-name.txt"
+        
+        # 获取文件中的食物列表
+        food_list = read_food_list(food_filename)
+
+        print(f"Foodcom list: {food_list}")  # 调试信息
+
+        # 使用食物列表继续执行其他操作，比如显示食物图片
+        display_food_images(food_list)  # 假设这是处理图片显示的函数
 
         # 在目标位置停下时，删除外卖员数据
         for deliveryman in deliverymen:
