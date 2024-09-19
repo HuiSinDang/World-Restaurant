@@ -1206,13 +1206,17 @@ def show_menupage():
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if nextpbutton.is_clicked(event.pos):
+                    click_sfx.play()
                     nextpbutton.press()
                 elif previouspbutton.is_clicked(event.pos):
-                        previouspbutton.press()
+                    click_sfx.play() 
+                    previouspbutton.press()
                 elif closepbutton.is_clicked(event.pos):
+                    click_sfx.play()
                     closepbutton.press()
                 for button in buttons:
                     if button.is_clicked(event.pos):
+                        click_sfx.play()
                         button.press()
         
         if sound_muted:
@@ -2082,14 +2086,12 @@ def order():
                                         # 读取文件内容，保留空行
                                         ffoodrak =  open("./picture/foodrak.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
-                                            # print("Foodrak before update:", foodrak)  # Debugging line
-
+                                            
                                         # 检查前三个元素是否有空位，并填入数据
                                         for i in range(min(3, len(foodrak))):
                                             if foodrak[i] == "":  # 找到空行
                                                 foodrak[i] = staff1[0]  # 用 staff1[0] 填充空位
-                                                print("Foodrak after update:", foodrak)  # Debugging line
-
+                                                
                                                 # 写入更新后的内容到文件
                                                 ffoodrak =  open("./picture/foodrak.txt", "w")
                                                 for item in foodrak:
@@ -2144,13 +2146,12 @@ def order():
                                         # 读取文件内容，保留空行
                                         ffoodrak =  open("./picture/foodrak.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
-                                            # print("Foodrak before update:", foodrak)  # Debugging line
-
+                                           
                                         # 检查前三个元素是否有空位，并填入数据
                                         for i in range(min(3, len(foodrak))):
                                             if foodrak[i] == "":  # 找到空行
                                                 foodrak[i] = staff2[1]  # 用 staff1[0] 填充空位
-                                                # print("Foodrak after update:", foodrak)  # Debugging line
+                                                
 
                                                 # 写入更新后的内容到文件
                                                 ffoodrak =  open("./picture/foodrak.txt", "w")
@@ -2205,8 +2206,7 @@ def order():
                                         # 读取文件内容，保留空行
                                         ffoodrak =  open("./picture/foodrak.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
-                                            # print("Foodrak before update:", foodrak)  # Debugging line
-
+                                           
                                         # 检查前三个元素是否有空位，并填入数据
                                         for i in range(min(3, len(foodrak))):
                                             if foodrak[i] == "":  # 找到空行
@@ -2576,6 +2576,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
     running = True
 
     while running:
+
         if steamer_running:
             steamer_elapsed = time.time() - steamer_start_time
             cooking_bar_steamer.update(steamer_elapsed, steamer_duration)
@@ -2699,7 +2700,6 @@ def selectfood_page2(): # after player click STOVE POT button rect
                     if selectprepare_button_rect.collidepoint(event.pos):
                         click_sfx.play()
                         selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
                         stovepot_food_index = selected_food_index  # Update the global index
                         food_selected = True
                         return stovepot_process(selected_food_index)
@@ -2843,7 +2843,6 @@ def selectfood_page3(): # after player click steamer
                     if selectprepare_button_rect.collidepoint(event.pos) and unlocked_items.get(food_name_normalized, False):
                         click_sfx.play()
                         selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
                         steamer_food_index = selected_food_index
                         food_selected = True
                         return steamer_process(selected_food_index)
@@ -2988,7 +2987,6 @@ def selectfood_page4(): # after player click oven
                     if selectprepare_button_rect.collidepoint(event.pos):
                         click_sfx.play()
                         selected_food_index = start_index + i
-                        print(f"Food selected index: {selected_food_index}")
                         oven_food_index = selected_food_index  # Update the global index
                         food_selected = True
                         return oven_process(selected_food_index)
@@ -3081,7 +3079,6 @@ def stovepot_process(selected_food_index):
     global stovepot_start_time, stovepot_running, stovepot_duration, stovepot_food_index
 
     if selected_food_index < 0 or selected_food_index >= len(food_lists):
-        print(f"Invalid food index: {selected_food_index}")
         return       # Exit if the index is invalid
 
     stovepot_running = True
@@ -3096,7 +3093,6 @@ def steamer_process(selected_food_index):
     global steamer_start_time, steamer_running, steamer_duration, steamer_food_index
 
     if selected_food_index < 0 or selected_food_index >= len(foodlist_steamer):
-        print(f"Invalid food index: {selected_food_index}")
         return         # Exit if the index is invalid
 
     steamer_running = True
@@ -3111,7 +3107,6 @@ def oven_process(selected_food_index):
     global oven_start_time, oven_running, oven_duration, oven_food_index
 
     if selected_food_index < 0 or selected_food_index >= len(foodlist_oven):
-        print(f"Invalid food index: {selected_food_index}")
         return            
 
     oven_running = True
@@ -3222,25 +3217,22 @@ def determine_available_slots():
 def update_slots(slot_index, food_item):    
     if slot_index is not None and 0 <= slot_index < len(slots):
         slots[slot_index] = food_item
-        print(f"Slot {slot_index} updated with {food_item}")
 
 
 def remind_no_empty_slots():
     global message_timer, full_slot_remind
     full_slot_remind = True
     message_timer = 120
-    print("Reminder triggered: Full slots")
+
 
         
 def put_food_to_slots(selected_food_index, machine_type):
     if selected_food_index is None or selected_food_index<0:
-        print(f"Error: Invalid food index {selected_food_index}")
         return False
     
     slot_index = determine_available_slots()
 
     if slot_index is not None:
-        print(f"Available slot found at index {slot_index}")
 
         if machine_type == "oven":
             food_name = foodlist_oven[selected_food_index]["name"]
@@ -3264,7 +3256,6 @@ def put_food_to_slots(selected_food_index, machine_type):
         f.close()
 
     else:
-        print("No available slots now")
         remind_no_empty_slots()
 
     return True
@@ -3306,7 +3297,6 @@ def throw_food_into_dustbin():
 
     # 如果没有食物的图片的话就退出
     if waste_food_img is None or waste_food_position is None:
-        print("No waste food to throw into the dustbin.")
         return
 
     dustbin_pos = (1250, 160)  
@@ -3350,7 +3340,6 @@ def throw_food_into_dustbin():
 
         else:
             throwing = False
-            print("Food thrown into the dustbin!")
             waste_food_index = None  # Reset waste food index
 
         pygame.time.delay(20)
@@ -3384,7 +3373,7 @@ def exceed_time_collect():
             throw_food_into_dustbin()
             stovepot_food_index = None
             stovepot_exceed_time = False
-            print("Stovepot food discarded after waiting.")
+         
 
     # Handle Steamer waiting bar
     if steamer_exceed_time:
@@ -3399,7 +3388,7 @@ def exceed_time_collect():
             throw_food_into_dustbin()
             steamer_food_index = None
             steamer_exceed_time = False
-            print("Steamer food discarded after waiting.")
+          
 
     # Handle Oven waiting bar
     if oven_exceed_time:
@@ -3414,7 +3403,7 @@ def exceed_time_collect():
             throw_food_into_dustbin()
             oven_food_index = None
             oven_exceed_time = False
-            print("Oven food discarded after waiting.")
+            
 
 def cooking_process():
     global stovepot_running, steamer_running, oven_running, message_timer
@@ -3673,7 +3662,6 @@ def display_food_images(foodcom):
 
     # 遍历食物列表，并将图片绘制到格子中间
     for index, item in enumerate(foodcom):
-        print(f"Checking food item: '{item}'")  # 添加此行来调试食物名称
         if item == "":
             continue
 
@@ -3689,19 +3677,13 @@ def display_food_images(foodcom):
             # 根据 foodcom 中的名字查找对应的图片
             if item in food_image_mapping:
                 image_file = food_image_mapping[item]
-                print(f"Loaded and displayed image: {image_file} at ({x}, {y})")
+               
             else:
                 # 如果没有找到对应的图片，使用默认图片
                 image_file = "./picture/bag.png"  # 确保此图片存在
-                print(f"Loaded and displayed default image at ({x}, {y})")
+                
 
-            # 加载并缩放图片
-            try:
-                image = pygame.image.load(image_file)
-                image = pygame.transform.scale(image, (image_width, image_height))
-                screen.blit(image, (x, y))
-            except pygame.error as e:
-                print(f"Error loading image {image_file}: {e}")
+           
 
 
 def main():
@@ -3810,7 +3792,6 @@ def main():
         # 获取文件中的食物列表
         food_list = read_food_list(food_filename)
 
-        print(f"Foodcom list: {food_list}")  # 调试信息
 
         # 使用食物列表继续执行其他操作，比如显示食物图片
         display_food_images(food_list)  # 假设这是处理图片显示的函数
@@ -3934,8 +3915,6 @@ def reset_machine_view():
     global stovepot_food_index, steamer_food_index, oven_food_index
     global current_machine_view
 
-    print("Resetting machine view...")
-
     # Reset all variables related to machine state
     stovepot_running = False
     steamer_running = False
@@ -3947,7 +3926,7 @@ def reset_machine_view():
 
     # Reset current machine view to main screen
     current_machine_view = "main_screen"
-    print("Reset machine view and returned to main screen")
+
 
 
 
