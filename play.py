@@ -3670,6 +3670,7 @@ def display_food_images(foodcom):
         if item == "":
             continue
 
+
         if index < 6:  # 确保不会超过6个格子
             # 获取每个格子的左上角坐标
             slot_x = table_rect.x + index * slot_width
@@ -3682,13 +3683,16 @@ def display_food_images(foodcom):
             # 根据 foodcom 中的名字查找对应的图片
             if item in food_image_mapping:
                 image_file = food_image_mapping[item]
-               
             else:
                 # 如果没有找到对应的图片，使用默认图片
                 image_file = "./picture/bag.png"  # 确保此图片存在
-                
 
-           
+            # 加载并缩放图片
+            try:
+                image = pygame.image.load(image_file)
+                image = pygame.transform.scale(image, (image_width, image_height))
+                screen.blit(image, (x, y))
+            except pygame.error as e:
 
 
 def main():
@@ -3790,6 +3794,14 @@ def main():
 
         
         deliverymen.update()
+
+        # 在目标位置停下时，删除外卖员数据
+        for deliveryman in deliverymen:
+            if deliveryman.finished:
+                deliverymen.remove(deliveryman)
+                # 数据已在 update() 方法中删除，无需重复
+        
+        deliverymen.draw(screen)
         
         # 假设 filename 是你的食物列表文件
         food_filename = "./picture/food-complete-name.txt"
@@ -3801,14 +3813,6 @@ def main():
         # 使用食物列表继续执行其他操作，比如显示食物图片
         display_food_images(food_list)  # 假设这是处理图片显示的函数
 
-        # 在目标位置停下时，删除外卖员数据
-        for deliveryman in deliverymen:
-            if deliveryman.finished:
-                deliverymen.remove(deliveryman)
-                # 数据已在 update() 方法中删除，无需重复
-        
-        deliverymen.draw(screen)
-        waiting_table()
 
         # Handle stovepot cooking process
         for event in pygame.event.get():
