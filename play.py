@@ -3697,12 +3697,7 @@ def display_food_images(foodcom):
                 # 如果没有找到对应的图片，使用默认图片
                 image_file = "./picture/bag.png"  # 确保此图片存在
 
-            # 加载并缩放图片
-            try:
-                image = pygame.image.load(image_file)
-                image = pygame.transform.scale(image, (image_width, image_height))
-                screen.blit(image, (x, y))
-            except pygame.error as e:
+        
 
 
 def main():
