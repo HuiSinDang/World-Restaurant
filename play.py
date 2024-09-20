@@ -362,6 +362,7 @@ class CookingBar: # draw cooking bar
         # Decrease hp based on elapsed time and duration
         self.hp = max(0, self.max_hp * (1 - elapsed_time / duration))
     
+# Deliveryman 类定义
 class Deliveryman(pygame.sprite.Sprite):
     def __init__(self, target_x, deliveryman_type, speed=5, image_size=(250, 250)):
         super().__init__()
@@ -374,12 +375,18 @@ class Deliveryman(pygame.sprite.Sprite):
             self.image = pygame.image.load("./picture/dm2.png")
         elif deliveryman_type == 3:
             self.image = pygame.image.load("./picture/dm3.png")
-        
-        self.image = pygame.transform.scale(self.image, image_size)
-        self.original_image = self.image  # 保存原始图像，用于翻转回来
-        self.rect = self.image.get_rect()
-        self.rect.x = screen_width  # 从右边进入屏幕
-        self.rect.y = 400
+        else:
+            self.image = None  # 如果无效，则为 None
+
+        if self.image:  # 确保 image 不为空时再进行缩放
+            self.image = pygame.transform.scale(self.image, image_size)
+            self.original_image = self.image  # 保存原始图像，用于翻转回来
+            self.rect = self.image.get_rect()
+            self.rect.x = screen_width  # 从右边进入屏幕
+            self.rect.y = 400
+        else:
+            raise ValueError(f"Invalid deliveryman_type: {deliveryman_type}")
+
         self.speed = speed
         self.target_x = target_x
         self.direction = -1  # 初始向左移动
@@ -411,29 +418,32 @@ class Deliveryman(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.reflected = False
             self.finished = True
-    
+
+
+# 读取文件并获取列表，保留空行
 def read_file_and_get_list(filename):
     with open(filename, 'r') as f:
-        content = f.read().strip()
-
-    if not content:
+        # 读取文件中的每一行，保留空行
+        content_list = [line.rstrip('\n') for line in f.readlines()]
+    
+    # 如果文件是空的，返回空列表
+    if not content_list:
         return []
-
-    content_list = [line for line in content.split('\n') if line.strip()]
-    content = ','.join(content_list)
-    result = list(map(int, content.split(',')))
+    
+    # 将非空行转换为整数，空行保留为 None
+    result = [int(line) if line.strip() else None for line in content_list]
     return result
 
-    
+
 # 更新文件，删除已完成的外卖员类型
 def update_file_after_removal(filename, completed_type):
     positions = read_file_and_get_list(filename)
     if completed_type in positions:
         positions.remove(completed_type)  # 从列表中移除已完成的外卖员类型
     with open(filename, 'w') as f:
-        f.write(','.join(map(str, positions)))
+        f.write(','.join(map(str, filter(None, positions))))  # 去掉 None 并写回文件
 
-# 动态检查文件更新并生成新的外卖员
+
 def update_deliverymen(existing_positions, deliverymen_group, filename):
     new_positions = read_file_and_get_list(filename)
 
@@ -441,8 +451,11 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
     if len(new_positions) > len(existing_positions):
         new_elements = new_positions[len(existing_positions):]
 
-        # 创建新的外卖员实例
         for i, deliveryman_type in enumerate(new_elements):
+            # 跳过 None 或者无效类型的外卖员
+            if deliveryman_type is None or not isinstance(deliveryman_type, int) or deliveryman_type not in [1, 2, 3]:
+                continue  # 跳过无效类型
+
             target_x = 250 + (len(existing_positions) + i) * 300  # 每个外卖员的目标点依次增加
             deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
             deliverymen_group.add(deliveryman)
@@ -450,7 +463,6 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
         existing_positions.extend(new_elements)
 
     return existing_positions
-
 
 # SELECT button
 selectbutton_surface = pygame.Surface((130, 40))
@@ -3741,18 +3753,11 @@ def main():
 
     machine_name = None
 
-    filename = "./picture/foodrak.txt"
-    positions = read_file_and_get_list(filename)
+    # 现有的外卖员位置列表
+    existing_positions = []
+    deliverymen_group = pygame.sprite.Group()
+    filename = './picture/foodrak.txt'
 
-    # 创建快递员组
-    deliverymen = pygame.sprite.Group()
-    existing_positions = list(positions)
-
-    # 初始化快递员组
-    for i, deliveryman_type in enumerate(positions):
-        target_x = 250 + i * 300  # 假设每个快递员目标点依次增加
-        deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
-        deliverymen.add(deliveryman)
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -3795,24 +3800,10 @@ def main():
 
             screen.blit(image, (x,y))
 
-                # 游戏主循环中的主要处理逻辑
-        new_positions = read_file_and_get_list(filename)
-
-        # 只处理新增的外卖员类型
-        if new_positions != existing_positions:
-            positions = update_deliverymen(existing_positions, deliverymen, filename)
-            existing_positions = new_positions  # 更新现有的 positions 列表
-
-        
-        deliverymen.update()
-
-        # 在目标位置停下时，删除外卖员数据
-        for deliveryman in deliverymen:
-            if deliveryman.finished:
-                deliverymen.remove(deliveryman)
-                # 数据已在 update() 方法中删除，无需重复
-        
-        deliverymen.draw(screen)
+            # 动态检查并更新外卖员
+        existing_positions = update_deliverymen(existing_positions, deliverymen_group, filename)
+        deliverymen_group.update()
+        deliverymen_group.draw(screen)
         
         # 假设 filename 是你的食物列表文件
         food_filename = "./picture/food-complete-name.txt"
