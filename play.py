@@ -436,13 +436,17 @@ def read_file_and_get_list(filename):
     return result
 
 
-# 更新文件，删除已完成的外卖员类型
+# 更新文件内容，删除某个特定的外卖员类型，但保留空行
 def update_file_after_removal(filename, completed_type):
-    positions = read_file_and_get_list(filename)
-    if completed_type in positions:
-        positions.remove(completed_type)  # 从列表中移除已完成的外卖员类型
+    with open(filename, 'r') as f:
+        lines = f.readlines()  # 读取文件的所有行
+
+    # 保留空行，只移除与 completed_type 对应的行
     with open(filename, 'w') as f:
-        f.write(','.join(map(str, filter(None, positions))))  # 去掉 None 并写回文件
+        for line in lines:
+            if line.strip() == str(completed_type):  # 如果行对应的外卖员类型，跳过
+                continue
+            f.write(line)  # 其他行，包括空行，写回文件
 
 
 def update_deliverymen(existing_positions, deliverymen_group, filename):
@@ -464,6 +468,7 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
         existing_positions.extend(new_elements)
 
     return existing_positions
+
 
 # SELECT button
 selectbutton_surface = pygame.Surface((130, 40))
@@ -3779,43 +3784,36 @@ def main():
 
         load_unlocked_food()
 
-        ffoodlist = open("./picture/foodrak.txt","r")
-        foodlist = [line.rstrip('\n') for line in ffoodlist.readlines()]  # 只去掉换行符，保留空行
+        # 读取文件内容，保留空行
+        with open("./picture/foodrak.txt", "r") as ffoodlist:
+            foodlist = ffoodlist.read().splitlines()  # 保留空行，splitlines 不会去除空白行
 
+        # 定义每个格子的固定坐标
+        positions = [(250, 375), (550, 375), (850, 375)]
+
+        # 遍历食物列表
         for index, item in enumerate(foodlist):
             if item == "":
-                continue
+                continue  # 空行跳过，但不影响其他行的位置
 
-            if index == 0:
-                x,y = 250, 375
-            elif index == 1:
-                x, y= 550, 375
-            elif index == 2:
-                x,y = 850, 375
-            
+            # 获取相应的坐标
+            x, y = positions[index]  
+
+            # 加载食物图片并进行缩放
             image = pygame.image.load("./picture/bag.png")
             image = pygame.transform.scale(image, (250, 100))
 
-            screen.blit(image, (x,y))
+            # 将图片绘制到指定坐标
+            screen.blit(image, (x, y))
 
-            # 动态检查并更新外卖员
+
         existing_positions = update_deliverymen(existing_positions, deliverymen_group, filename)
         deliverymen_group.update()
-                # 移除已经完成的外卖员
-        for deliveryman in deliverymen_group:
-            if deliveryman.finished:
-                deliverymen_group.remove(deliveryman)
         deliverymen_group.draw(screen)
-        
-        # 假设 filename 是你的食物列表文件
+
         food_filename = "./picture/food-complete-name.txt"
-        
-        # 获取文件中的食物列表
         food_list = read_food_list(food_filename)
-
-
-        # 使用食物列表继续执行其他操作，比如显示食物图片
-        display_food_images(food_list)  # 假设这是处理图片显示的函数
+        display_food_images(food_list)
 
 
         # Handle stovepot cooking process
