@@ -2,8 +2,8 @@ Tokbokki:True
 Fried Rice:True
 Oden:True
 Bibimbap:True
-Korean Army Stew:False
-Fried Noodles:False
+Korean Army Stew:True
+Fried Noodles:True
 Fried Bihuns:True
 Hokkien Mee:True
 Ramen:True

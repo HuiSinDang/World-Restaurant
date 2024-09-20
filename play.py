@@ -3303,154 +3303,154 @@ waiting_bar_steamer = CookingBar(651, 120, 160, 20, 100)
 waiting_bar_oven = CookingBar(965, 119, 160, 20, 100)    
 
 
-def throw_food_into_dustbin():
-    global stovepot_food_index, steamer_food_index, oven_food_index
-    global waste_food_index, stovepot_button_rect, steamer_button_rect, oven_button_rect
-    global soundoff_btn_rect, soundon_btn_rect
+# def throw_food_into_dustbin():
+#     global stovepot_food_index, steamer_food_index, oven_food_index
+#     global waste_food_index, stovepot_button_rect, steamer_button_rect, oven_button_rect
+#     global soundoff_btn_rect, soundon_btn_rect
 
-    waste_food_img = None
-    waste_food_position = None
+#     waste_food_img = None
+#     waste_food_position = None
 
-    if sound_muted:
-        sound_button_img = soundoff_btn
-        sound_button_rect = soundoff_btn_rect
-    else:
-        sound_button_img = soundon_btn
-        sound_button_rect = soundon_btn_rect
-
-
-    if stovepot_food_index == waste_food_index:
-        if waste_food_index in range(len(food_lists)):
-            waste_food_img = food_lists[waste_food_index]["image"]
-        waste_food_position = (240, 157)  # stovepot食物的位置
-    elif steamer_food_index == waste_food_index:
-        if waste_food_index in range(len(foodlist_steamer)):
-            waste_food_img = foodlist_steamer[waste_food_index]["image"]
-        waste_food_position = (565, 157)  
-    elif oven_food_index == waste_food_index:
-        if waste_food_index in range(len(foodlist_oven)):
-            waste_food_img = foodlist_oven[waste_food_index]["image"]
-        waste_food_position = (850, 157) 
+#     if sound_muted:
+#         sound_button_img = soundoff_btn
+#         sound_button_rect = soundoff_btn_rect
+#     else:
+#         sound_button_img = soundon_btn
+#         sound_button_rect = soundon_btn_rect
 
 
-    # 如果没有食物的图片的话就退出
-    if waste_food_img is None or waste_food_position is None:
-        return
-
-    dustbin_pos = (1250, 160)  
-    speed = 15
-    throwing = True
-    angle = 0  # 初始角度
-
-    while throwing:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                throwing = False
-
-        # 计算食物和垃圾桶的direction vector
-        direction_x = dustbin_pos[0] - waste_food_position[0]
-        direction_y = dustbin_pos[1] - waste_food_position[1]
-
-        # 计算食物与垃圾桶的距离
-        distance = (direction_x**2 + direction_y**2)**0.5
-
-        if distance > 10:  # 继续往垃圾桶方向移动
-            dir_x = direction_x / distance
-            dir_y = (direction_y / distance)
-            waste_food_position = (waste_food_position[0] + dir_x * speed, waste_food_position[1] + dir_y * speed)
-
-            # 旋转食物
-            angle += 10  
-            rotated_food_img = pygame.transform.rotate(waste_food_img, angle)
-
-            rotated_rect = rotated_food_img.get_rect(center=waste_food_position)
-
-            screen.blit(background, (0, 0))  
-            pan_default_button.update()
-            steamer_button.update()
-            oven_button.update()  
-            profilebutton.update()
-            upgrade_btn.update()
-            menu_button.update()
-            orderbtn.update()
-            happyhour_bar(hhactive)
-            money_bar()
-            waiting_table()
-
-            stovepot_button_rect = stovepot_button_select()
-            steamer_button_rect = steamer_button_select()
-            oven_button_rect = oven_button_select()
-
-            screen.blit(rotated_food_img, rotated_rect.topleft)  
-            screen.blit(sound_button_img, sound_button_rect.topleft)  # Draw the sound button
-            screen.blit(dustbin_img, dustbin_pos)
-            pygame.display.update()
-
-        else:
-            throwing = False
-            waste_food_index = None  # Reset waste food index
-
-        pygame.time.delay(20)
+#     if stovepot_food_index == waste_food_index:
+#         if waste_food_index in range(len(food_lists)):
+#             waste_food_img = food_lists[waste_food_index]["image"]
+#         waste_food_position = (240, 157)  # stovepot食物的位置
+#     elif steamer_food_index == waste_food_index:
+#         if waste_food_index in range(len(foodlist_steamer)):
+#             waste_food_img = foodlist_steamer[waste_food_index]["image"]
+#         waste_food_position = (565, 157)  
+#     elif oven_food_index == waste_food_index:
+#         if waste_food_index in range(len(foodlist_oven)):
+#             waste_food_img = foodlist_oven[waste_food_index]["image"]
+#         waste_food_position = (850, 157) 
 
 
+#     # 如果没有食物的图片的话就退出
+#     if waste_food_img is None or waste_food_position is None:
+#         return
 
-def exceed_time_collect():
-    global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time
-    global waste_food_index, stovepot_waiting_start_time, steamer_waiting_start_time, oven_waiting_start_time
-    global stovepot_food_index, steamer_food_index, oven_food_index
+#     dustbin_pos = (1250, 160)  
+#     speed = 15
+#     throwing = True
+#     angle = 0  # 初始角度
 
-    waiting_duration = 10
-    current_time = time.time()
+#     while throwing:
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 throwing = False
 
-    if sound_muted:
-        screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
-    else:
-        screen.blit(soundon_btn, soundon_btn_rect.topleft)  
+#         # 计算食物和垃圾桶的direction vector
+#         direction_x = dustbin_pos[0] - waste_food_position[0]
+#         direction_y = dustbin_pos[1] - waste_food_position[1]
+
+#         # 计算食物与垃圾桶的距离
+#         distance = (direction_x**2 + direction_y**2)**0.5
+
+#         if distance > 10:  # 继续往垃圾桶方向移动
+#             dir_x = direction_x / distance
+#             dir_y = (direction_y / distance)
+#             waste_food_position = (waste_food_position[0] + dir_x * speed, waste_food_position[1] + dir_y * speed)
+
+#             # 旋转食物
+#             angle += 10  
+#             rotated_food_img = pygame.transform.rotate(waste_food_img, angle)
+
+#             rotated_rect = rotated_food_img.get_rect(center=waste_food_position)
+
+#             screen.blit(background, (0, 0))  
+#             pan_default_button.update()
+#             steamer_button.update()
+#             oven_button.update()  
+#             profilebutton.update()
+#             upgrade_btn.update()
+#             menu_button.update()
+#             orderbtn.update()
+#             happyhour_bar(hhactive)
+#             money_bar()
+#             waiting_table()
+
+#             stovepot_button_rect = stovepot_button_select()
+#             steamer_button_rect = steamer_button_select()
+#             oven_button_rect = oven_button_select()
+
+#             screen.blit(rotated_food_img, rotated_rect.topleft)  
+#             screen.blit(sound_button_img, sound_button_rect.topleft)  # Draw the sound button
+#             screen.blit(dustbin_img, dustbin_pos)
+#             pygame.display.update()
+
+#         else:
+#             throwing = False
+#             waste_food_index = None  # Reset waste food index
+
+#         pygame.time.delay(20)
 
 
-    # Handle Stovepot waiting bar
-    if stovepot_exceed_time:
-        waiting_elapsed = current_time - stovepot_waiting_start_time
-        waiting_bar_stovepot.update(waiting_elapsed, waiting_duration)
-        waiting_bar_stovepot.draw(screen)
-        pastefood_stovepot(stovepot_food_index)
-        screen.blit(fire_img, (290, 113))
-        draw_machine_waiting_button("stovepot")
-        if waiting_elapsed >= waiting_duration:
-            waste_food_index = stovepot_food_index
-            throw_food_into_dustbin()
-            stovepot_food_index = None
-            stovepot_exceed_time = False
+
+# def exceed_time_collect():
+#     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time
+#     global waste_food_index, stovepot_waiting_start_time, steamer_waiting_start_time, oven_waiting_start_time
+#     global stovepot_food_index, steamer_food_index, oven_food_index
+
+#     waiting_duration = 10
+#     current_time = time.time()
+
+#     if sound_muted:
+#         screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+#     else:
+#         screen.blit(soundon_btn, soundon_btn_rect.topleft)  
+
+
+#     # Handle Stovepot waiting bar
+#     if stovepot_exceed_time:
+#         waiting_elapsed = current_time - stovepot_waiting_start_time
+#         waiting_bar_stovepot.update(waiting_elapsed, waiting_duration)
+#         waiting_bar_stovepot.draw(screen)
+#         pastefood_stovepot(stovepot_food_index)
+#         screen.blit(fire_img, (290, 113))
+#         draw_machine_waiting_button("stovepot")
+#         if waiting_elapsed >= waiting_duration:
+#             waste_food_index = stovepot_food_index
+#             throw_food_into_dustbin()
+#             stovepot_food_index = None
+#             stovepot_exceed_time = False
          
 
-    # Handle Steamer waiting bar
-    if steamer_exceed_time:
-        waiting_elapsed = current_time - steamer_waiting_start_time
-        waiting_bar_steamer.update(waiting_elapsed, waiting_duration)
-        waiting_bar_steamer.draw(screen)
-        pastefood_steamer(steamer_food_index)
-        screen.blit(fire_img, (610, 113))
-        draw_machine_waiting_button("steamer")
-        if waiting_elapsed >= waiting_duration:
-            waste_food_index = steamer_food_index
-            throw_food_into_dustbin()
-            steamer_food_index = None
-            steamer_exceed_time = False
+#     # Handle Steamer waiting bar
+#     if steamer_exceed_time:
+#         waiting_elapsed = current_time - steamer_waiting_start_time
+#         waiting_bar_steamer.update(waiting_elapsed, waiting_duration)
+#         waiting_bar_steamer.draw(screen)
+#         pastefood_steamer(steamer_food_index)
+#         screen.blit(fire_img, (610, 113))
+#         draw_machine_waiting_button("steamer")
+#         if waiting_elapsed >= waiting_duration:
+#             waste_food_index = steamer_food_index
+#             throw_food_into_dustbin()
+#             steamer_food_index = None
+#             steamer_exceed_time = False
           
 
-    # Handle Oven waiting bar
-    if oven_exceed_time:
-        waiting_elapsed = current_time - oven_waiting_start_time
-        waiting_bar_oven.update(waiting_elapsed, waiting_duration)
-        waiting_bar_oven.draw(screen)
-        pastefood_oven(oven_food_index)
-        screen.blit(fire_img, (930, 113))
-        draw_machine_waiting_button("oven")
-        if waiting_elapsed >= waiting_duration:
-            waste_food_index = oven_food_index
-            throw_food_into_dustbin()
-            oven_food_index = None
-            oven_exceed_time = False
+#     # Handle Oven waiting bar
+#     if oven_exceed_time:
+#         waiting_elapsed = current_time - oven_waiting_start_time
+#         waiting_bar_oven.update(waiting_elapsed, waiting_duration)
+#         waiting_bar_oven.draw(screen)
+#         pastefood_oven(oven_food_index)
+#         screen.blit(fire_img, (930, 113))
+#         draw_machine_waiting_button("oven")
+#         if waiting_elapsed >= waiting_duration:
+#             waste_food_index = oven_food_index
+#             throw_food_into_dustbin()
+#             oven_food_index = None
+#             oven_exceed_time = False
             
 
 def cooking_process():
@@ -3527,7 +3527,7 @@ def cooking_process():
             full_slot_remind = False
 
     # Handle waiting bar if exceed time
-    exceed_time_collect()
+    # exceed_time_collect()
 
 def draw_machine_type_button(machine_type):
     colors_cooking = {
@@ -3773,7 +3773,7 @@ def main():
     
     deliverymen_group = pygame.sprite.Group()
     existing_positions = read_file_and_get_list("./picture/foodrak.txt")
-    print(f"Initial positions: {existing_positions}")  # 调试信息
+    
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -3835,12 +3835,12 @@ def main():
             if len(sprites) <= i:
                 # 没有外卖员，添加新的
                 target_x = 250 + i * 300
-                print(f"Adding new deliveryman type {deliveryman_type} at position {target_x}")
+                
                 deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
                 deliverymen_group.add(deliveryman)
             elif sprites[i].deliveryman_type != deliveryman_type:
                 # 替换不匹配的外卖员
-                print(f"Replacing deliveryman at index {i} with type {deliveryman_type}")
+                
                 deliverymen_group.remove(sprites[i])  # 移除旧的
                 target_x = 250 + i * 300
                 deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
@@ -3852,11 +3852,11 @@ def main():
         # 移除已完成任务的外卖员
         for deliveryman in deliverymen_group:
             if deliveryman.finished:
-                print(f"Removing finished deliveryman type {deliveryman.deliveryman_type}")
+                
                 deliverymen_group.remove(deliveryman)
 
         # 打印当前的外卖员信息以便调试
-        print(f"Active deliverymen: {[dm.deliveryman_type for dm in deliverymen_group]}")
+        
         deliverymen_group.draw(screen)
 
 
@@ -3933,7 +3933,7 @@ def main():
 
         
         cooking_process()
-        exceed_time_collect()
+        # exceed_time_collect()
         save_unlocked_food()
         save_unlocked_machines()
         update_slots(slot_index, food_item)
