@@ -1446,8 +1446,22 @@ def order():
         
         draw_text("Order", main_font, "black", screen, 650, 190)  # On top of button 1
 
-        f = open("./picture/food.txt", "r")
-        food = [line.strip() for line in f.readlines() if line.strip()]
+        food = []
+
+        # 打开txt文件
+        file =  open('./picture/unlocked_food.txt', 'r')
+        # 遍历文件中的每一行
+        for line in file:
+            # 去除首尾空白字符
+            line = line.strip()
+            # 跳过空行
+            if not line:
+                continue
+            # 检查是否是 True 并提取 xxx 部分
+            if line.endswith(':True'):
+                # 提取 xxx 部分并添加到 food 列表中
+                food_item = line.split(':')[0]
+                food.append(food_item)
 
         completebutton.update()
 
