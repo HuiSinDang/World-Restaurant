@@ -470,6 +470,7 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
     return existing_positions
 
 
+
 # SELECT button
 selectbutton_surface = pygame.Surface((130, 40))
 selectprepare_button_rect = pygame.Rect(1010, 90, 150, 40) 
@@ -3755,12 +3756,10 @@ def main():
     food_item = None
 
     machine_name = None
-
-    # 现有的外卖员位置列表
-    existing_positions = []
+    
     deliverymen_group = pygame.sprite.Group()
-    filename = './picture/foodrak.txt'
-
+    existing_positions = read_file_and_get_list("./picture/foodrak.txt")
+    print(f"Initial positions: {existing_positions}")  # 调试信息
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -3768,7 +3767,7 @@ def main():
         screen.blit(dustbin_img, (1250, 160))
         money_bar()
         happyhour_bar(hhactive)
-        # waiting_table()
+
         profilebutton.update()
         upgrade_btn.update()
         menu_button.update()
@@ -3806,10 +3805,48 @@ def main():
             # 将图片绘制到指定坐标
             screen.blit(image, (x, y))
 
+            # 读取新外卖员位置
+        new_positions = read_file_and_get_list("./picture/foodrak.txt")
 
-        existing_positions = update_deliverymen(existing_positions, deliverymen_group, filename)
+        # 如果当前组内的外卖员数量不匹配，更新列表
+        for i, deliveryman_type in enumerate(new_positions):
+            if deliveryman_type is None:
+                continue  # 跳过空行
+            deliveryman_type = int(deliveryman_type)  # 确保类型一致
+
+            # 当前 deliverymen_group 中的外卖员
+            sprites = deliverymen_group.sprites()
+
+            # 检查当前 index 是否已有外卖员
+            if len(sprites) <= i:
+                # 没有外卖员，添加新的
+                target_x = 250 + i * 300
+                print(f"Adding new deliveryman type {deliveryman_type} at position {target_x}")
+                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+                deliverymen_group.add(deliveryman)
+            elif sprites[i].deliveryman_type != deliveryman_type:
+                # 替换不匹配的外卖员
+                print(f"Replacing deliveryman at index {i} with type {deliveryman_type}")
+                deliverymen_group.remove(sprites[i])  # 移除旧的
+                target_x = 250 + i * 300
+                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+                deliverymen_group.add(deliveryman)
+
+        # 更新外卖员的位置或状态
         deliverymen_group.update()
+
+        # 移除已完成任务的外卖员
+        for deliveryman in deliverymen_group:
+            if deliveryman.finished:
+                print(f"Removing finished deliveryman type {deliveryman.deliveryman_type}")
+                deliverymen_group.remove(deliveryman)
+
+        # 打印当前的外卖员信息以便调试
+        print(f"Active deliverymen: {[dm.deliveryman_type for dm in deliverymen_group]}")
         deliverymen_group.draw(screen)
+
+
+        # 检查 foodrak.txt 中的新外卖员类型
 
         food_filename = "./picture/food-complete-name.txt"
         food_list = read_food_list(food_filename)
