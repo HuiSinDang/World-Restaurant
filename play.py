@@ -3693,11 +3693,17 @@ def display_food_images(foodcom):
             # 根据 foodcom 中的名字查找对应的图片
             if item in food_image_mapping:
                 image_file = food_image_mapping[item]
+                image = pygame.image.load(image_file)
+                image = pygame.transform.scale(image, (image_width, image_height))
+                screen.blit(image, (x, y))
             else:
                 # 如果没有找到对应的图片，使用默认图片
                 image_file = "./picture/bag.png"  # 确保此图片存在
 
-        
+            # 加载并缩放图片
+            # try:
+                
+            
 
 
 def main():
