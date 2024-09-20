@@ -3759,7 +3759,7 @@ def main():
     
     deliverymen_group = pygame.sprite.Group()
     existing_positions = read_file_and_get_list("./picture/foodrak.txt")
-    print(f"Initial positions: {existing_positions}")  # 调试信息
+    
 
     while True:
         bg_img = pygame.image.load("./picture/lobby.jpg").convert()
@@ -3821,12 +3821,12 @@ def main():
             if len(sprites) <= i:
                 # 没有外卖员，添加新的
                 target_x = 250 + i * 300
-                print(f"Adding new deliveryman type {deliveryman_type} at position {target_x}")
+                
                 deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
                 deliverymen_group.add(deliveryman)
             elif sprites[i].deliveryman_type != deliveryman_type:
                 # 替换不匹配的外卖员
-                print(f"Replacing deliveryman at index {i} with type {deliveryman_type}")
+                
                 deliverymen_group.remove(sprites[i])  # 移除旧的
                 target_x = 250 + i * 300
                 deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
@@ -3838,11 +3838,11 @@ def main():
         # 移除已完成任务的外卖员
         for deliveryman in deliverymen_group:
             if deliveryman.finished:
-                print(f"Removing finished deliveryman type {deliveryman.deliveryman_type}")
+                
                 deliverymen_group.remove(deliveryman)
 
         # 打印当前的外卖员信息以便调试
-        print(f"Active deliverymen: {[dm.deliveryman_type for dm in deliverymen_group]}")
+        
         deliverymen_group.draw(screen)
 
 
