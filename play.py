@@ -405,7 +405,7 @@ class Deliveryman(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)  # 水平翻转
                 self.reflected = True  # 标记为已经反转
         # 停留3秒后，开始回走
-        elif pygame.time.get_ticks() - self.wait_time > 1000 and self.direction == -1:
+        elif self.wait_time > 0 and pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
             self.direction = 1  # 转身，开始向右回走
             # 在开始回走的时候删除文件中的数据
             update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type)
@@ -418,6 +418,7 @@ class Deliveryman(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.reflected = False
             self.finished = True
+
 
 
 # 读取文件并获取列表，保留空行
@@ -1395,7 +1396,7 @@ def profile():
         button.draw(screen)
         resetbutton.update()
         pygame.display.flip()
-        clock.tick(30)
+        clock.tick(60)
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(str(text), True, color)
@@ -3615,7 +3616,7 @@ def handle_unlocking_machine():
         screen.blit(soundon_btn, soundon_btn_rect.topleft)
     
     pygame.display.flip()
-    clock.tick(30)
+    clock.tick(60)
 
 def read_food_list(filename):
     with open(filename, "r") as file:
@@ -3711,9 +3712,6 @@ def display_food_images(foodcom):
             else:
                 # 如果没有找到对应的图片，使用默认图片
                 image_file = "./picture/bag.png"  # 确保此图片存在
-
-            # 加载并缩放图片
-            # try:
                 
             
 
@@ -3803,6 +3801,10 @@ def main():
             # 动态检查并更新外卖员
         existing_positions = update_deliverymen(existing_positions, deliverymen_group, filename)
         deliverymen_group.update()
+                # 移除已经完成的外卖员
+        for deliveryman in deliverymen_group:
+            if deliveryman.finished:
+                deliverymen_group.remove(deliveryman)
         deliverymen_group.draw(screen)
         
         # 假设 filename 是你的食物列表文件
