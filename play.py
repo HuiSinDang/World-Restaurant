@@ -1501,12 +1501,12 @@ def order():
                     f1 = food[y]
                     order1.append(f1)
                     ffood1.write(f'{f1}\n')
-                    if f1 in waitingtable1 :
-                        color = "green"
-                    else :
-                        color = "red"
-                    draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
-                    y_offset += 50
+                    # if f1 in waitingtable1 :
+                    #     color = "green"
+                    # else :
+                    #     color = "red"
+                    # draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
+                    # y_offset += 50
                 ffood1.close()
 
             else:
@@ -1589,9 +1589,9 @@ def order():
                 f1 = food[y]
                 order1.append(f1)
                 ffood1.write(f'{f1}\n')
-                color = "green" if f1 in waitingtable1 else "red"
-                draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
-                y_offset += 50
+                # color = "green" if f1 in waitingtable1 else "red"
+                # draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
+                # y_offset += 50
             ffood1.close()
 
         #order 2
@@ -1630,12 +1630,12 @@ def order():
                     f2 = food[y]
                     order2.append(f2)
                     ffood2.write(f'{f2}\n')
-                    if f2 in waitingtable2:
-                        color = "green"
-                    else :
-                        color = "red"
-                    draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                    y_offset += 50
+                    # if f2 in waitingtable2:
+                    #     color = "green"
+                    # else :
+                    #     color = "red"
+                    # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
+                    # y_offset += 50
                 ffood2.close()
 
             else:
@@ -1720,12 +1720,12 @@ def order():
                 f2 = food[y]
                 order2.append(f2)
                 ffood2.write(f'{f2}\n')
-                if f2 in waitingtable2:
-                    color = "green"
-                else:
-                    color = "red"
-                draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                y_offset += 50
+                # if f2 in waitingtable2:
+                #     color = "green"
+                # else:
+                #     color = "red"
+                # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
+                # y_offset += 50
             ffood2.close()
 
         #order 3
@@ -1764,12 +1764,12 @@ def order():
                     f3 = food[y]
                     order3.append(f3)
                     ffood3.write(f'{f3}\n')
-                    if f3 in waitingtable3:
-                        color = "green"
-                    else:
-                        color = "red"
-                    draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                    y_offset += 50
+                    # if f3 in waitingtable3:
+                    #     color = "green"
+                    # else:
+                    #     color = "red"
+                    # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
+                    # y_offset += 50
                 ffood3.close()
 
             else:
@@ -1853,12 +1853,12 @@ def order():
                 f3 = food[y]
                 order3.append(f3)
                 ffood3.write(f'{f3}\n')
-                if f3 in waitingtable3:
-                    color = "green"
-                else:
-                    color = "red"
-                draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                y_offset += 50
+                # if f3 in waitingtable3:
+                #     color = "green"
+                # else:
+                #     color = "red"
+                # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
+                # y_offset += 50
             ffood3.close()
         
         if last_clicked_order == "order1":
@@ -3213,91 +3213,37 @@ def pastefood_oven(selected_food_index):
     screen.blit(new_food_image, (food_x, food_y))
 
 
-def waiting_table():
-    table_rect = pygame.Rect(195, 620, 1070, 140)
-    table_color = (188,143,143)
-    pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)  
+# def waiting_table():
+#     table_rect = pygame.Rect(195, 620, 1070, 140)
+#     table_color = (188,143,143)
+#     pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)  
 
 
-    # 6个格子在1 row (代表table width被分割六份）
-    slot_width = table_rect.width // 6         
-    slot_height = table_rect.height            # The height of each slot is the full height of the table
+#     # 6个格子在1 row (代表table width被分割六份）
+#     slot_width = table_rect.width // 6         
+#     slot_height = table_rect.height            # The height of each slot is the full height of the table
 
 
-    # Iterate through the 6 slots to draw them
-    for col in range(6):  # 6 columns for 6 slots
-        slot_rect = pygame.Rect(
-            table_rect.x + col * slot_width,
-            table_rect.y,
-            slot_width, slot_height
-        )
-        pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # Draw slot rectangles with gray borders
+#     # Iterate through the 6 slots to draw them
+#     for col in range(6):  # 6 columns for 6 slots
+#         slot_rect = pygame.Rect(
+#             table_rect.x + col * slot_width,
+#             table_rect.y,
+#             slot_width, slot_height
+#         )
+#         pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # Draw slot rectangles with gray borders
 
 
-        if slots[col] is not None:
-            food_item = slots[col]
-            food_image = food_item["image"]
-            new_food_image = pygame.transform.scale(food_image, (slot_width, slot_height))
-            screen.blit(new_food_image, slot_rect.topleft)
+#         if slots[col] is not None:
+#             food_item = slots[col]
+#             food_image = food_item["image"]
+#             new_food_image = pygame.transform.scale(food_image, (slot_width, slot_height))
+#             screen.blit(new_food_image, slot_rect.topleft)
 
 
-slots = [None]*6
-
-def determine_available_slots():
-    index = 0
-    while index < len(slots):
-        if slots[index] is None:
-            return index
-        index +=1
-    return None 
 
 
-def update_slots(slot_index, food_item):    
-    if slot_index is not None and 0 <= slot_index < len(slots):
-        slots[slot_index] = food_item
 
-
-def remind_no_empty_slots():
-    global message_timer, full_slot_remind
-    full_slot_remind = True
-    message_timer = 120
-
-
-        
-def put_food_to_slots(selected_food_index, machine_type):
-    if selected_food_index is None or selected_food_index<0:
-        return False
-    
-    slot_index = determine_available_slots()
-
-    if slot_index is not None:
-
-        if machine_type == "oven":
-            food_name = foodlist_oven[selected_food_index]["name"]
-            food_price = foodlist_oven[selected_food_index]["price"]
-            update_slots(slot_index, foodlist_oven[selected_food_index])
-        elif machine_type == "stovepot":
-            food_name = food_lists[selected_food_index]["name"]
-            food_price = food_lists[selected_food_index]["price"]
-            update_slots(slot_index, food_lists[selected_food_index])
-        elif machine_type == "steamer":
-            food_name = foodlist_steamer[selected_food_index]["name"]
-            food_price = foodlist_steamer[selected_food_index]["price"]
-            update_slots(slot_index, foodlist_steamer[selected_food_index])
-
-        f = open("./picture/food-complete-name.txt", "a")
-        f.write (f"{food_name}\n")
-        f.close()
-
-        f = open("./picture/food-complete-price.txt", "a")
-        f.write(f"{food_price}\n")
-        f.close()
-
-    else:
-        remind_no_empty_slots()
-
-    return True
-        
 waiting_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
 waiting_bar_steamer = CookingBar(651, 120, 160, 20, 100)
 waiting_bar_oven = CookingBar(965, 119, 160, 20, 100)    
@@ -3459,6 +3405,7 @@ def cooking_process():
     global stovepot_food_index, steamer_food_index, oven_food_index
     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time
     global stovepot_waiting_start_time, steamer_waiting_start_time, oven_waiting_start_time
+    global machine_type
 
     current_time = time.time()
 
@@ -3470,13 +3417,21 @@ def cooking_process():
         elapsed_time = current_time - stovepot_start_time
         if elapsed_time >= stovepot_duration:
             stovepot_running = False
-            slot_index = determine_available_slots()
-            if slot_index is not None:
-                put_food_to_slots(stovepot_food_index, "stovepot")
-                stovepot_exceed_time = False
-            else:
-                stovepot_exceed_time = True
-                stovepot_waiting_start_time = current_time  # Start waiting bar timer
+            print("finish")
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = food_lists[stovepot_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
+            # slot_index = determine_available_slots(slots)
+            # if slot_index is not None:
+            #     put_food_to_slots(stovepot_food_index, "stovepot")
+            #     stovepot_exceed_time = False
+
 
         cooking_bar_stovepot.update(elapsed_time, stovepot_duration)
         cooking_bar_stovepot.draw(screen)
@@ -3488,13 +3443,15 @@ def cooking_process():
         elapsed_time = current_time - steamer_start_time
         if elapsed_time >= steamer_duration:
             steamer_running = False
-            slot_index = determine_available_slots()
-            if slot_index is not None:
-                put_food_to_slots(steamer_food_index, "steamer")
-                steamer_exceed_time = False
-            else:
-                steamer_exceed_time = True
-                steamer_waiting_start_time = current_time  # Start waiting bar timer
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = foodlist_steamer[steamer_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
 
         cooking_bar_steamer.update(elapsed_time, steamer_duration)
         cooking_bar_steamer.draw(screen)
@@ -3506,13 +3463,15 @@ def cooking_process():
         elapsed_time = current_time - oven_start_time
         if elapsed_time >= oven_duration:
             oven_running = False
-            slot_index = determine_available_slots()
-            if slot_index is not None:
-                put_food_to_slots(oven_food_index, "oven")
-                oven_exceed_time = False
-            else:
-                oven_exceed_time = True
-                oven_waiting_start_time = current_time  # Start waiting bar timer
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = foodlist_oven[oven_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
 
         cooking_bar_oven.update(elapsed_time, oven_duration)
         cooking_bar_oven.draw(screen)
@@ -3936,7 +3895,7 @@ def main():
         # exceed_time_collect()
         save_unlocked_food()
         save_unlocked_machines()
-        update_slots(slot_index, food_item)
+        # update_slots(slot_index, food_item)
         pygame.display.flip()
         clock.tick(60)
 
