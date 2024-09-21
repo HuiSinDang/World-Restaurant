@@ -23,7 +23,7 @@ Soup Dumplings:False
 Shrimp Dumplings:True
 Egg Custard Bun:False
 Corndogs:False
-Korean Fried Chicken:False
+Korean Fried Chicken:True
 Calamari Rings:False
 Rainbow Cake:True
 Red Velvet:True
