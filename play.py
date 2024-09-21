@@ -1501,12 +1501,12 @@ def order():
                     f1 = food[y]
                     order1.append(f1)
                     ffood1.write(f'{f1}\n')
-                    if f1 in waitingtable1 :
-                        color = "green"
-                    else :
-                        color = "red"
-                    draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
-                    y_offset += 50
+                    # if f1 in waitingtable1 :
+                    #     color = "green"
+                    # else :
+                    #     color = "red"
+                    # draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
+                    # y_offset += 50
                 ffood1.close()
 
             else:
@@ -1589,9 +1589,9 @@ def order():
                 f1 = food[y]
                 order1.append(f1)
                 ffood1.write(f'{f1}\n')
-                color = "green" if f1 in waitingtable1 else "red"
-                draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
-                y_offset += 50
+                # color = "green" if f1 in waitingtable1 else "red"
+                # draw_text(f1, main_font, color, screen, 360, y_offset)  # On top of button 1
+                # y_offset += 50
             ffood1.close()
 
         #order 2
@@ -1630,12 +1630,12 @@ def order():
                     f2 = food[y]
                     order2.append(f2)
                     ffood2.write(f'{f2}\n')
-                    if f2 in waitingtable2:
-                        color = "green"
-                    else :
-                        color = "red"
-                    draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                    y_offset += 50
+                    # if f2 in waitingtable2:
+                    #     color = "green"
+                    # else :
+                    #     color = "red"
+                    # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
+                    # y_offset += 50
                 ffood2.close()
 
             else:
@@ -1720,12 +1720,12 @@ def order():
                 f2 = food[y]
                 order2.append(f2)
                 ffood2.write(f'{f2}\n')
-                if f2 in waitingtable2:
-                    color = "green"
-                else:
-                    color = "red"
-                draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                y_offset += 50
+                # if f2 in waitingtable2:
+                #     color = "green"
+                # else:
+                #     color = "red"
+                # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
+                # y_offset += 50
             ffood2.close()
 
         #order 3
@@ -1764,12 +1764,12 @@ def order():
                     f3 = food[y]
                     order3.append(f3)
                     ffood3.write(f'{f3}\n')
-                    if f3 in waitingtable3:
-                        color = "green"
-                    else:
-                        color = "red"
-                    draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                    y_offset += 50
+                    # if f3 in waitingtable3:
+                    #     color = "green"
+                    # else:
+                    #     color = "red"
+                    # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
+                    # y_offset += 50
                 ffood3.close()
 
             else:
@@ -1853,12 +1853,12 @@ def order():
                 f3 = food[y]
                 order3.append(f3)
                 ffood3.write(f'{f3}\n')
-                if f3 in waitingtable3:
-                    color = "green"
-                else:
-                    color = "red"
-                draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                y_offset += 50
+                # if f3 in waitingtable3:
+                #     color = "green"
+                # else:
+                #     color = "red"
+                # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
+                # y_offset += 50
             ffood3.close()
         
         if last_clicked_order == "order1":
