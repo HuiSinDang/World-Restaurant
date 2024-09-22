@@ -13,7 +13,7 @@ mixer.music.load('./picture/music.mp3')
 mixer.music.play(-1)
 mixer.music.set_volume(1)
 click_sfx = pygame.mixer.Sound("./picture/click.wav")
-throw_effect = pygame.mixer.Sound("./picture/throw.mp3")
+
 
 screen_height=750
 screen_width=1400
@@ -924,6 +924,8 @@ def save_unlocked_food():
         for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
             f.write(f"{button.foodname}:{button.pressed}\n")
 
+
+
 def load_unlocked_food():
     unlocked_food = {"Tokbokki","Oden","Fried Rice"}
     try:
@@ -1653,6 +1655,7 @@ def order():
 
                 update_button_image2(order2button, all_in_waitingtable2)
 
+                
                 # 更新员工图像
                 if int(staff2[1]) == 1:
                     man2.update()
@@ -2000,7 +2003,8 @@ def order():
                                 list2 = load_list_from_file(list2_filename)
 
                                 for item in list1:
-                                    list2.remove(item)
+                                    if item in list2:
+                                        list2.remove(item)
                                     
 
                                 list1.clear()  
@@ -2052,7 +2056,8 @@ def order():
                                 list2 = load_list_from_file(list2_filename)
 
                                 for item in list1:
-                                    list2.remove(item)
+                                    if item in list2:
+                                        list2.remove(item)
                                     
 
                                 list1.clear()  
@@ -2116,7 +2121,8 @@ def order():
                                         list2 = load_list_from_file(list2_filename)
 
                                         for item in list1:
-                                            list2.remove(item)
+                                            if item in list2:
+                                                list2.remove(item)
                                            
 
                                         list1.clear()  
@@ -3915,7 +3921,7 @@ def throw_food_dustbin(dustbin_img_rect):
 
             # If a food has been selected, check for dustbin click
             elif dustbin_img_rect.collidepoint(event.pos):
-                throw_effect.play()
+                click_sfx.play()
                
                 # Read the current food list again
                 current_foods = read_food_list(food_filename)
