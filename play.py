@@ -1056,10 +1056,10 @@ buttons_page5 =[
 ]
 
 buttons_page6 =[
-    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=20),
-    Button("Mooncake","Unlock",780,425,125,40,lambda:unlock_item(32),label_text="Mooncake\nRM 20",image_path='./picture/mooncake.png',cost=20),
-    Button("Cookies","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Cookies\nRM 20",image_path='./picture/mooncake.png',cost=20),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
+    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png'),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png'),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png'),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png'),
 ]
 
 
@@ -2336,8 +2336,8 @@ def draw_popup():
     draw_text("Default", upgrade_font, "black", screen, 710, 343)
     draw_text("Steamer", upgrade_font, "black", screen, 892, 358)
     draw_text("Oven", upgrade_font, "black", screen, 1073, 358)
-    draw_text("Machine Features - B: Cooking process lowered to 40s", upgrade_font, "black", screen, 714, 380)
-    draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
+    # draw_text("Machine Features - B: Cooking process lowered to 40s", upgrade_font, "black", screen, 714, 380)
+    # draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
 
     close_button.draw(screen)
 
