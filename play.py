@@ -1055,8 +1055,9 @@ buttons_page5 =[
 
 buttons_page6 =[
     Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=20),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(32),label_text="Mooncake\nRM 20",image_path='./picture/mooncake.png',cost=20),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(33),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
+    Button("Mooncake","Unlock",780,425,125,40,lambda:unlock_item(32),label_text="Mooncake\nRM 20",image_path='./picture/mooncake.png',cost=20),
+    Button("Cookies","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Cookies\nRM 20",image_path='./picture/mooncake.png',cost=20),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=20),
 ]
 
 
@@ -1109,6 +1110,7 @@ button_mapping_page6 = {
     31: buttons_page6[0],
     32: buttons_page6[1],
     33: buttons_page6[2],
+    34: buttons_page6[3],
 }
 
 def unlock_item(item_id):
