@@ -365,7 +365,7 @@ class CookingBar: # draw cooking bar
     
 # Deliveryman 类定义
 class Deliveryman(pygame.sprite.Sprite):
-    def __init__(self, target_x, deliveryman_type, speed=5, image_size=(250, 250)):
+    def __init__(self, target_x, deliveryman_type, speed=15, image_size=(250, 250)):
         super().__init__()
         self.deliveryman_type = deliveryman_type  # 保存 deliveryman_type 为实例属性
 
@@ -406,7 +406,7 @@ class Deliveryman(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)  # 水平翻转
                 self.reflected = True  # 标记为已经反转
         # 停留3秒后，开始回走
-        elif self.wait_time > 0 and pygame.time.get_ticks() - self.wait_time > 3000 and self.direction == -1:
+        elif self.wait_time > 0 and pygame.time.get_ticks() - self.wait_time > 300 and self.direction == -1:
             self.direction = 1  # 转身，开始向右回走
             # 在开始回走的时候删除文件中的数据
             update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type)
@@ -593,7 +593,7 @@ dimsum = pygame.image.load('./picture/dimsum.png')
 dimsum = pygame.transform.scale(dimsum, (100,100))
 
 orderbtn_surface = pygame.image.load("./picture/order_btn.png")
-orderbtn_surface = pygame.transform.scale(orderbtn_surface, (175, 175))
+orderbtn_surface = pygame.transform.scale(orderbtn_surface, (100, 100))
 orderbtn = Button(orderbtn_surface, 75, 360,"")
 
 order1button_surface = pygame.image.load("./picture/order.png")
@@ -1397,10 +1397,10 @@ def profile():
                 if event.key == pygame.K_r:
                     rename()
 
-        if sound_muted:
-            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
-        else:
-            screen.blit(soundon_btn, soundon_btn_rect.topleft) 
+        # if sound_muted:
+        #     screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+        # else:
+        #     screen.blit(soundon_btn, soundon_btn_rect.topleft) 
 
         button.draw(screen)
         resetbutton.update()
@@ -3540,9 +3540,7 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
             with open("./picture/food-complete-name.txt", "a") as fslots:
                 food_name = food_list[machine_food_index]["name"]  
                 fslots.write(f"{food_name}\n")
-                print(f"Successfully wrote {food_name} to file.")
         else:
-            print(f"Full slots, start waiting bar for {machine_name}")
             exceed_slot_food = food_list[machine_food_index]["name"]
             autothrow_item.append(exceed_slot_food)
             waiting_start_time = current_time  # Start waiting bar timer
