@@ -1,7 +1,2 @@
-<<<<<<< HEAD
 Korean Fried Chicken
 
-=======
-Fried Rice
-Mooncake
->>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265

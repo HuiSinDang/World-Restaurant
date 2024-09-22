@@ -1,4 +1,3 @@
-<<<<<<< HEAD
-=======
-Bibimbap
->>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
+Fried Rice
+Thai Steamed Fish
+Korean Fried Chicken
