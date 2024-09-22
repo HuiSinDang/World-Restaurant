@@ -17,18 +17,18 @@ Hanjiben:True
 Thai Steamed Fish:True
 Xiu Mai:True
 Steamed Egg:True
-Lo Mai Gai:False
+Lo Mai Gai:True
 Herbal Chicken:True
-Soup Dumplings:False
+Soup Dumplings:True
 Shrimp Dumplings:True
-Egg Custard Bun:False
-Corndogs:False
-Korean Fried Chicken:False
-Calamari Rings:False
+Egg Custard Bun:True
+Corndogs:True
+Korean Fried Chicken:True
+Calamari Rings:True
 Rainbow Cake:True
 Red Velvet:True
 Black Forest:True
 Pandan Roll Cake:True
-Cookies:False
+Cookies:True
 Mooncake:True
 Satay:True
