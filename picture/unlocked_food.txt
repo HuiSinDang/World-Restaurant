@@ -21,10 +21,17 @@ Lo Mai Gai:True
 Herbal Chicken:True
 Soup Dumplings:True
 Shrimp Dumplings:True
+<<<<<<< HEAD
 Egg Custard Bun:True
 Corndogs:True
 Korean Fried Chicken:True
 Calamari Rings:True
+=======
+Egg Custard Bun:False
+Corndogs:False
+Korean Fried Chicken:True
+Calamari Rings:False
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
 Rainbow Cake:True
 Red Velvet:True
 Black Forest:True

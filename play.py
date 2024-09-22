@@ -3424,7 +3424,11 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
     global stovepot_food_index, steamer_food_index, oven_food_index
     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time
     global stovepot_waiting_start_time, steamer_waiting_start_time, oven_waiting_start_time
+<<<<<<< HEAD
     global machine_type, autothrow_item
+=======
+    global machine_type
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
 
     current_time = time.time()
 
@@ -3461,7 +3465,25 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         elapsed_time = current_time - stovepot_start_time
         if elapsed_time >= stovepot_duration:
             stovepot_running = False
+<<<<<<< HEAD
             stovepot_waiting_start_time, stovepot_exceed_time = handle_slot_check(stovepot_food_index, food_lists, stovepot_waiting_start_time, stovepot_exceed_time, "stovepot")
+=======
+            print("finish")
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = food_lists[stovepot_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
+            # slot_index = determine_available_slots(slots)
+            # if slot_index is not None:
+            #     put_food_to_slots(stovepot_food_index, "stovepot")
+            #     stovepot_exceed_time = False
+
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
 
         cooking_bar_stovepot.update(elapsed_time, stovepot_duration)
         cooking_bar_stovepot.draw(screen)
@@ -3474,8 +3496,21 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         elapsed_time = current_time - steamer_start_time
         if elapsed_time >= steamer_duration:
             steamer_running = False
+<<<<<<< HEAD
             steamer_waiting_start_time, steamer_exceed_time = handle_slot_check(steamer_food_index, foodlist_steamer,  steamer_waiting_start_time, steamer_exceed_time, "steamer")
             
+=======
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = foodlist_steamer[steamer_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
+
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
         cooking_bar_steamer.update(elapsed_time, steamer_duration)
         cooking_bar_steamer.draw(screen)
         pastefood_steamer(steamer_food_index)
@@ -3487,7 +3522,19 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         elapsed_time = current_time - oven_start_time
         if elapsed_time >= oven_duration:
             oven_running = False
+<<<<<<< HEAD
             oven_waiting_start_time, oven_exceed_time = handle_slot_check(oven_food_index, foodlist_oven, oven_waiting_start_time, oven_exceed_time, "oven")
+=======
+
+            with open("./picture/food-complete-name.txt", "r") as fslot:
+                slots = [line.strip() for line in fslot if line.strip()]
+                
+            if len(slots) < 6:
+                with open("./picture/food-complete-name.txt", "a") as fslots:
+                    food_name = foodlist_oven[oven_food_index]["name"]  # 使用stovepot_food_index
+                    fslots.write(f"{food_name}\n")
+                    print(f"Successfully wrote {food_name} to file.")
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
 
         cooking_bar_oven.update(elapsed_time, oven_duration)
         cooking_bar_oven.draw(screen)
@@ -4008,7 +4055,10 @@ def main():
         exceed_time_collect()
         save_unlocked_food()
         save_unlocked_machines()
+<<<<<<< HEAD
         
+=======
+>>>>>>> 33aa0032ccceae9a5b3360528addd623d0d4b265
         # update_slots(slot_index, food_item)
         pygame.display.flip()
         clock.tick(60)
