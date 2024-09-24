@@ -711,6 +711,7 @@ food_prices = {
     "Pandan Roll Cake": 300,
     "Mooncake": 300,
     "Satay": 300,
+    "Cookies": 100,
 }
 
 # Main loop(irene)
