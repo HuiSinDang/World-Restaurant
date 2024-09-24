@@ -150,7 +150,7 @@ rainbowcake_img = pygame.image.load("./picture/rainbowcake.png")
 rainbowcake_img = pygame.transform.scale(rainbowcake_img, (120, 115))
 
 redvelvet_img = pygame.image.load("./picture/redvelvet.png")
-redvelvet_img = pygame.transform.scale(redvelvet_img, (80, 80))
+redvelvet_img = pygame.transform.scale(redvelvet_img, (100, 100))
 
 blackforest_img = pygame.image.load("./picture/blackforest.png")
 blackforest_img = pygame.transform.scale(blackforest_img, (125, 100))
@@ -208,6 +208,9 @@ shrimpdumpling_img = pygame.transform.scale(shrimpdumpling_img, (100, 127))
 
 custardbun_img = pygame.image.load("./picture/custardbun.png") 
 custardbun_img = pygame.transform.scale(custardbun_img, (100, 127))
+
+cookies_img = pygame.image.load("./picture/cookies.png") 
+cookies_img = pygame.transform.scale(cookies_img, (100, 100))
 
 dustbin_img = pygame.image.load("./picture/dustbin.png")
 dustbin_img = pygame.transform.scale(dustbin_img, (200, 140))
@@ -294,7 +297,9 @@ foodlist_oven = [
 
     {"image": mooncake_img, "name": "Mooncake", "price": "RM300.00"},
 
-    {"image": satay_img, "name": "Satay", "price": "RM300.00" }
+    {"image": satay_img, "name": "Satay", "price": "RM300.00" },
+
+    {"image": cookies_img, "name": "Cookies", "price": "RM100.00" }
 
 ]
 
@@ -1057,7 +1062,7 @@ buttons_page5 =[
 
 buttons_page6 =[
     Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png'),
-    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/oden.png'),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/cookies.png'),
     Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png'),
     Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png'),
 ]
@@ -3239,36 +3244,6 @@ def pastefood_oven(selected_food_index):
     screen.blit(new_food_image, (food_x, food_y))
 
 
-# def waiting_table():
-#     table_rect = pygame.Rect(195, 620, 1070, 140)
-#     table_color = (188,143,143)
-#     pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)  
-
-
-#     # 6个格子在1 row (代表table width被分割六份）
-#     slot_width = table_rect.width // 6         
-#     slot_height = table_rect.height            # The height of each slot is the full height of the table
-
-
-#     # Iterate through the 6 slots to draw them
-#     for col in range(6):  # 6 columns for 6 slots
-#         slot_rect = pygame.Rect(
-#             table_rect.x + col * slot_width,
-#             table_rect.y,
-#             slot_width, slot_height
-#         )
-#         pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # Draw slot rectangles with gray borders
-
-
-#         if slots[col] is not None:
-#             food_item = slots[col]
-#             food_image = food_item["image"]
-#             new_food_image = pygame.transform.scale(food_image, (slot_width, slot_height))
-#             screen.blit(new_food_image, slot_rect.topleft)
-
-
-
-
 
 waiting_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
 waiting_bar_steamer = CookingBar(651, 120, 160, 20, 100)
@@ -3319,7 +3294,7 @@ def auto_throw():
         return
 
     dustbin_pos = (1250, 160)  
-    speed = 20
+    speed = 23
     throwing = True
     angle = 0  # 初始角度
 
@@ -3370,8 +3345,14 @@ def auto_throw():
         else:
             throwing = False
             waste_food_index = None  # Reset waste food index
+        
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft)  
 
         pygame.time.delay(20)
+
 
 
 
@@ -3383,23 +3364,23 @@ def exceed_time_collect():  #出现waitingbar， 烧焦
     waiting_duration = 10
     current_time = time.time()
 
-    if sound_muted:
-        screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
-    else:
-        screen.blit(soundon_btn, soundon_btn_rect.topleft)  
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
 
     # Handle Stovepot waiting bar
     if stovepot_exceed_time:
         waiting_elapsed = current_time - stovepot_waiting_start_time
         if waiting_elapsed < waiting_duration:
-            # waiting_elapsed = current_time - stovepot_waiting_start_time
             waiting_bar_stovepot.update(waiting_elapsed, waiting_duration)
             waiting_bar_stovepot.draw(screen)
             pastefood_stovepot(stovepot_food_index)
             screen.blit(fire_img, (290, 113))
             draw_machine_waiting_button("stovepot")
-        else:   #waiting_elapsed >= waiting_duration:
+        else:  
             waste_food_index = stovepot_food_index
             auto_throw()
             stovepot_food_index = None
@@ -3411,13 +3392,12 @@ def exceed_time_collect():  #出现waitingbar， 烧焦
     if steamer_exceed_time: 
         waiting_elapsed = current_time - steamer_waiting_start_time
         if waiting_elapsed < waiting_duration:      
-            # waiting_elapsed = current_time - steamer_waiting_start_time
             waiting_bar_steamer.update(waiting_elapsed, waiting_duration)
             waiting_bar_steamer.draw(screen)
             pastefood_steamer(steamer_food_index)
             screen.blit(fire_img, (610, 113))
             draw_machine_waiting_button("steamer")
-        else:  #waiting_elapsed >= waiting_duration:
+        else: 
             waste_food_index = steamer_food_index
             auto_throw()
             steamer_food_index = None
@@ -3428,21 +3408,22 @@ def exceed_time_collect():  #出现waitingbar， 烧焦
     if oven_exceed_time:
         waiting_elapsed = current_time - oven_waiting_start_time
         if waiting_elapsed < waiting_duration:
-            # waiting_elapsed = current_time - oven_waiting_start_time
             waiting_bar_oven.update(waiting_elapsed, waiting_duration)
             waiting_bar_oven.draw(screen)
             pastefood_oven(oven_food_index)
             screen.blit(fire_img, (930, 113))
             draw_machine_waiting_button("oven")
         else:
-            # waiting_elapsed >= waiting_duration:
             waste_food_index = oven_food_index
             auto_throw()
             oven_food_index = None
             oven_exceed_time = False
+    
+    pygame.display.update()
+    clock.tick(60)
 
 
-            
+        
 
 autothrow_item = []
 def cooking_process():  #handles cooking and checks whether each machine has finished its cooking time.
@@ -3466,9 +3447,7 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
-        #         mute_sound()
+
 
     def handle_slot_check(machine_food_index, food_list, waiting_start_time, exceed_time_flag, machine_name):
         with open("./picture/food-complete-name.txt", "r") as fslots:
@@ -3528,10 +3507,7 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         pastefood_oven(oven_food_index)
         draw_machine_type_button("oven")
     
-    # if sound_muted:
-    #     screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
-    # else:
-    #     screen.blit(soundon_btn, soundon_btn_rect.topleft)
+
 
     if full_slot_remind:
         font_slot = pygame.font.SysFont("cambria", 30, bold=True)
@@ -3541,6 +3517,8 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
             full_slot_remind = False
 
     exceed_time_collect()   # Handle waiting bar if exceed time
+    pygame.display.update()
+    clock.tick(60)
 
 
 
@@ -3695,7 +3673,8 @@ food_image_mapping = {
         "Black Forest": "./picture/blackforest.png",
         "Pandan Roll Cake": "./picture/pandanrollcake.png",
         "Mooncake": "./picture/mooncake.png",
-        "Satay": "./picture/satay.png"
+        "Satay": "./picture/satay.png",
+        "Cookies": "./picture/cookies.png"
     }
 
 
