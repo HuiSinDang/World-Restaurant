@@ -731,7 +731,7 @@ steamer_call = False
 oven_call = False
 
 #money#
-money_amount = 500
+money_amount = 150
 max_display_money = 1000000
 money_file_path = os.path.join(os.getcwd(),"./picture/money.txt")
 moneybox = pygame.image.load('./picture/moneybox.png')
@@ -743,9 +743,9 @@ def show_money():
             with open("./picture/money.txt","r")as file:
                 return int(file.read())
         except (ValueError,IOError):
-            return 500
+            return 150
     else:
-        return 500
+        return 150
     
 def save_money():
     with open("./picture/money.txt","w") as file:
@@ -904,7 +904,10 @@ def show_intropage():
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
-#menu-unlock food
+def rename_backbutton():
+    global running
+    running = True
+
 def load_image(path,size):
     try:
         image = pygame.image.load(path)
@@ -912,358 +915,8 @@ def load_image(path,size):
     except pygame.error as e:
         return None
     
-menupage = load_image('./picture/menupage.png',(900,800))
-nextbutton = load_image('./picture/nextbutton.png',(35,35))
-previousbutton = load_image('./picture/previousbutton.png',(35,35))
-closebutton = load_image('./picture/closebutton.png',(40,40))
-
-def load_font(path,size):
-    try:
-        return pygame.font.Font(path,size)
-    except FileNotFoundError as e:
-        return pygame.font.Font(None,size)
-    
-font3 = load_font('./picture/jugnle.ttf', 20)
-
-def save_unlocked_food():
-    with open('./picture/unlocked_food.txt','w')as f:
-        for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
-            f.write(f"{button.foodname}:{button.pressed}\n")
-
-
-
-def load_unlocked_food():
-    unlocked_food = {"Tokbokki","Oden","Fried Rice"}
-    try:
-        with open('./picture/unlocked_food.txt','r')as f:
-            lines = f.readlines()
-            for line in lines:
-                foodname,pressed = line.strip().split(':')
-                if pressed == 'True':
-                    unlocked_food.add(foodname)
-    except FileNotFoundError:
-        pass
-    for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
-        if button.foodname in unlocked_food:
-            button.pressed = True
-        else:
-            button.pressed = False
-
-class Button:
-    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50),cost=20):
-        self.rect = pygame.Rect(x,y,width,height)
-        self.foodname = foodname
-        self.button_text = button_text
-        self.action = action
-        self.pressed = False
-        self.label_text = label_text
-        self.label_lines = []
-        self.image = None
-        self.image_rect = None
-        self.cost = cost
-        self.update_text(self.button_text)
-        if self.label_text:
-            self.update_label()
-        if image_path:
-            self.load_image(image_path,image_size)
-
-    def update_text(self,new_text):
-        self.text_surface = font3.render(new_text,True,black)
-        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
-
-    def update_label(self):
-        if self.label_text:
-            lines = self.label_text.split('\n')
-            self.label_lines = [font3.render(line,True,black)for line in lines]
-
-    def load_image(self,image_path,size):
-        try:
-            self.image = pygame.image.load(image_path)
-            self.image = pygame.transform.scale(self.image,size)
-            self.image_rect = self.image.get_rect(center=(self.rect.centerx,self.rect.top -70))
-        except pygame.error as e:
-            pass
-
-    def draw(self,screen):
-        if self.image:
-            self.image_rect.centerx = self.rect.centerx
-            self.image_rect.bottom = self.rect.top - 60
-            screen.blit(self.image,self.image_rect)
-        if self.label_lines:
-            label_y_position = self.image_rect.bottom + 10 if self.image else self.rect.top - 70
-            line_height = font3.get_height()
-            for i, line_surface in enumerate(self.label_lines):
-                line_rect = line_surface.get_rect(center=(self.rect.centerx,label_y_position + i * line_height))
-                screen.blit(line_surface,line_rect)
-
-        color =  dark_pink if self.pressed else pink
-        pygame.draw.rect(screen,color,self.rect)
-        display_text = "Unlocked" if self.pressed else self.button_text
-        self.update_text(display_text)
-        screen.blit(self.text_surface,self.text_rect)
-
-    def is_clicked(self,pos):
-        return self.rect.collidepoint(pos)
-
-    def press(self):
-        if not self.pressed:
-            if subtract_money(self.cost):
-                self.pressed = True
-                self.action()
-                save_money()
-                save_unlocked_food()
-                return True
-            else:
-                return False
-
-buttons_page1 = [
-    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20),
-    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
-    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
-    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
-    Button("Korean Army Stew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Korean Army Stew\nRM 20",image_path='./picture/armystew.png',cost=20),
-    Button("Fried Noodles","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodles\nRM 20",image_path='./picture/friednoodle.png',cost=20),
-]
-
-buttons_page2 =[
-    Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 20",image_path='./picture/oden.png',cost=20),
-    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
-    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
-    Button("Fried Udons","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udons\nRM 20",image_path='./picture/udon.png',cost=20),
-    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
-    Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 20",image_path='./picture/kueyteow.png',cost=20),
-]
-
-buttons_page3 =[
-    Button("Kai See Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
-    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
-    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
-    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
-    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png',cost=20),
-    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png',cost=20),
-]
-
-buttons_page4 =[
-    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=20),
-    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=20),
-    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=20),
-    Button("Soup Dumplings","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumplings\nRM 20",image_path='./picture/dumpling.png',cost=20),
-    Button("Shrimp Dumplings","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumplings\nRM 20",image_path='./picture/shrimpdumpling.png',cost=20),
-    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=20),
-]
-
-buttons_page5 =[
-    Button("Corndogs","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndogs\nRM 20",image_path='./picture/corndog.png',cost=20),
-    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Korean Fried Chicken\nRM 20",image_path='./picture/kfry.png',cost=20),
-    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=20),
-    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=20),
-    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=20),
-    Button("Black Forest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Black Forest\nRM 20",image_path='./picture/blackforest.png',cost=20),
-]
-
-buttons_page6 =[
-    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png'),
-    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/cookies.png'),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png'),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png'),
-]
-
-
-button_mapping_page1 = {
-    1: buttons_page1[0],
-    2: buttons_page1[1],
-    3: buttons_page1[2],
-    4: buttons_page1[3],
-    5: buttons_page1[4],
-    6: buttons_page1[5],
-}
-
-button_mapping_page2 = {
-    7: buttons_page2[0],
-    8: buttons_page2[1],
-    9: buttons_page2[2],
-    10: buttons_page2[3],
-    11: buttons_page2[4],
-    12: buttons_page2[5],
-}
-
-button_mapping_page3 = {
-    13: buttons_page3[0],
-    14: buttons_page3[1],
-    15: buttons_page3[2],
-    16: buttons_page3[3],
-    17: buttons_page3[4],
-    18: buttons_page3[5],
-}
-
-button_mapping_page4 = {
-    19: buttons_page4[0],
-    20: buttons_page4[1],
-    21: buttons_page4[2],
-    22: buttons_page4[3],
-    23: buttons_page4[4],
-    24: buttons_page4[5],
-}
-
-button_mapping_page5 = {
-    25: buttons_page5[0],
-    26: buttons_page5[1],
-    27: buttons_page5[2],
-    28: buttons_page5[3],
-    29: buttons_page5[4],
-    30: buttons_page5[5],
-}
-
-button_mapping_page6 = {
-    31: buttons_page6[0],
-    32: buttons_page6[1],
-    33: buttons_page6[2],
-    34: buttons_page6[3],
-}
-
-def unlock_item(item_id):
-    button = None
-    if 1 <= item_id <= 6:
-        button = button_mapping_page1.get(item_id)
-    elif 7 <= item_id <= 12:
-        button = button_mapping_page2.get(item_id)
-    elif 13 <= item_id <= 18:
-        button = button_mapping_page3.get(item_id)
-    elif 19 <= item_id <= 24:
-        button = button_mapping_page4.get(item_id)
-    elif 25 <= item_id <= 30:
-        button = button_mapping_page5.get(item_id)
-    elif 31 <= item_id <= 34:
-        button = button_mapping_page6.get(item_id)
-    if button and not button.pressed:
-        button.press()
-
-current_page = 1
-buttons = buttons_page1
-
-def display_message(screen,message,position,color=(255,0,0)):
-    text_surface=font3.render(message,True,color)
-    screen.blit(text_surface,position)
-
-
-
-def change_page(forward=True):
-    global current_page,buttons
-    if forward:
-        if current_page == 1:
-            current_page = 2
-            buttons = buttons_page2
-        elif current_page == 2:
-            current_page = 3
-            buttons = buttons_page3
-        elif current_page == 3:
-            current_page = 4
-            buttons = buttons_page4
-        elif current_page == 4:
-            current_page = 5
-            buttons = buttons_page5
-        elif current_page == 5:
-            current_page = 6
-            buttons = buttons_page6
-        else:
-            current_page = 1
-            buttons = buttons_page1
-    else:
-        if current_page == 6:
-            current_page = 5
-            buttons = buttons_page5
-        elif current_page == 5:
-            current_page = 4
-            buttons = buttons_page4
-        elif current_page == 4:
-            current_page = 3
-            buttons = buttons_page3
-        elif current_page == 3:
-            current_page = 2
-            buttons = buttons_page2
-        elif current_page == 2:
-            current_page = 1
-            buttons = buttons_page1
-        else:
-            current_page = 6
-            buttons = buttons_page6
-
-def close_menu():  #yv
-    global running
-    running = False
-
-nextpbutton = ImageButton(nextbutton,925,625,change_page)
-previouspbutton = ImageButton(previousbutton,500,625,lambda:change_page(forward=False))
-closepbutton = ImageButton(closebutton,925,100,close_menu)
-
-def show_menupage():
-    global current_page,buttons,running
-    running = True
-    load_unlocked_food()
-    
-    while running:
-        if current_page == 1:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page1
-        elif current_page == 2:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page2
-        elif current_page == 3:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page3
-        elif current_page == 4:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page4
-        elif current_page == 5:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page5
-        elif current_page == 6:
-            screen.blit(menupage,(275,20))
-            buttons = buttons_page6
-
-        for button in buttons:
-            button.draw(screen)
-        if current_page > 1:
-            previouspbutton.draw(screen)
-        if current_page < 6:
-            nextpbutton.draw(screen)
-        closepbutton.draw(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if nextpbutton.is_clicked(event.pos):
-                    click_sfx.play()
-                    nextpbutton.press()
-                elif previouspbutton.is_clicked(event.pos):
-                    click_sfx.play() 
-                    previouspbutton.press()
-                elif closepbutton.is_clicked(event.pos):
-                    click_sfx.play()
-                    closepbutton.press()
-                for button in buttons:
-                    if button.is_clicked(event.pos):
-                        click_sfx.play()
-                        button.press()
-        
-        if sound_muted:
-            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
-        else:
-            screen.blit(soundon_btn, soundon_btn_rect.topleft)
-
-        pygame.display.flip()
-        pygame.time.Clock().tick(30)
-
-
-def rename_backbutton():
-    global running
-    running = True
-
 backbutton = load_image('./picture/back_btn.png',(75, 75))
 backbutton = ImageButton(backbutton, 75, 75, rename_backbutton)
-
-
 
 def rename():
     text = font.render("What's name of your restaurant?: ", True, white)
@@ -2585,6 +2238,362 @@ def upgrade_process():
 
 load_unlocked_machines()
 
+#menu-unlock food
+def load_image(path,size):
+    try:
+        image = pygame.image.load(path)
+        return pygame.transform.scale(image,size)
+    except pygame.error as e:
+        return None
+    
+menupage = load_image('./picture/menupage.png',(900,800))
+nextbutton = load_image('./picture/nextbutton.png',(35,35))
+previousbutton = load_image('./picture/previousbutton.png',(35,35))
+closebutton = load_image('./picture/closebutton.png',(40,40))
+
+def load_font(path,size):
+    try:
+        return pygame.font.Font(path,size)
+    except FileNotFoundError as e:
+        return pygame.font.Font(None,size)
+    
+font3 = load_font('./picture/jugnle.ttf', 20)
+
+def save_unlocked_food():
+    with open('./picture/unlocked_food.txt','w')as f:
+        for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
+            f.write(f"{button.foodname}:{button.pressed}\n")
+
+
+
+def load_unlocked_food():
+    unlocked_food = {"Tokbokki","Oden","Fried Rice"}
+    try:
+        with open('./picture/unlocked_food.txt','r')as f:
+            lines = f.readlines()
+            for line in lines:
+                foodname,pressed = line.strip().split(':')
+                if pressed == 'True':
+                    unlocked_food.add(foodname)
+    except FileNotFoundError:
+        pass
+    for button in buttons_page1 + buttons_page2 + buttons_page3 + buttons_page4 + buttons_page5 + buttons_page6:
+        if button.foodname in unlocked_food:
+            button.pressed = True
+        else:
+            button.pressed = False
+
+class Button:
+    def __init__(self,foodname,button_text,x,y,width,height,action,label_text,image_path=None,image_size=(50,50),cost=20,requires_machine=False,machine=None):
+        self.rect = pygame.Rect(x,y,width,height)
+        self.foodname = foodname
+        self.button_text = button_text
+        self.action = action
+        self.pressed = False
+        self.label_text = label_text
+        self.label_lines = []
+        self.image = None
+        self.image_rect = None
+        self.cost = cost
+        self.requires_machine = requires_machine
+        self.machine = machine
+        self.update_text(self.button_text)
+        if self.label_text:
+            self.update_label()
+        if image_path:
+            self.load_image(image_path,image_size)
+
+    def update_text(self,new_text):
+        self.text_surface = font3.render(new_text,True,black)
+        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
+
+    def update_label(self):
+        if self.label_text:
+            lines = self.label_text.split('\n')
+            self.label_lines = [font3.render(line,True,black)for line in lines]
+
+    def load_image(self,image_path,size):
+        try:
+            self.image = pygame.image.load(image_path)
+            self.image = pygame.transform.scale(self.image,size)
+            self.image_rect = self.image.get_rect(center=(self.rect.centerx,self.rect.top -70))
+        except pygame.error as e:
+            pass
+
+    def draw(self,screen):
+        if self.image:
+            self.image_rect.centerx = self.rect.centerx
+            self.image_rect.bottom = self.rect.top - 60
+            screen.blit(self.image,self.image_rect)
+        if self.label_lines:
+            label_y_position = self.image_rect.bottom + 10 if self.image else self.rect.top - 70
+            line_height = font3.get_height()
+            for i, line_surface in enumerate(self.label_lines):
+                line_rect = line_surface.get_rect(center=(self.rect.centerx,label_y_position + i * line_height))
+                screen.blit(line_surface,line_rect)
+
+        color =  dark_pink if self.pressed else pink
+        pygame.draw.rect(screen,color,self.rect)
+        display_text = "Unlocked" if self.pressed else self.button_text
+        self.update_text(display_text)
+        screen.blit(self.text_surface,self.text_rect)
+
+    def is_clicked(self,pos):
+        return self.rect.collidepoint(pos)
+
+    def press(self):
+        if self.requires_machine and self.machine not in unlocked_machine:
+            show_message("Machine haven't unlock!")
+            return False
+        if not self.pressed:
+            if subtract_money(self.cost):
+                self.pressed = True
+                self.action()
+                save_money()
+                save_unlocked_food()
+                return True
+            else:
+                return False
+
+buttons_page1 = [
+    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20),
+    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
+    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
+    Button("Korean Army Stew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Korean Army Stew\nRM 20",image_path='./picture/armystew.png',cost=20),
+    Button("Fried Noodles","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodles\nRM 20",image_path='./picture/friednoodle.png',cost=20),
+]
+
+buttons_page2 =[
+    Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 20",image_path='./picture/oden.png',cost=20),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
+    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
+    Button("Fried Udons","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udons\nRM 20",image_path='./picture/udon.png',cost=20),
+    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
+    Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 20",image_path='./picture/kueyteow.png',cost=20),
+]
+
+buttons_page3 =[
+    Button("Kai See Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
+    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
+    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
+    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
+    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png',cost=40,requires_machine=True,machine="STEAMER"),
+]
+
+buttons_page4 =[
+    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Soup Dumplings","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumplings\nRM 20",image_path='./picture/dumpling.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Shrimp Dumplings","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumplings\nRM 20",image_path='./picture/shrimpdumpling.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=40,requires_machine=True,machine="STEAMER"),
+]
+
+buttons_page5 =[
+    Button("Corndogs","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndogs\nRM 20",image_path='./picture/corndog.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Korean Fried Chicken\nRM 20",image_path='./picture/kfry.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Black Forest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Black Forest\nRM 20",image_path='./picture/blackforest.png',cost=80,requires_machine=True,machine="OVEN"),
+]
+
+buttons_page6 =[
+    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/cookies.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=80,requires_machine=True,machine="OVEN"),
+]
+
+
+button_mapping_page1 = {
+    1: buttons_page1[0],
+    2: buttons_page1[1],
+    3: buttons_page1[2],
+    4: buttons_page1[3],
+    5: buttons_page1[4],
+    6: buttons_page1[5],
+}
+
+button_mapping_page2 = {
+    7: buttons_page2[0],
+    8: buttons_page2[1],
+    9: buttons_page2[2],
+    10: buttons_page2[3],
+    11: buttons_page2[4],
+    12: buttons_page2[5],
+}
+
+button_mapping_page3 = {
+    13: buttons_page3[0],
+    14: buttons_page3[1],
+    15: buttons_page3[2],
+    16: buttons_page3[3],
+    17: buttons_page3[4],
+    18: buttons_page3[5],
+}
+
+button_mapping_page4 = {
+    19: buttons_page4[0],
+    20: buttons_page4[1],
+    21: buttons_page4[2],
+    22: buttons_page4[3],
+    23: buttons_page4[4],
+    24: buttons_page4[5],
+}
+
+button_mapping_page5 = {
+    25: buttons_page5[0],
+    26: buttons_page5[1],
+    27: buttons_page5[2],
+    28: buttons_page5[3],
+    29: buttons_page5[4],
+    30: buttons_page5[5],
+}
+
+button_mapping_page6 = {
+    31: buttons_page6[0],
+    32: buttons_page6[1],
+    33: buttons_page6[2],
+    34: buttons_page6[3],
+}
+
+def unlock_item(item_id):
+    button = None
+    if 1 <= item_id <= 6:
+        button = button_mapping_page1.get(item_id)
+    elif 7 <= item_id <= 12:
+        button = button_mapping_page2.get(item_id)
+    elif 13 <= item_id <= 18:
+        button = button_mapping_page3.get(item_id)
+    elif 19 <= item_id <= 24:
+        button = button_mapping_page4.get(item_id)
+    elif 25 <= item_id <= 30:
+        button = button_mapping_page5.get(item_id)
+    elif 31 <= item_id <= 34:
+        button = button_mapping_page6.get(item_id)
+    if button and not button.pressed:
+        button.press()
+
+current_page = 1
+buttons = buttons_page1
+
+def display_message(screen,message,position,color=(255,0,0)):
+    text_surface=font3.render(message,True,color)
+    screen.blit(text_surface,position)
+
+
+
+def change_page(forward=True):
+    global current_page,buttons
+    if forward:
+        if current_page == 1:
+            current_page = 2
+            buttons = buttons_page2
+        elif current_page == 2:
+            current_page = 3
+            buttons = buttons_page3
+        elif current_page == 3:
+            current_page = 4
+            buttons = buttons_page4
+        elif current_page == 4:
+            current_page = 5
+            buttons = buttons_page5
+        elif current_page == 5:
+            current_page = 6
+            buttons = buttons_page6
+        else:
+            current_page = 1
+            buttons = buttons_page1
+    else:
+        if current_page == 6:
+            current_page = 5
+            buttons = buttons_page5
+        elif current_page == 5:
+            current_page = 4
+            buttons = buttons_page4
+        elif current_page == 4:
+            current_page = 3
+            buttons = buttons_page3
+        elif current_page == 3:
+            current_page = 2
+            buttons = buttons_page2
+        elif current_page == 2:
+            current_page = 1
+            buttons = buttons_page1
+        else:
+            current_page = 6
+            buttons = buttons_page6
+
+def close_menu():  #yv
+    global running
+    running = False
+
+nextpbutton = ImageButton(nextbutton,925,625,change_page)
+previouspbutton = ImageButton(previousbutton,500,625,lambda:change_page(forward=False))
+closepbutton = ImageButton(closebutton,925,100,close_menu)
+
+def show_menupage():
+    global current_page,buttons,running
+    running = True
+    load_unlocked_food()
+    load_unlocked_machines()
+    
+    while running:
+        if current_page == 1:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page1
+        elif current_page == 2:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page2
+        elif current_page == 3:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page3
+        elif current_page == 4:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page4
+        elif current_page == 5:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page5
+        elif current_page == 6:
+            screen.blit(menupage,(275,20))
+            buttons = buttons_page6
+
+        for button in buttons:
+            button.draw(screen)
+        if current_page > 1:
+            previouspbutton.draw(screen)
+        if current_page < 6:
+            nextpbutton.draw(screen)
+        closepbutton.draw(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if nextpbutton.is_clicked(event.pos):
+                    click_sfx.play()
+                    nextpbutton.press()
+                elif previouspbutton.is_clicked(event.pos):
+                    click_sfx.play() 
+                    previouspbutton.press()
+                elif closepbutton.is_clicked(event.pos):
+                    click_sfx.play()
+                    closepbutton.press()
+                for button in buttons:
+                    if button.is_clicked(event.pos):
+                        click_sfx.play()
+                        button.press()
+        
+        if sound_muted:
+            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
+        else:
+            screen.blit(soundon_btn, soundon_btn_rect.topleft)
+
+        pygame.display.flip()
+        pygame.time.Clock().tick(30)
 
 machinetype_surface = pygame.Surface ((160, 60))
 machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
@@ -3789,6 +3798,7 @@ def throw_food_dustbin(dustbin_img_rect):
                     if selected_food in current_foods:
                         current_foods.remove(selected_food)
                         throw_item.append(selected_food)
+                        subtract_money(50)
 
                     # Update the food list in the text file
                     with open(food_filename, "w") as foodfile:
