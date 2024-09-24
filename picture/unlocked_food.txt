@@ -4,31 +4,31 @@ Oden:True
 Bibimbap:True
 Korean Army Stew:True
 Fried Noodles:True
-Fried Bihuns:True
+Fried Bihuns:False
 Hokkien Mee:True
 Ramen:True
-Fried Udons:True
-Curry Mee:True
-Cantonese Kuey Teow:True
-Kai See Hor Fun:True
-Mala Xiang Guo:True
-Youtiao:True
-Hanjiben:True
+Fried Udons:False
+Curry Mee:False
+Cantonese Kuey Teow:False
+Kai See Hor Fun:False
+Mala Xiang Guo:False
+Youtiao:False
+Hanjiben:False
 Thai Steamed Fish:True
 Xiu Mai:True
-Steamed Egg:True
-Lo Mai Gai:True
-Herbal Chicken:True
-Soup Dumplings:True
-Shrimp Dumplings:True
-Egg Custard Bun:True
-Corndogs:True
+Steamed Egg:False
+Lo Mai Gai:False
+Herbal Chicken:False
+Soup Dumplings:False
+Shrimp Dumplings:False
+Egg Custard Bun:False
+Corndogs:False
 Korean Fried Chicken:True
-Calamari Rings:True
-Rainbow Cake:True
-Red Velvet:True
-Black Forest:True
-Pandan Roll Cake:True
-Mooncake:True
-Cookies:True
-Satay:True
+Calamari Rings:False
+Rainbow Cake:False
+Red Velvet:False
+Black Forest:False
+Pandan Roll Cake:False
+Cookies:False
+Mooncake:False
+Satay:False
