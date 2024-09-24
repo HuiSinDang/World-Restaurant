@@ -3298,16 +3298,19 @@ def auto_throw():
     if stovepot_food_index == waste_food_index:
         if waste_food_index in range(len(food_lists)):
             waste_food_img = food_lists[waste_food_index]["image"]
+            subtract_money(70)
         waste_food_position = (240, 157)  # stovepot食物的位置
         
     elif steamer_food_index == waste_food_index:
         if waste_food_index in range(len(foodlist_steamer)):
             waste_food_img = foodlist_steamer[waste_food_index]["image"]
+            subtract_money(70)
         waste_food_position = (565, 157)  
 
     elif oven_food_index == waste_food_index:
         if waste_food_index in range(len(foodlist_oven)):
             waste_food_img = foodlist_oven[waste_food_index]["image"]
+            subtract_money(70)
         waste_food_position = (850, 157) 
     
     
@@ -3810,7 +3813,7 @@ def throw_food_dustbin(dustbin_img_rect):
                     if selected_food in current_foods:
                         current_foods.remove(selected_food)
                         throw_item.append(selected_food)
-                        subtract_money(50)
+                        subtract_money(70)
 
                     # Update the food list in the text file
                     with open(food_filename, "w") as foodfile:
