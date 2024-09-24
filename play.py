@@ -370,7 +370,7 @@ class CookingBar: # draw cooking bar
     
 # Deliveryman 类定义
 class Deliveryman(pygame.sprite.Sprite):
-    def __init__(self, target_x, deliveryman_type, deliveryman_index, speed=15, image_size=(250, 250)):
+    def __init__(self, target_x, deliveryman_type, deliveryman_index, speed=30, image_size=(250, 250)):
         super().__init__()
         self.deliveryman_type = deliveryman_type  # 保存 deliveryman_type 为实例属性
         self.deliveryman_index = deliveryman_index  # 新增索引属性
@@ -3319,7 +3319,7 @@ def auto_throw():
         return
 
     dustbin_pos = (1250, 160)  
-    speed = 23
+    speed = 25
     throwing = True
     angle = 0  # 初始角度
 
