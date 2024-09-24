@@ -370,9 +370,10 @@ class CookingBar: # draw cooking bar
     
 # Deliveryman 类定义
 class Deliveryman(pygame.sprite.Sprite):
-    def __init__(self, target_x, deliveryman_type, speed=15, image_size=(250, 250)):
+    def __init__(self, target_x, deliveryman_type, deliveryman_index, speed=15, image_size=(250, 250)):
         super().__init__()
         self.deliveryman_type = deliveryman_type  # 保存 deliveryman_type 为实例属性
+        self.deliveryman_index = deliveryman_index  # 新增索引属性
 
         # 加载不同的外卖员图片
         if deliveryman_type == 1:
@@ -414,7 +415,7 @@ class Deliveryman(pygame.sprite.Sprite):
         elif self.wait_time > 0 and pygame.time.get_ticks() - self.wait_time > 300 and self.direction == -1:
             self.direction = 1  # 转身，开始向右回走
             # 在开始回走的时候删除文件中的数据
-            update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type)
+            update_file_after_removal("./picture/foodrak.txt", self.deliveryman_type, self.deliveryman_index)
         # 回走到屏幕右侧时再次反转图片
         elif self.direction == 1 and self.rect.x < screen_width:
             self.rect.x += self.speed
@@ -442,17 +443,23 @@ def read_file_and_get_list(filename):
     return result
 
 
-# 更新文件内容，删除某个特定的外卖员类型，但保留空行
-def update_file_after_removal(filename, completed_type):
+# 更新文件内容，删除第一个特定的外卖员类型，并基于索引位置，但保留空行
+def update_file_after_removal(filename, completed_type, deliveryman_index):
     with open(filename, 'r') as f:
         lines = f.readlines()  # 读取文件的所有行
 
-    # 保留空行，只移除与 completed_type 对应的行
     with open(filename, 'w') as f:
+        removed = False  # 标记是否已经删除目标行
+        current_index = 0  # 追踪当前行的索引
         for line in lines:
-            if line.strip() == str(completed_type):  # 如果行对应的外卖员类型，跳过
-                continue
-            f.write(line)  # 其他行，包括空行，写回文件
+            if not removed and line.strip() == str(completed_type):
+                if current_index == deliveryman_index:
+                    removed = True  # 只删除当前索引的外卖员
+                    continue  # 跳过这一行
+            f.write(line)  # 其他行写回文件
+            current_index += 1
+
+
 
 
 def update_deliverymen(existing_positions, deliverymen_group, filename):
@@ -467,8 +474,13 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
             if deliveryman_type is None or not isinstance(deliveryman_type, int) or deliveryman_type not in [1, 2, 3]:
                 continue  # 跳过无效类型
 
+            # 检查是否已经存在相同类型的外卖员
+            existing_types = [dm.deliveryman_type for dm in deliverymen_group if not dm.finished]
+            if deliveryman_type in existing_types:
+                continue  # 如果已经存在相同的外卖员类型且未完成，跳过
+
             target_x = 250 + (len(existing_positions) + i) * 300  # 每个外卖员的目标点依次增加
-            deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+            deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type, deliveryman_index=len(existing_positions) + i)
             deliverymen_group.add(deliveryman)
 
         existing_positions.extend(new_elements)
@@ -3931,7 +3943,7 @@ def main():
             # 将图片绘制到指定坐标
             screen.blit(image, (x, y))
 
-            # 读取新外卖员位置
+           # 读取新外卖员位置
         new_positions = read_file_and_get_list("./picture/foodrak.txt")
 
         # 如果当前组内的外卖员数量不匹配，更新列表
@@ -3948,14 +3960,14 @@ def main():
                 # 没有外卖员，添加新的
                 target_x = 250 + i * 300
                 
-                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type, deliveryman_index=i)
                 deliverymen_group.add(deliveryman)
             elif sprites[i].deliveryman_type != deliveryman_type:
                 # 替换不匹配的外卖员
                 
                 deliverymen_group.remove(sprites[i])  # 移除旧的
                 target_x = 250 + i * 300
-                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type)
+                deliveryman = Deliveryman(target_x=target_x, deliveryman_type=deliveryman_type, deliveryman_index=i)
                 deliverymen_group.add(deliveryman)
 
         # 更新外卖员的位置或状态
