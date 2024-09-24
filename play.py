@@ -1405,6 +1405,9 @@ def profile():
                     rename()
                 if profilebutton.checkForInput(pygame.mouse.get_pos()):
                     profile()
+                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                    mute_sound()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     profile()
@@ -2353,8 +2356,8 @@ def draw_popup():
     draw_text("Default", upgrade_font, "black", screen, 710, 343)
     draw_text("Steamer", upgrade_font, "black", screen, 892, 358)
     draw_text("Oven", upgrade_font, "black", screen, 1073, 358)
-    # draw_text("Machine Features - B: Cooking process lowered to 40s", upgrade_font, "black", screen, 714, 380)
-    # draw_text("- C: Cooking process lowered to 30s", upgrade_font, "black", screen, 805, 408)
+    draw_text("Machine Features - B: Unlock steamed foods to earn more money", upgrade_font, "black", screen, 765, 380)
+    draw_text("- C: Unlock oven foods to earn more money", upgrade_font, "black", screen, 838, 408)
 
     close_button.draw(screen)
 
@@ -2754,7 +2757,6 @@ def selectfood_page2(): # after player click STOVE POT button rect
                         close_button.press()  
 
                     else:
-                        # return_cooking_view()  # Keep cooking view active if cooking is still ongoing
                         close_button.press()
                     
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
@@ -2893,8 +2895,11 @@ def selectfood_page3(): # after player click steamer
                         close_button.press()   #return main screen
                     else:
                         close_button.press()
-                    
 
+
+                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+                    mute_sound()
+                
                 if next_btn.checkForInput(pygame.mouse.get_pos()) and current_page < total_pages:
                     current_page += 1
 
@@ -2913,8 +2918,6 @@ def selectfood_page3(): # after player click steamer
                         food_selected = True
                         return steamer_process(selected_food_index)
                 
-                if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
-                    mute_sound()
                 
         pygame.display.update()
         clock.tick(60)
@@ -3459,6 +3462,14 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
     throw_filename = "./picture/throw-food-name.txt"
     throw_list = read_food_list(throw_filename)
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        # if event.type == pygame.MOUSEBUTTONDOWN:
+        #     if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
+        #         mute_sound()
+
     def handle_slot_check(machine_food_index, food_list, waiting_start_time, exceed_time_flag, machine_name):
         with open("./picture/food-complete-name.txt", "r") as fslots:
             slots = [line.strip() for line in fslots if line.strip()]
@@ -3517,10 +3528,10 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         pastefood_oven(oven_food_index)
         draw_machine_type_button("oven")
     
-    if sound_muted:
-            screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
-    else:
-        screen.blit(soundon_btn, soundon_btn_rect.topleft)
+    # if sound_muted:
+    #     screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
+    # else:
+    #     screen.blit(soundon_btn, soundon_btn_rect.topleft)
 
     if full_slot_remind:
         font_slot = pygame.font.SysFont("cambria", 30, bold=True)
@@ -4045,7 +4056,6 @@ def main():
 
         
         cooking_process()
-       
         throw_food_dustbin(dustbin_img_rect)  # Handle throwing food into the dustbin
         exceed_time_collect()
         save_unlocked_food()
