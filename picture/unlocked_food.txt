@@ -1,13 +1,13 @@
 Tokbokki:True
 Fried Rice:True
 Oden:True
-Bibimbap:False
-Korean Army Stew:False
-Fried Noodles:False
+Bibimbap:True
+Korean Army Stew:True
+Fried Noodles:True
 Fried Bihuns:False
 Hokkien Mee:False
-Ramen:False
-Fried Udons:False
+Ramen:True
+Fried Udons:True
 Curry Mee:False
 Cantonese Kuey Teow:False
 Kai See Hor Fun:False
@@ -19,7 +19,7 @@ Xiu Mai:False
 Steamed Egg:False
 Lo Mai Gai:False
 Herbal Chicken:False
-Soup Dumplings:False
+Soup Dumplings:True
 Shrimp Dumplings:False
 Egg Custard Bun:False
 Corndogs:False

@@ -833,7 +833,7 @@ def update_happy_hour_status():
     elif hhactive and (time.time() - hh_start_time) >= hhtime:
         hhactive = False
 
-def happyhour_bar(happyhour):
+def happyhour_bar():
     update_happy_hour_status()
     remaining_order = (order_completed % 5 - 5) % 5
     if hhactive:
@@ -2002,7 +2002,7 @@ def order():
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
-        
+        money_bar()
         
         pygame.display.flip()
         pygame.time.Clock().tick(30)
@@ -2603,7 +2603,7 @@ def show_menupage():
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)
         else:
             screen.blit(soundon_btn, soundon_btn_rect.topleft)
-
+        money_bar()
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
@@ -3906,7 +3906,7 @@ def main():
         screen.blit(bg_img, (0, 0))
         screen.blit(dustbin_img, dustbin_img_rect)
         money_bar()
-        happyhour_bar(hhactive)
+        happyhour_bar()
 
         profilebutton.update()
         upgrade_btn.update()
