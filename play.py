@@ -3323,7 +3323,7 @@ def auto_throw():
         return
 
     dustbin_pos = (1250, 160)  
-    speed = 25
+    speed = 22
     throwing = True
     angle = 0  # 初始角度
 
@@ -3358,7 +3358,7 @@ def auto_throw():
             upgrade_btn.update()
             menu_button.update()
             orderbtn.update()
-            happyhour_bar(hhactive)
+            happyhour_bar()
             money_bar()
             display_food_images(food_list)
             
