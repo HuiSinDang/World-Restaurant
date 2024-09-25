@@ -2801,13 +2801,14 @@ def selectfood_page2(): # after player click STOVE POT button rect
                 for i, food_item in enumerate(items_on_page):
                     food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
-                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                    if selectprepare_button_rect.collidepoint(event.pos):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        stovepot_food_index = selected_food_index  # Update the global index
-                        food_selected = True
-                        return stovepot_process(selected_food_index)
+                    if unlocked_items.get(food_name_normalized, True):
+                        selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                        if selectprepare_button_rect.collidepoint(event.pos):
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            stovepot_food_index = selected_food_index  # Update the global index
+                            food_selected = True
+                            return stovepot_process(selected_food_index)
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
@@ -2942,13 +2943,14 @@ def selectfood_page3(): # after player click steamer
                 for i, food_item in enumerate(items_on_page):
                     food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
-                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                    if selectprepare_button_rect.collidepoint(event.pos) and unlocked_items.get(food_name_normalized, False):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        steamer_food_index = selected_food_index
-                        food_selected = True
-                        return steamer_process(selected_food_index)
+                    if unlocked_items.get(food_name_normalized, True):
+                        selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                        if selectprepare_button_rect.collidepoint(event.pos) and unlocked_items.get(food_name_normalized, False):
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            steamer_food_index = selected_food_index
+                            food_selected = True
+                            return steamer_process(selected_food_index)
                 
                 
         pygame.display.update()
@@ -3079,13 +3081,14 @@ def selectfood_page4(): # after player click oven
                 for i, food_item in enumerate(items_on_page):
                     food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
-                    selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
-                    if selectprepare_button_rect.collidepoint(event.pos):
-                        click_sfx.play()
-                        selected_food_index = start_index + i
-                        oven_food_index = selected_food_index  # Update the global index
-                        food_selected = True
-                        return oven_process(selected_food_index)
+                    if unlocked_items.get(food_name_normalized, True):
+                        selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
+                        if selectprepare_button_rect.collidepoint(event.pos):
+                            click_sfx.play()
+                            selected_food_index = start_index + i
+                            oven_food_index = selected_food_index  # Update the global index
+                            food_selected = True
+                            return oven_process(selected_food_index)
 
                     
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
