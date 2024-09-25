@@ -487,6 +487,26 @@ def update_deliverymen(existing_positions, deliverymen_group, filename):
 
     return existing_positions
 
+# 当 foodrak.txt 为空时，从 queue.txt 写入数据并清空 queue.txt
+def refill_foodrak_from_queue(foodrak_filename, queue_filename):
+    # 检查 foodrak.txt 是否为空
+    with open(foodrak_filename, 'r') as foodrak_file:
+        foodrak_data = foodrak_file.read().strip()
+
+    if not foodrak_data:  # 如果 foodrak.txt 为空
+        # 从 queue.txt 读取所有数据
+        with open(queue_filename, 'r') as queue_file:
+            queue_data = queue_file.readlines()
+
+        # 如果 queue.txt 有数据，将其写入 foodrak.txt
+        if queue_data:
+            with open(foodrak_filename, 'w') as foodrak_file:
+                foodrak_file.writelines(queue_data)
+
+            # 清空 queue.txt
+            with open(queue_filename, 'w') as queue_file:
+                queue_file.write("")
+
 
 
 # SELECT button
@@ -1328,12 +1348,6 @@ def order():
                     f2 = food[y]
                     order2.append(f2)
                     ffood2.write(f'{f2}\n')
-                    # if f2 in waitingtable2:
-                    #     color = "green"
-                    # else :
-                    #     color = "red"
-                    # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                    # y_offset += 50
                 ffood2.close()
 
             else:
@@ -1419,12 +1433,6 @@ def order():
                 f2 = food[y]
                 order2.append(f2)
                 ffood2.write(f'{f2}\n')
-                # if f2 in waitingtable2:
-                #     color = "green"
-                # else:
-                #     color = "red"
-                # draw_text(f2, main_font, color, screen, 660, y_offset)  # On top of button 2
-                # y_offset += 50
             ffood2.close()
 
         #order 3
@@ -1463,12 +1471,6 @@ def order():
                     f3 = food[y]
                     order3.append(f3)
                     ffood3.write(f'{f3}\n')
-                    # if f3 in waitingtable3:
-                    #     color = "green"
-                    # else:
-                    #     color = "red"
-                    # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                    # y_offset += 50
                 ffood3.close()
 
             else:
@@ -1552,12 +1554,6 @@ def order():
                 f3 = food[y]
                 order3.append(f3)
                 ffood3.write(f'{f3}\n')
-                # if f3 in waitingtable3:
-                #     color = "green"
-                # else:
-                #     color = "red"
-                # draw_text(f3, main_font, color, screen, 960, y_offset)  # On top of button 3
-                # y_offset += 50
             ffood3.close()
         
         if last_clicked_order == "order1":
@@ -1624,7 +1620,7 @@ def order():
                         pygame.time.wait(1000)
 
                 if completebutton.checkForInput(pygame.mouse.get_pos()):
-                    ffoodrak = open("./picture/foodrak.txt", "r")
+                    ffoodrak = open("./picture/queue.txt", "r")
                     foodrak = [line.strip() for line in ffoodrak.readlines()]
                     ffoodrak.close()
 
@@ -1653,7 +1649,7 @@ def order():
 
                                 fstaff1 = open("./picture/staff.txt", "r") 
                                 staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
-                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak = open("./picture/queue.txt", "a")
                                 ffoodrak.write(f'{staff1[0]}\n')
                                 del staff1[0]
                                 fstaff1 = open("./picture/staff.txt", "w")
@@ -1705,7 +1701,7 @@ def order():
                                 list1.clear()  
                                 fstaff2 = open("./picture/staff.txt", "r") 
                                 staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
-                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak = open("./picture/queue.txt", "a")
                                 ffoodrak.write(f'{staff2[1]}\n')
                                 del staff2[1]
                                 fstaff2 = open("./picture/staff.txt", "w")
@@ -1758,7 +1754,7 @@ def order():
                                 list1.clear()  
                                 fstaff3 = open("./picture/staff.txt", "r") 
                                 staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
-                                ffoodrak = open("./picture/foodrak.txt", "a")
+                                ffoodrak = open("./picture/queue.txt", "a")
                                 ffoodrak.write(f'{staff3[2]}\n')
                                 del staff3[2]
                                 fstaff3 = open("./picture/staff.txt", "w")
@@ -1826,7 +1822,7 @@ def order():
                                         staff1 = [line.strip() for line in fstaff1.readlines() if line.strip()]
 
                                         # 读取文件内容，保留空行
-                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        ffoodrak =  open("./picture/queue.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
                                             
                                         # 检查前三个元素是否有空位，并填入数据
@@ -1835,7 +1831,7 @@ def order():
                                                 foodrak[i] = staff1[0]  # 用 staff1[0] 填充空位
                                                 
                                                 # 写入更新后的内容到文件
-                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                ffoodrak =  open("./picture/queue.txt", "w")
                                                 for item in foodrak:
                                                         ffoodrak.write(f"{item}\n")  # 确保数据按行写入
 
@@ -1888,7 +1884,7 @@ def order():
                                         staff2 = [line.strip() for line in fstaff2.readlines() if line.strip()]
 
                                         # 读取文件内容，保留空行
-                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        ffoodrak =  open("./picture/queue.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
                                            
                                         # 检查前三个元素是否有空位，并填入数据
@@ -1898,7 +1894,7 @@ def order():
                                                 
 
                                                 # 写入更新后的内容到文件
-                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                ffoodrak =  open("./picture/queue.txt", "w")
                                                 for item in foodrak:
                                                         ffoodrak.write(f"{item}\n")  # 确保数据按行写入
 
@@ -1950,7 +1946,7 @@ def order():
                                         staff3 = [line.strip() for line in fstaff3.readlines() if line.strip()]
 
                                         # 读取文件内容，保留空行
-                                        ffoodrak =  open("./picture/foodrak.txt", "r")
+                                        ffoodrak =  open("./picture/queue.txt", "r")
                                         foodrak = [line.rstrip('\n') for line in ffoodrak.readlines()]  # 只去掉换行符，保留空行
                                            
                                         # 检查前三个元素是否有空位，并填入数据
@@ -1959,7 +1955,7 @@ def order():
                                                 foodrak[i] = staff3[2]  # 用 staff1[0] 填充空位
 
                                                 # 写入更新后的内容到文件
-                                                ffoodrak =  open("./picture/foodrak.txt", "w")
+                                                ffoodrak =  open("./picture/queue.txt", "w")
                                                 for item in foodrak:
                                                         ffoodrak.write(f"{item}\n")  # 确保数据按行写入
 
@@ -3935,6 +3931,8 @@ def main():
         # 读取文件内容，保留空行
         with open("./picture/foodrak.txt", "r") as ffoodlist:
             foodlist = ffoodlist.read().splitlines()  # 保留空行，splitlines 不会去除空白行
+        
+        refill_foodrak_from_queue("./picture/foodrak.txt","./picture/queue.txt")
 
         # 定义每个格子的固定坐标
         positions = [(250, 375), (550, 375), (850, 375)]
