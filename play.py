@@ -2368,55 +2368,55 @@ class Button:
                 return False
 
 buttons_page1 = [
-    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 20",image_path='./picture/tokbokki.png',cost=20),
-    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 20",image_path='./picture/friedrice.png',cost=20),
-    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 20",image_path='./picture/oden.png',cost=20),
-    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 20",image_path='./picture/bibimbap.png',cost=20),
-    Button("Korean Army Stew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Korean Army Stew\nRM 20",image_path='./picture/armystew.png',cost=20),
-    Button("Fried Noodles","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodles\nRM 20",image_path='./picture/friednoodle.png',cost=20),
+    Button("Tokbokki","Unlock",575,225,125,40,lambda:unlock_item(1),label_text="Tokbokki\nRM 30",image_path='./picture/tokbokki.png',cost=30),
+    Button("Fried Rice","Unlock",780,225,125,40,lambda:unlock_item(2),label_text="Fried Rice\nRM 30",image_path='./picture/friedrice.png',cost=30),
+    Button("Oden","Unlock",575,425,125,40,lambda:unlock_item(3),label_text="Oden\nRM 30",image_path='./picture/oden.png',cost=30),
+    Button("Bibimbap","Unlock",780,425,125,40,lambda:unlock_item(4),label_text="Bibimbap\nRM 30",image_path='./picture/bibimbap.png',cost=30),
+    Button("Korean Army Stew","Unlock",575,625,125,40,lambda:unlock_item(5),label_text="Korean Army Stew\nRM 50",image_path='./picture/armystew.png',cost=50),
+    Button("Fried Noodles","Unlock",780,625,125,40,lambda:unlock_item(6),label_text="Fried Noodles\nRM 50",image_path='./picture/friednoodle.png',cost=50),
 ]
 
 buttons_page2 =[
-    Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 20",image_path='./picture/oden.png',cost=20),
-    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 20",image_path='./picture/hokkienmee.png',cost=20),
-    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 20",image_path='./picture/ramen.png',cost=20),
-    Button("Fried Udons","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udons\nRM 20",image_path='./picture/udon.png',cost=20),
-    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 20",image_path='./picture/currymee.png',cost=20),
-    Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 20",image_path='./picture/kueyteow.png',cost=20),
+    Button("Fried Bihuns","Unlock",575,225,125,40,lambda:unlock_item(7),label_text="Fried Bihuns\nRM 50",image_path='./picture/oden.png',cost=50),
+    Button("Hokkien Mee","Unlock",780,225,125,40,lambda:unlock_item(8),label_text="Hokkien Mee\nRM 50",image_path='./picture/hokkienmee.png',cost=50),
+    Button("Ramen","Unlock",575,425,125,40,lambda:unlock_item(9),label_text="Ramen\nRM 50",image_path='./picture/ramen.png',cost=50),
+    Button("Fried Udons","Unlock",780,425,125,40,lambda:unlock_item(10),label_text="Fried Udons\nRM 50",image_path='./picture/udon.png',cost=50),
+    Button("Curry Mee","Unlock",575,625,125,40,lambda:unlock_item(11),label_text="Curry Mee\nRM 50",image_path='./picture/currymee.png',cost=50),
+    Button("Cantonese Kuey Teow","Unlock",780,625,125,40,lambda:unlock_item(12),label_text="Cantonese Kuey Teow\nRM 50",image_path='./picture/kueyteow.png',cost=50),
 ]
 
 buttons_page3 =[
-    Button("Kai See Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 20",image_path='./picture/horfun.png',cost=20),
-    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 20",image_path='./picture/mala.png',cost=20),
-    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 20",image_path='./picture/youtiao.png',cost=20),
-    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 20",image_path='./picture/hanjiben.png',cost=20),
-    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 20",image_path='./picture/steamfish.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 20",image_path='./picture/oden.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Kai See Hor Fun","Unlock",575,225,125,40,lambda:unlock_item(13),label_text="Kai See Hor Fun\nRM 50",image_path='./picture/horfun.png',cost=50),
+    Button("Mala Xiang Guo","Unlock",780,225,125,40,lambda:unlock_item(14),label_text="Mala Xiang Guo\nRM 50",image_path='./picture/mala.png',cost=50),
+    Button("Youtiao","Unlock",575,425,125,40,lambda:unlock_item(15),label_text="Youtiao\nRM 50",image_path='./picture/youtiao.png',cost=50),
+    Button("Hanjiben","Unlock",780,425,125,40,lambda:unlock_item(16),label_text="Hanjiben\nRM 50",image_path='./picture/hanjiben.png',cost=50),
+    Button("Thai Steamed Fish","Unlock",575,625,125,40,lambda:unlock_item(17),label_text="Thai Steamed Fish\nRM 100",image_path='./picture/steamfish.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Xiu Mai","Unlock",780,625,125,40,lambda:unlock_item(18),label_text="Xiu Mai\nRM 100",image_path='./picture/oden.png',cost=100,requires_machine=True,machine="STEAMER"),
 ]
 
 buttons_page4 =[
-    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 20",image_path='./picture/steamegg.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 20",image_path='./picture/lomaigai.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 20",image_path='./picture/herbalchicken.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Soup Dumplings","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumplings\nRM 20",image_path='./picture/dumpling.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Shrimp Dumplings","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumplings\nRM 20",image_path='./picture/shrimpdumpling.png',cost=40,requires_machine=True,machine="STEAMER"),
-    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 20",image_path='./picture/custardbun.png',cost=40,requires_machine=True,machine="STEAMER"),
+    Button("Steamed Egg","Unlock",575,225,125,40,lambda:unlock_item(19),label_text="Steamed Egg\nRM 100",image_path='./picture/steamegg.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Lo Mai Gai","Unlock",780,225,125,40,lambda:unlock_item(20),label_text="Lo Mai Gai\nRM 100",image_path='./picture/lomaigai.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Herbal Chicken","Unlock",575,425,125,40,lambda:unlock_item(21),label_text="Herbal Chicken\nRM 100",image_path='./picture/herbalchicken.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Soup Dumplings","Unlock",780,425,125,40,lambda:unlock_item(22),label_text="Soup Dumplings\nRM 100",image_path='./picture/dumpling.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Shrimp Dumplings","Unlock",575,625,125,40,lambda:unlock_item(23),label_text="Shrimp Dumplings\nRM 100",image_path='./picture/shrimpdumpling.png',cost=100,requires_machine=True,machine="STEAMER"),
+    Button("Egg Custard Bun","Unlock",780,625,125,40,lambda:unlock_item(24),label_text="Egg Custard Bun\nRM 100",image_path='./picture/custardbun.png',cost=100,requires_machine=True,machine="STEAMER"),
 ]
 
 buttons_page5 =[
-    Button("Corndogs","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndogs\nRM 20",image_path='./picture/corndog.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Korean Fried Chicken\nRM 20",image_path='./picture/kfry.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 20",image_path='./picture/calamari.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 20",image_path='./picture/rainbowcake.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 20",image_path='./picture/redvelvet.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Black Forest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Black Forest\nRM 20",image_path='./picture/blackforest.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Corndogs","Unlock",575,225,125,40,lambda:unlock_item(25),label_text="Corndogs\nRM 200",image_path='./picture/corndog.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Korean Fried Chicken","Unlock",780,225,125,40,lambda:unlock_item(26),label_text="Korean Fried Chicken\nRM 200",image_path='./picture/kfry.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Calamari Rings","Unlock",575,425,125,40,lambda:unlock_item(27),label_text="Calamari Rings\nRM 200",image_path='./picture/calamari.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Rainbow Cake","Unlock",780,425,125,40,lambda:unlock_item(28),label_text="Rainbow Cake\nRM 200",image_path='./picture/rainbowcake.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Red Velvet","Unlock",575,625,125,40,lambda:unlock_item(29),label_text="Red Velvet\nRM 200",image_path='./picture/redvelvet.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Black Forest","Unlock",780,625,125,40,lambda:unlock_item(30),label_text="Black Forest\nRM 200",image_path='./picture/blackforest.png',cost=200,requires_machine=True,machine="OVEN"),
 ]
 
 buttons_page6 =[
-    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 20",image_path='./picture/pandanrollcake.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 20",image_path='./picture/cookies.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 20",image_path='./picture/mooncake.png',cost=80,requires_machine=True,machine="OVEN"),
-    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 20",image_path='./picture/satay.png',cost=80,requires_machine=True,machine="OVEN"),
+    Button("Pandan Roll Cake","Unlock",575,225,125,40,lambda:unlock_item(31),label_text="Pandan Roll Cake\nRM 200",image_path='./picture/pandanrollcake.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Cookies","Unlock",780,225,125,40,lambda:unlock_item(32),label_text="Cookies\nRM 200",image_path='./picture/cookies.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Mooncake","Unlock",575,425,125,40,lambda:unlock_item(33),label_text="Mooncakes\nRM 200",image_path='./picture/mooncake.png',cost=200,requires_machine=True,machine="OVEN"),
+    Button("Satay","Unlock",780,425,125,40,lambda:unlock_item(34),label_text="Satay\nRM 200",image_path='./picture/satay.png',cost=200,requires_machine=True,machine="OVEN"),
 ]
 
 
