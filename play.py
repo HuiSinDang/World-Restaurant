@@ -802,6 +802,8 @@ hhactive = False
 hhtime = 30
 hh_start_time = None
 hh_file_path = os.path.join(os.getcwd(),"./picture/happyhour.txt")
+hhbar = pygame.image.load('./picture/hhbar.png')
+hhbar = pygame.transform.scale(hhbar,(800,100))
 
 def show_order_completed():
     if os.path.exists(hh_file_path):
@@ -834,6 +836,8 @@ def update_happy_hour_status():
         hhactive = False
 
 def happyhour_bar():
+    hhbar_rect = pygame.Rect(260, 10, 650, 60)
+    screen.blit(hhbar,hhbar_rect.topleft)
     update_happy_hour_status()
     remaining_order = (order_completed % 5 - 5) % 5
     if hhactive:
@@ -2003,6 +2007,7 @@ def order():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
         money_bar()
+        happyhour_bar()
         
         pygame.display.flip()
         pygame.time.Clock().tick(30)
