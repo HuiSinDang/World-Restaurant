@@ -1,7 +1,7 @@
 Tokbokki:True
 Fried Rice:True
 Oden:True
-Bibimbap:True
+Bibimbap:False
 Korean Army Stew:False
 Fried Noodles:False
 Fried Bihuns:False
