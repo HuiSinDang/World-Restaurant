@@ -1100,13 +1100,6 @@ def profile():
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
-                    profile()
-                if event.key == pygame.K_ESCAPE:
-                    return
-                if event.key == pygame.K_r:
-                    rename()
 
         if sound_muted:
             screen.blit(soundoff_btn, soundoff_btn_rect.topleft)  
@@ -1657,11 +1650,12 @@ def order():
                                 save_list_to_file(list1_filename, list1)
                                 save_list_to_file(list2_filename, list2)
                                 
-                                profit = int(total_price1)
                                 if hhactive:
                                     add_money(total_price1 * 2)
+                                    profit = int(total_price1)*2
                                 else:
                                     add_money(total_price1)
+                                    profit = int(total_price1)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
                                 add_order()
@@ -1709,11 +1703,12 @@ def order():
                                 save_list_to_file(list1_filename, list1)
                                 save_list_to_file(list2_filename, list2)
                                 
-                                profit = int(total_price2)
                                 if hhactive:
                                     add_money(total_price2 * 2)
+                                    profit = int(total_price2)*2
                                 else:
                                     add_money(total_price2)
+                                    profit = int(total_price2)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
                                 add_order()
@@ -1762,11 +1757,12 @@ def order():
                                 save_list_to_file(list1_filename, list1)
                                 save_list_to_file(list2_filename, list2)
                                 
-                                profit = int(total_price3)
                                 if hhactive:
                                     add_money(total_price3 * 2)
+                                    profit = int(total_price3)*2
                                 else:
                                     add_money(total_price3)
+                                    profit = int(total_price3)
                                 ftotal.write(f'{profit}\n')
                                 ftotal.close
                                 add_order()
@@ -4027,9 +4023,6 @@ def main():
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
           
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p:
-                    profile()
 
         if message_timer > 0:
             show_message(current_machine_message)
