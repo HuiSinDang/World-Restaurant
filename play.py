@@ -194,9 +194,6 @@ hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
 steamegg_img = pygame.image.load("./picture/steamegg.png") ##
 steamegg_img = pygame.transform.scale(steamegg_img, (100, 127))
 
-hanjiben_img = pygame.image.load("./picture/hanjiben.png") 
-hanjiben_img = pygame.transform.scale(hanjiben_img, (100, 127))
-
 lomaigai_img = pygame.image.load("./picture/lomaigai.png") 
 lomaigai_img = pygame.transform.scale(lomaigai_img, (100, 127))
 
@@ -746,7 +743,7 @@ food_prices = {
     "Cookies": 100,
 }
 
-# Main loop(irene)
+
 show_popup = False
 show_popup2B = False
 show_popup2C = False
@@ -2014,7 +2011,7 @@ def draw_popup():
     
     screen.blit(coin1_img,(852, 322))
     screen.blit(coin1_img,(1023, 322))
-    pan_unlock_button.update()  # 带框的机器图片，不能删
+    pan_unlock_button.update()  # pics with border cannot delete
     steamer_unlock_button.update()
     oven_unlock_button.update()
     inputmoney_rect = pygame.Rect(740,150, 200, 33)
@@ -2129,21 +2126,21 @@ def pink_closebutton(): #irene
 close_button = load_image('./picture/close_windowBtn.png',(60,60))
 close_button = ImageButton(close_button, 1165, 103, pink_closebutton)
 
-def save_unlocked_machines(): #把已经unlock的machine写进file里
-    f = open("./picture/unlocked_machines.txt", "w")  # Open the file in write mode
+def save_unlocked_machines():
+    f = open("./picture/unlocked_machines.txt", "w")  
     for machine in unlocked_machine:
-        f.write(machine + "\n")  # Write each unlocked machine to the file
+        f.write(machine + "\n")  
     f.close()
 
-def load_unlocked_machines(): #读file
+def load_unlocked_machines(): 
     global unlocked_machine
     unlocked_machine = set() 
     try:
-        f = open("./picture/unlocked_machines.txt", "r")  #读的file
+        f = open("./picture/unlocked_machines.txt", "r")  
         lines = f.readlines()
         for line in lines:
-            unlocked_machine.add(line.strip())  #将machine的名字加进去
-        f.close()  # 读完file后就会关掉
+            unlocked_machine.add(line.strip())  
+        f.close()  
     except FileNotFoundError:
         pass
 
@@ -2246,6 +2243,8 @@ def upgrade_process():
             screen.blit(soundon_btn, soundon_btn_rect.topleft)  
         
         handle_upgrades()
+        money_bar()
+        happyhour_bar()
         pygame.display.update()
         clock.tick(60)
 
@@ -2608,21 +2607,21 @@ def show_menupage():
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
-machinetype_surface = pygame.Surface ((160, 60))
-machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
-machinetype_button_rect2 = pygame.Rect(480, 400, 160, 50)
-machinetype_button_rect3 = pygame.Rect(480, 600, 160, 50)
+# machinetype_surface = pygame.Surface ((160, 60))
+# machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
+# machinetype_button_rect2 = pygame.Rect(480, 400, 160, 50)
+# machinetype_button_rect3 = pygame.Rect(480, 600, 160, 50)
 
 font_button_machine = pygame.font.SysFont("Comic Sans MS", 21, bold=True)
 
-ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
-ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+# ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
+# ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
 
-ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
-ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+# ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
+# ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
 
-ChooseMachine_text3 = font_button_machine.render(" OVEN", True, "white")
-ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
+# ChooseMachine_text3 = font_button_machine.render(" OVEN", True, "white")
+# ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
 
 # Assume current_page starts from 1 and max_items_per_page is 3
 current_page = 1
@@ -2663,9 +2662,33 @@ def detect_unlock_food():
     return unlocked_items
 
 
+stovepot_running = False
+steamer_running = False
+oven_running = False
+
+stovepot_start_time = 0
+steamer_start_time = 0
+oven_start_time = 0
+
+
+stovepot_duration = 6
+steamer_duration = 8
+oven_duration = 10
+
+
+cooking_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
+cooking_bar_steamer = CookingBar(651, 120, 160, 20, 100)
+cooking_bar_oven = CookingBar(965, 119, 160, 20, 100)
+
+
 stovepot_waiting_start_time = 0
 steamer_waiting_start_time = 0
 oven_waiting_start_time = 0
+
+
+waiting_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
+waiting_bar_steamer = CookingBar(651, 120, 160, 20, 100)
+waiting_bar_oven = CookingBar(965, 119, 160, 20, 100)
 
 
 
@@ -2673,17 +2696,17 @@ def selectfood_page2(): # after player click STOVE POT button rect
     global stovepot_food_index, current_page, running, steamer_waiting_start_time, oven_waiting_start_time
 
     waiting_duration = 10
-    food_selected = False  # 用来track food select
+    food_selected = False  #trak food that player selected
 
     unlocked_items = detect_unlock_food()
-    color_locked = (128, 128, 128) #灰色
-    color_unlocked = (186, 255, 184) #浅青色
-    hover_color = (18, 255, 50) #深青色
+    color_locked = (128, 128, 128) #gray
+    color_unlocked = (186, 255, 184) #light green
+    hover_color = (18, 255, 50) #deep green
     running = True
 
     while running:
         
-        if steamer_running: #以下四个是让player在按别的machine按钮的同时也能看到食物或烧焦进度
+        if steamer_running: #can see the progress of cooking process and overcook when player press another machine button
             steamer_elapsed = time.time() - steamer_start_time
             cooking_bar_steamer.update(steamer_elapsed, steamer_duration)
             cooking_bar_steamer.draw(screen)
@@ -2738,7 +2761,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
             food_name_normalized = food_item["name"].strip().lower()    # Normalizing the item name
             y_position = 216 + i * 144
 
-            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+
             if not unlocked_items.get(food_name_normalized, True):
                 rect_color = color_locked
             else:
@@ -2749,14 +2772,14 @@ def selectfood_page2(): # after player click STOVE POT button rect
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Only show select button for unlocked food items
+
             if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                 select_button_color = color_unlocked
                 if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                     select_button_color = hover_color
 
-                # Draw select button
+
                 selectbutton_surface.fill(select_button_color)
                 selectbutton_surface.blit(SELECT_text, text_rect)
                 screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
@@ -2793,7 +2816,7 @@ def selectfood_page2(): # after player click STOVE POT button rect
                 if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
                     current_page -= 1
 
-                # Check if the select button is clicked
+
                 for i, food_item in enumerate(items_on_page):
                     food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
@@ -2802,13 +2825,14 @@ def selectfood_page2(): # after player click STOVE POT button rect
                         if selectprepare_button_rect.collidepoint(event.pos):
                             click_sfx.play()
                             selected_food_index = start_index + i
-                            stovepot_food_index = selected_food_index  # Update the global index
+                            stovepot_food_index = selected_food_index  
                             food_selected = True
                             return stovepot_process(selected_food_index)
 
                 if soundon_btn_rect.collidepoint(event.pos) or soundoff_btn_rect.collidepoint(event.pos):
                     mute_sound()
-        # close_button.draw(screen)
+
+
         pygame.display.update()
         clock.tick(60)
 
@@ -2879,7 +2903,7 @@ def selectfood_page3(): # after player click steamer
             food_name_normalized = food_item["name"].strip().lower() 
             y_position = 216 + i * 144
 
-            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+            
             if not unlocked_items.get(food_name_normalized, True):
                 rect_color = color_locked
             else:
@@ -2890,7 +2914,7 @@ def selectfood_page3(): # after player click steamer
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-           # Only show select button for unlocked food items
+           
             if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                 select_button_color = color_unlocked
@@ -2918,10 +2942,10 @@ def selectfood_page3(): # after player click steamer
                 if close_button.is_clicked(event.pos):
                     click_sfx.play()
                     if not food_selected:
-                        steamer_food_index = -1  # Reset the food index
-                        close_button.press()  # Go back to the main screen
+                        steamer_food_index = -1  
+                        close_button.press() 
                     if not (stovepot_running or steamer_running or oven_running):
-                        close_button.press()   #return main screen
+                        close_button.press()  
                     else:
                         close_button.press()
 
@@ -2935,7 +2959,7 @@ def selectfood_page3(): # after player click steamer
                 if back_btn.checkForInput(pygame.mouse.get_pos()) and current_page > 1:
                     current_page -= 1
 
-                # Check if the select button is clicked
+               
                 for i, food_item in enumerate(items_on_page):
                     food_name_normalized = food_item["name"].strip().lower()
                     y_position = 216 + i * 144
@@ -3019,7 +3043,7 @@ def selectfood_page4(): # after player click oven
             food_name_normalized = food_item["name"].strip().lower()
             y_position = 216 + i * 144
 
-            # 确定格子的颜色，如果locked的话就灰色， unlocked的话就冷白色
+
             if not unlocked_items.get(food_name_normalized, True):
                 rect_color = color_locked
             else:
@@ -3031,14 +3055,13 @@ def selectfood_page4(): # after player click oven
             draw_text(food_item["name"], food_title_font, "black", screen, 700, y_position + 60)
             draw_text(food_item["price"], food_title_font, "black", screen, 900, y_position + 60)
 
-            # Only show select button for unlocked food items
             if rect_color == color_pic:
                 selectprepare_button_rect = pygame.Rect(1010, y_position + 43, 130, 40)
                 select_button_color = color_unlocked
                 if selectprepare_button_rect.collidepoint(pygame.mouse.get_pos()):
                     select_button_color = hover_color
 
-                # Draw select button
+
                 selectbutton_surface.fill(select_button_color)
                 selectbutton_surface.blit(SELECT_text, text_rect)
                 screen.blit(selectbutton_surface, selectprepare_button_rect.topleft)
@@ -3060,8 +3083,8 @@ def selectfood_page4(): # after player click oven
                 if close_button.is_clicked(event.pos):
                     click_sfx.play()
                     if not food_selected:
-                        oven_food_index = -1  # Reset the food index
-                        close_button.press() # Go back to the main screen
+                        oven_food_index = -1  
+                        close_button.press() 
                     if not (stovepot_running or steamer_running or oven_running):
                         close_button.press()  
                     else:
@@ -3082,7 +3105,7 @@ def selectfood_page4(): # after player click oven
                         if selectprepare_button_rect.collidepoint(event.pos):
                             click_sfx.play()
                             selected_food_index = start_index + i
-                            oven_food_index = selected_food_index  # Update the global index
+                            oven_food_index = selected_food_index 
                             food_selected = True
                             return oven_process(selected_food_index)
 
@@ -3150,24 +3173,7 @@ def oven_button_select(): # OVEN button on main screen
     return machinetype_button_rect3
 
 
-# Initialize process states and start times
-stovepot_running = False
-steamer_running = False
-oven_running = False
 
-stovepot_start_time = 0
-steamer_start_time = 0
-oven_start_time = 0
-
-# Duration in seconds for each cooking process
-stovepot_duration = 6
-steamer_duration = 8
-oven_duration = 10
-
-# x, y, w, h, max_hp
-cooking_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
-cooking_bar_steamer = CookingBar(651, 120, 160, 20, 100)
-cooking_bar_oven = CookingBar(965, 119, 160, 20, 100)
 
 
 def stovepot_process(selected_food_index):
@@ -3188,7 +3194,7 @@ def steamer_process(selected_food_index):
     global steamer_start_time, steamer_running, steamer_duration, steamer_food_index
 
     if selected_food_index < 0 or selected_food_index >= len(foodlist_steamer):
-        return         # Exit if the index is invalid
+        return        
 
     steamer_running = True
     steamer_start_time = time.time()
@@ -3220,10 +3226,8 @@ def pastefood_stovepot(selected_food_index):
     stovepot_button_color =  (255, 0, 102) 
     machinetype_surface1.fill(stovepot_button_color)
 
-    # Resize the food image to the desired size (e.g., 100x100 pixels)
     new_food_image = pygame.transform.scale(food_image, (80, 80))
-        
-    # Coordinates of the dialog box
+
     dialog_x, dialog_y = 230, 147
 
     screen.blit(dialogbox_img, ( dialog_x, dialog_y))
@@ -3236,13 +3240,11 @@ def pastefood_steamer(selected_food_index):
     global foodlist_steamer
     food_image = foodlist_steamer[selected_food_index]["image"]
 
-    # Resize the food image to the desired size (e.g., 100x100 pixels)
     new_food_image = pygame.transform.scale(food_image, (80, 80))
 
     steamer_button_color =  (255, 0, 102) 
     machinetype_surface2.fill(steamer_button_color)
-        
-    # Coordinates of the dialog box
+
     dialog_x, dialog_y = 555, 147
 
     screen.blit(dialogbox_img, ( dialog_x, dialog_y))
@@ -3255,13 +3257,11 @@ def pastefood_oven(selected_food_index):
     global foodlist_oven
     food_image = foodlist_oven[selected_food_index]["image"]
 
-    # Resize the food image to the desired size (e.g., 100x100 pixels)
     new_food_image = pygame.transform.scale(food_image, (80, 80))
 
     oven_button_color =  (255, 0, 102) 
     machinetype_surface3.fill(oven_button_color)
         
-    # Coordinates of the dialog box
     dialog_x, dialog_y = 840, 147
 
     screen.blit(dialogbox_img, ( dialog_x, dialog_y))
@@ -3270,10 +3270,7 @@ def pastefood_oven(selected_food_index):
     screen.blit(new_food_image, (food_x, food_y))
 
 
-
-waiting_bar_stovepot = CookingBar(330, 119, 160, 20, 100)  # x, y, w, h, max_hp
-waiting_bar_steamer = CookingBar(651, 120, 160, 20, 100)
-waiting_bar_oven = CookingBar(965, 119, 160, 20, 100)    
+    
 
 
 def auto_throw():
@@ -3287,8 +3284,8 @@ def auto_throw():
     food_filename = "./picture/food-complete-name.txt"
     food_list = read_food_list(food_filename)
 
-    throw_filename = "./picture/throw-food-name.txt"
-    throw_list = read_food_list(throw_filename)
+    # throw_filename = "./picture/throw-food-name.txt"
+    # throw_list = read_food_list(throw_filename)
 
 
     if sound_muted:
@@ -3303,7 +3300,7 @@ def auto_throw():
         if waste_food_index in range(len(food_lists)):
             waste_food_img = food_lists[waste_food_index]["image"]
             subtract_money(70)
-        waste_food_position = (240, 157)  # stovepot食物的位置
+        waste_food_position = (240, 157)  
         
     elif steamer_food_index == waste_food_index:
         if waste_food_index in range(len(foodlist_steamer)):
@@ -3318,33 +3315,33 @@ def auto_throw():
         waste_food_position = (850, 157) 
     
     
-    # 如果没有食物的图片的话就退出
+
     if waste_food_img is None or waste_food_position is None:
         return
 
     dustbin_pos = (1250, 160)  
     speed = 22
     throwing = True
-    angle = 0  # 初始角度
+    angle = 0  
 
     while throwing:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 throwing = False
 
-        # 计算食物和垃圾桶的direction vector
+        
         direction_x = dustbin_pos[0] - waste_food_position[0]
         direction_y = dustbin_pos[1] - waste_food_position[1]
 
-        # 计算食物与垃圾桶的距离
+      
         distance = (direction_x**2 + direction_y**2)**0.5
 
-        if distance > 10:  # 继续往垃圾桶方向移动
+        if distance > 10: 
             dir_x = direction_x / distance
             dir_y = (direction_y / distance)
             waste_food_position = (waste_food_position[0] + dir_x * speed, waste_food_position[1] + dir_y * speed)
 
-            # 旋转食物
+            
             angle += 10  
             rotated_food_img = pygame.transform.rotate(waste_food_img, angle)
 
@@ -3367,7 +3364,7 @@ def auto_throw():
             oven_button_rect = oven_button_select()
 
             screen.blit(rotated_food_img, rotated_rect.topleft)  
-            screen.blit(sound_button_img, sound_button_rect.topleft)  # Draw the sound button
+            screen.blit(sound_button_img, sound_button_rect.topleft)  
             screen.blit(dustbin_img, dustbin_pos)
             pygame.display.update()
 
@@ -3385,7 +3382,7 @@ def auto_throw():
 
 
 
-def exceed_time_collect():  #出现waitingbar， 烧焦
+def exceed_time_collect():  #display waiitng bar for overcook
     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time
     global waste_food_index, stovepot_waiting_start_time, steamer_waiting_start_time, oven_waiting_start_time
     global stovepot_food_index, steamer_food_index, oven_food_index
@@ -3465,12 +3462,12 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
 
     current_time = time.time()
 
-    full_slot_remind = False
+
     message_timer = 0
 
 
     throw_filename = "./picture/throw-food-name.txt"
-    throw_list = read_food_list(throw_filename)
+    # throw_list = read_food_list(throw_filename)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -3536,14 +3533,6 @@ def cooking_process():  #handles cooking and checks whether each machine has fin
         pastefood_oven(oven_food_index)
         draw_machine_type_button("oven")
     
-
-
-    if full_slot_remind:
-        font_slot = pygame.font.SysFont("cambria", 30, bold=True)
-        draw_text("Full   slots   now! ", font_slot, "red", screen, 680, 600)
-        message_timer -= 1
-        if message_timer <= 0:
-            full_slot_remind = False
 
     exceed_time_collect()   # Handle waiting bar if exceed time
     pygame.display.update()
@@ -3710,63 +3699,56 @@ food_image_mapping = {
 
 
 current_food_slots = []
-
-# Function to display food images in the table slots
-def display_food_images(foodcom):
+def display_food_images(foodcom):   # display food images in the table slots(waiitng table)
     global current_food_slots
     table_rect = pygame.Rect(195, 620, 1070, 140)
     table_color = (188, 143, 143)
     pygame.draw.rect(screen, table_color, table_rect, pygame.SRCALPHA)
 
-    slot_width = table_rect.width // 6  # Width of each slot
-    slot_height = table_rect.height     # Height of the slots
+    slot_width = table_rect.width // 6 
+    slot_height = table_rect.height     
 
-     #绘制6个格子
-    for col in range(6):  # 6个列代表6个格子
+
+    for col in range(6): #draw 6 slots
         slot_rect = pygame.Rect(
             table_rect.x + col * slot_width,
             table_rect.y,
             slot_width, slot_height
         )
-        pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  # 灰色边框的格子
-        # 图片映射
+        pygame.draw.rect(screen, (200, 200, 200), slot_rect, 3)  #gray border rect
 
-    food_slots = []  # Store food and their rect positions
 
-    image_width, image_height = 125, 125  # 图片的大小
+    food_slots = []  
+
+    image_width, image_height = 125, 125  
     table_rect = pygame.Rect(195, 620, 1070, 140)
-    slot_width = table_rect.width // 6  # 每个格子的宽度
-    slot_height = table_rect.height  # 每个格子的高度
+    slot_width = table_rect.width // 6  
+    slot_height = table_rect.height  
 
-    # Iterate and draw slots
+
     for index, item in enumerate(foodcom):
         if item == "":
             continue
 
-        if index < 6:  # Ensure we are only drawing 6 slots
-            # Get each slot's top-left coordinates
+        if index < 6:  
             slot_x = table_rect.x + index * slot_width
             slot_y = table_rect.y
 
-            # 计算图片在格子中居中的坐标
+        
             x = slot_x + (slot_width - image_width) // 2
             y = slot_y + (slot_height - image_height) // 2
 
             
-
-            # 根据 foodcom 中的名字查找对应的图片
             if item in food_image_mapping:
                 image_file = food_image_mapping[item]
                 image = pygame.image.load(image_file)
                 image = pygame.transform.scale(image, (image_width, image_height))
                 screen.blit(image, (x, y))
-                # Add the food and its rectangle to the food_slots list
-                food_rect = pygame.Rect(x, y, image_width, image_height)
+                food_rect = pygame.Rect(x, y, image_width, image_height)  # Add the food and its rectangle to the food_slots list
                 food_slots.append((item, food_rect))
                 
             else:
-                # 如果没有找到对应的图片，使用默认图片
-                image_file = "./picture/bag.png"  # 确保此图片存在
+                image_file = "./picture/bag.png"   # if did not find matching pics, use default pic
 
     return food_slots  # Return the list of food and their rect positions
                 
@@ -3776,8 +3758,8 @@ def display_food_images(foodcom):
 dustbin_img_rect = dustbin_img.get_rect(topleft=(1250, 160)) 
                            
 
-selected_food = None    # track 要删除的item
-selected_food_rect = None   #格子
+selected_food = None    # track food items that wanna throw
+selected_food_rect = None   #petak
 throw_item = []
 glow_food_color = (255, 255, 0)
 glow_dustbin_color = (255, 0, 0)
@@ -3787,39 +3769,39 @@ def throw_food_dustbin(dustbin_img_rect):
     global selected_food, throw_item, selected_food_rect, glow_food_color, glow_dustbin_color, glow_thickness
     food_filename = "./picture/food-complete-name.txt"
     food_list = read_food_list(food_filename)
-    food_slots = display_food_images(food_list)  # Display the food images from the file
+    food_slots = display_food_images(food_list)  
 
     throw_filename = "./picture/throw-food-name.txt"
-    previous_selected_food_rect = None  # Track the previously selected food rect
+    previous_selected_food_rect = None  
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-        # Detect left mouse button click
+        
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if selected_food is None:  # No food selected
+                if selected_food is None: 
                     for food, food_rect in food_slots:
-                        if food_rect.collidepoint(event.pos):  # If mouse click is inside a food's rectangle
+                        if food_rect.collidepoint(event.pos):  
                             click_sfx.play()
-                            selected_food = food  # Store the selected food
+                            selected_food = food  
                             selected_food_rect = food_rect
-                            break  # Exit loop after selecting a food
+                            break  
 
-                # If a food has been selected, check for dustbin click
+                
                 elif dustbin_img_rect.collidepoint(event.pos):
                     click_sfx.play()
                     current_foods = read_food_list(food_filename)
 
-                    # Remove the selected food from the list
+                   
                     if selected_food in current_foods:
                         current_foods.remove(selected_food)
                         throw_item.append(selected_food)
                         subtract_money(70)
 
-                    # Update the food list in the text file
+                    
                     with open(food_filename, "w") as foodfile:
                         for food_item in current_foods:
                             foodfile.write(food_item + "\n")
@@ -3828,39 +3810,36 @@ def throw_food_dustbin(dustbin_img_rect):
                         for waste_item in throw_item:
                             throwfile.write(waste_item + "\n")
 
-                    selected_food = None  # Reset selection after throwing
-                    food_slots = display_food_images(current_foods)  # Redraw food slots after removing
+                    selected_food = None  
+                    food_slots = display_food_images(current_foods)  
                     pygame.display.update()
 
-                # Check for clicks on food slots or reset selection
+                
                 else:
                     for food, food_rect in food_slots:
                         if food_rect.collidepoint(event.pos) and food != selected_food:
                             click_sfx.play()
-                            previous_selected_food_rect = selected_food_rect  # Store the previous selection
-                            selected_food = food  # Store the newly selected food
+                            previous_selected_food_rect = selected_food_rect  
+                            selected_food = food 
                             selected_food_rect = food_rect
-                            break  # Exit loop after selecting a food
+                            break  
                     else:
-                        # If click is outside any food rect, reset selection
                         selected_food = None
                         selected_food_rect = None
 
-    # Drawing glow effect if food is selected
+
     if selected_food is not None:
-        # Draw glowing border around the selected food
         pygame.draw.rect(screen, glow_food_color, selected_food_rect.inflate(glow_thickness * 2, glow_thickness * 2), glow_thickness)
 
-    # Clear previous selection glow
+    
     if previous_selected_food_rect is not None:
         pygame.draw.rect(screen, glow_food_color, previous_selected_food_rect.inflate(glow_thickness * 1, glow_thickness * 1), glow_thickness)  # Erase the glow
 
-    # Draw glow effect around dustbin if food is selected and dustbin is hovered or clicked
+    
     if selected_food is not None and dustbin_img_rect.collidepoint(pygame.mouse.get_pos()):
-        # Draw glowing effect around the dustbin when hovered with a selected food
         pygame.draw.rect(screen, glow_dustbin_color, dustbin_img_rect.inflate(glow_thickness * 2, glow_thickness * 2), glow_thickness)
 
-    return food_slots  # Return the updated food slots
+    return food_slots  
 
           
 
@@ -3869,14 +3848,13 @@ def main():
     global stovepot_running, steamer_running, oven_running, sound_muted
     global stovepot_start_time, steamer_start_time, oven_start_time
     global stovepot_food_index, steamer_food_index, oven_food_index
-    global  machine_type, food_item, message_timer, full_slot_remind
+    global  machine_type, food_item, message_timer
     global stovepot_exceed_time, steamer_exceed_time, oven_exceed_time, current_machine_view
     global machine_complete_unlocked, unlocked_machine, machine_name
 
     stovepot_running = False
     steamer_running = False
     oven_running = False
-    full_slot_remind = False
     sound_muted = False
     current_machine_view = "main_screen"
 
@@ -3894,7 +3872,7 @@ def main():
     steamer_exceed_time = False
     oven_exceed_time = False
 
-    slot_index = None
+    # slot_index = None
     machine_type = None
     food_item = None
 
