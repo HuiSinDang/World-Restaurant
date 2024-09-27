@@ -755,9 +755,7 @@ not_enough_money = False  # indicate not enough money
 message_timer = 0  # Timer to show messages temporarily
 unlocked_machine = set() # Set to track unlocked machines
 remind_unlock = False
-stovepot_call = False
-steamer_call = False
-oven_call = False
+
 
 #money#
 money_amount = 150
