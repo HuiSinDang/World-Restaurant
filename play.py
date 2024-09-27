@@ -2601,21 +2601,8 @@ def show_menupage():
         pygame.display.flip()
         pygame.time.Clock().tick(30)
 
-# machinetype_surface = pygame.Surface ((160, 60))
-# machinetype_button_rect1 = pygame.Rect(480, 200, 160, 50) #surface和button的vertical不一样所以会有shadow酱
-# machinetype_button_rect2 = pygame.Rect(480, 400, 160, 50)
-# machinetype_button_rect3 = pygame.Rect(480, 600, 160, 50)
 
 font_button_machine = pygame.font.SysFont("Comic Sans MS", 21, bold=True)
-
-# ChooseMachine_text1 = font_button_machine.render(" STOVE POT", True, "white")
-# ChooseMachine_text_rect1 = ChooseMachine_text1.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
-
-# ChooseMachine_text2 = font_button_machine.render(" STEAMER", True, "white")
-# ChooseMachine_text_rect2 = ChooseMachine_text2.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
-
-# ChooseMachine_text3 = font_button_machine.render(" OVEN", True, "white")
-# ChooseMachine_text_rect3 = ChooseMachine_text3.get_rect(center=(machinetype_surface.get_width()/2, machinetype_surface.get_height()/2))
 
 # Assume current_page starts from 1 and max_items_per_page is 3
 current_page = 1
@@ -3866,7 +3853,7 @@ def main():
     steamer_exceed_time = False
     oven_exceed_time = False
 
-    # slot_index = None
+
     machine_type = None
     food_item = None
 
